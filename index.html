@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#080d19">
-  <meta name="description" content="A serious senior fullstack interview course: 33 guided lessons, 110 interview questions, coding labs, mock interviews, and a focused study plan.">
+  <meta name="description" content="Backend-first senior fullstack interview course with 49 guided lessons, real Node/Postgres/Docker practice, MongoDB, Redis, queues, security and system design.">
   <title>Fullstack Interview OS — Senior Fullstack Crash Course</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23121d32'/%3E%3Cpath d='M17 20h30v8H25v8h19v8H25v8h-8z' fill='%2399a9ff'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="styles.css">
@@ -31,6 +31,11 @@
   <script defer src="depth-system-design.js"></script>
   <script defer src="depth-ai.js"></script>
   <script defer src="depth-resume.js"></script>
+  <script defer src="backend-track-api.js"></script>
+  <script defer src="backend-track-data.js"></script>
+  <script defer src="backend-track-async.js"></script>
+  <script defer src="backend-track-ops.js"></script>
+  <script defer src="backend-workshop.js"></script>
   <script defer src="app.js"></script>
 </head>
 <body>
@@ -50,9 +55,10 @@
    <div class="aside-label">YOUR LEARNING SPACE</div>
    <div class="nav">
      <button data-route="dashboard"><span class="ico">◫</span> Overview</button>
+     <button data-route="backend"><span class="ico">⬢</span> Backend pathway</button>
      <button data-route="curriculum"><span class="ico">▤</span> Curriculum</button>
      <button data-route="diagrams"><span class="ico">▥</span> Visual architecture</button>
-     <button data-route="plan"><span class="ico">▦</span> 8-day crash plan</button>
+     <button data-route="plan"><span class="ico">▦</span> Fullstack refresher</button>
      <button data-route="interviews"><span class="ico">◎</span> Interview bank</button>
      <button data-route="labs"><span class="ico">⌘</span> Coding lab</button>
      <button data-route="mocks"><span class="ico">◈</span> Mock interviews</button>
@@ -61,9 +67,9 @@
    </div>
    <div class="sidebar-bottom">
      <div class="eyebrow">PLACEMENT FIRST</div>
-     <p>Built for a senior React / Next.js engineer strengthening backend, architecture and AI interview skills.</p>
+     <p>Backend-first training for experienced frontend engineers: learn to build, secure, deploy and debug Node APIs.</p>
      <div class="bar"><span id="side-progress" style="width:0%"></span></div>
-     <small id="side-progress-text" class="muted">0 of 33 lessons complete</small>
+     <small id="side-progress-text" class="muted">0 lessons complete</small>
    </div>
  </aside>
  <div class="layout">
@@ -74,7 +80,7 @@
     </div>
     <div class="topright">
       <span class="pill green">● ACTIVE COURSE</span>
-      <span class="pill" id="header-count">33 LESSONS</span>
+      <span class="pill" id="header-count">COURSE LESSONS</span>
       <button class="btn ghost small" id="theme-btn" type="button" title="Switch color theme" aria-label="Switch color theme">◐ Theme</button>
     </div>
   </header>

@@ -80,15 +80,58 @@ function sourcedMediaTile(m,more=false){
   <span class="media-insight"><span class="insight-symbol">◈</span> ${insight}</span></figcaption>
  </figure>`;
 }
+
 function sourcedLessonGallery(l) {
  const item=MEDIA[l.id];
  if(!item)return `<div class="lesson-artwork">${V.lesson(l.id,l.trackId,l.title)}</div>`;
+ const sources=[item,...(Array.isArray(item.extras)?item.extras:[])];
+ const count=sources.length;
+ const galleryId="source-carousel-"+l.id;
+ const buttons=count>1?`<div class="source-carousel-toolbar">
+   <span class="source-carousel-position" data-source-position aria-live="polite" aria-atomic="true">1 / ${count}</span>
+   <div class="source-carousel-actions">
+     <button type="button" class="source-carousel-arrow" data-action="source-prev" aria-label="Previous source illustration" aria-controls="${galleryId}"><span aria-hidden="true">←</span><span>Previous</span></button>
+     <button type="button" class="source-carousel-arrow" data-action="source-next" aria-label="Next source illustration" aria-controls="${galleryId}"><span>Next</span><span aria-hidden="true">→</span></button>
+   </div>
+ </div>`:"";
+ const dots=count>1?`<div class="source-carousel-pagination" role="group" aria-label="Choose a source">
+   ${sources.map((source,i)=>`<button type="button" class="source-carousel-dot ${i===0?"active":""}" data-action="source-jump" data-index="${i}" aria-label="Show source ${i+1}: ${esc(source.title)}" aria-pressed="${i===0?"true":"false"}"><span></span></button>`).join("")}
+ </div>`:"";
  return `<section class="lesson-real-media" aria-label="Curated illustrations and diagrams from original technical sources">
- <header class="media-section-header"><div><span class="eyebrow">CONCEPT VISUALIZATION / CURATED SOURCE</span><h3>See how it actually works.</h3></div><span class="media-curated-tag">ORIGINAL REFERENCE · HD / VECTOR</span></header>
- ${sourcedMediaTile(item)}
- ${item.extras?.length?`<details class="reference-extras"><summary>Explore ${item.extras.length} additional source diagram${item.extras.length>1?"s":""}<span>Open gallery ↓</span></summary><div class="reference-gallery">${item.extras.map(x=>sourcedMediaTile(x,true)).join("")}</div></details>`:""}
- <div class="reference-footnote"><span>◎</span> Diagrams are displayed from their original publishers, not generated. Follow each source link for the original context, credits, and usage terms.</div>
+ <header class="media-section-header"><div><span class="eyebrow">CONCEPT VISUALIZATION / CURATED SOURCE</span><h3>See how it actually works.</h3></div><span class="media-curated-tag">${count} ORIGINAL SOURCE${count===1?"":"S"} · HD / VECTOR</span></header>
+ <div class="source-carousel" role="region" aria-roledescription="carousel" aria-label="Source illustrations for ${esc(l.title)}" data-source-index="0" tabindex="0">
+   ${buttons}
+   <div class="source-carousel-slides" id="${galleryId}">
+     ${sources.map((source,i)=>`<div class="source-slide" role="group" aria-roledescription="slide" aria-label="Source ${i+1} of ${count}: ${esc(source.title)}" ${i===0?"":'hidden aria-hidden="true"'}>${sourcedMediaTile(source,i>0)}</div>`).join("")}
+   </div>
+   ${dots}
+ </div>
+ <div class="reference-footnote"><span>◎</span> Each illustration retains its publisher credit, original link and usage note. Images are hosted by their original sources.</div>
  </section>`;
+}
+function setSourceSlide(carousel,requestedIndex){
+ if(!carousel)return;
+ const slides=Array.from(carousel.querySelectorAll(".source-slide"));
+ if(!slides.length)return;
+ const index=((requestedIndex%slides.length)+slides.length)%slides.length;
+ carousel.dataset.sourceIndex=String(index);
+ slides.forEach((slide,i)=>{
+   const visible=i===index;
+   slide.hidden=!visible;
+   if(visible)slide.removeAttribute("aria-hidden");
+   else slide.setAttribute("aria-hidden","true");
+ });
+ const position=carousel.querySelector("[data-source-position]");
+ if(position)position.textContent=(index+1)+" / "+slides.length;
+ carousel.querySelectorAll('[data-action="source-jump"]').forEach((button,i)=>{
+   button.classList.toggle("active",i===index);
+   button.setAttribute("aria-pressed",String(i===index));
+ });
+}
+function moveSourceSlide(carousel,delta){
+ if(!carousel)return;
+ const current=Number(carousel.dataset.sourceIndex)||0;
+ setSourceSlide(carousel,current+delta);
 }
 
 
@@ -176,6 +219,12 @@ app.addEventListener("click",async e=>{
 const target=e.target.closest("[data-go],[data-action]");if(!target)return;
 if(target.dataset.go){go(target.dataset.go);return}
 const act=target.dataset.action,id=target.dataset.id,idx=Number(target.dataset.index);
+if(act==="source-next"||act==="source-prev"||act==="source-jump"){
+ const carousel=target.closest(".source-carousel");
+ if(act==="source-jump")setSourceSlide(carousel,idx);
+ else moveSourceSlide(carousel,act==="source-next"?1:-1);
+ return;
+}
 if(act==="select-diagram"){ui.diagram=id;ui.diagramNode=0;render()}
 if(act==="select-node"){ui.diagramNode=idx;render()}
 if(act==="jump-section"){const section=document.getElementById(id);if(section)section.scrollIntoView({behavior:"smooth",block:"start"});return}
@@ -204,7 +253,31 @@ if(act==="grade-card"){const cards=dueQuestions(),q=cards[ui.flashIndex];progres
 });
 app.addEventListener("input",e=>{const x=e.target;if(x.id==="interview-search"){ui.search=x.value;ui.limit=10;document.getElementById("question-list").innerHTML=interviewList()}if(x.dataset.saveNote){progress.notes[x.dataset.saveNote]=x.value;save()}if(x.dataset.saveMock!==undefined){progress.mockAnswers[x.dataset.saveMock]=x.value;save()}if(x.id==="code-editor"){const l=labById.get(getLocation().split("/")[1])||labs[0];progress.labDrafts[l.id]=x.value;save()}});
 app.addEventListener("change",e=>{if(e.target.id==="interview-topic"){ui.topic=e.target.value;ui.limit=10;document.getElementById("question-list").innerHTML=interviewList()}if(e.target.id==="interview-level"){ui.level=e.target.value;ui.limit=10;document.getElementById("question-list").innerHTML=interviewList()}});
-app.addEventListener("keydown",e=>{const target=e.target.closest('[role="link"],[data-action="flip-card"]');if(target&&(e.key==="Enter"||e.key===" ")){e.preventDefault();target.click()}if(e.target.id==="code-editor"&&e.key==="Tab"){e.preventDefault();const x=e.target,pos=x.selectionStart;x.value=x.value.slice(0,pos)+"  "+x.value.slice(x.selectionEnd);x.selectionStart=x.selectionEnd=pos+2;x.dispatchEvent(new Event("input",{bubbles:true}))}});
+app.addEventListener("keydown",e=>{
+ const sourceCarousel=e.target.closest(".source-carousel");
+ if(sourceCarousel&&(e.key==="ArrowRight"||e.key==="ArrowLeft")){
+   e.preventDefault();
+   moveSourceSlide(sourceCarousel,e.key==="ArrowRight"?1:-1);
+   return;
+ }
+const target=e.target.closest('[role="link"],[data-action="flip-card"]');if(target&&(e.key==="Enter"||e.key===" ")){e.preventDefault();target.click()}if(e.target.id==="code-editor"&&e.key==="Tab"){e.preventDefault();const x=e.target,pos=x.selectionStart;x.value=x.value.slice(0,pos)+"  "+x.value.slice(x.selectionEnd);x.selectionStart=x.selectionEnd=pos+2;x.dispatchEvent(new Event("input",{bubbles:true}))}});
+let sourceSwipeStart=null;
+app.addEventListener("touchstart",e=>{
+ const carousel=e.target.closest(".source-carousel");
+ if(!carousel||e.touches.length!==1){sourceSwipeStart=null;return}
+ sourceSwipeStart={carousel,x:e.touches[0].clientX,y:e.touches[0].clientY};
+},{passive:true});
+app.addEventListener("touchend",e=>{
+ if(!sourceSwipeStart||!e.changedTouches.length)return;
+ const {carousel,x,y}=sourceSwipeStart;
+ sourceSwipeStart=null;
+ if(!carousel.isConnected)return;
+ const dx=e.changedTouches[0].clientX-x;
+ const dy=e.changedTouches[0].clientY-y;
+ if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)*1.25){
+   moveSourceSlide(carousel,dx<0?1:-1);
+ }
+},{passive:true});
 function runLab(){return new Promise(resolve=>{const l=labById.get(getLocation().split("/")[1])||labs[0];const code=document.getElementById("code-editor")?.value||"";const container=document.getElementById("lab-results");container.innerHTML='<div class="console">Running tests in an isolated browser worker…</div>';const workerJs=`
 self.onmessage=async function(e){
  const AsyncFunction=Object.getPrototypeOf(async function(){}).constructor;
@@ -225,5 +298,5 @@ document.getElementById("menu-btn").addEventListener("click",()=>document.getEle
 document.getElementById("theme-btn").addEventListener("click",()=>{progress.theme=progress.theme==="dark"?"light":"dark";save();render()});
 window.addEventListener("hashchange",()=>{if(ui.mockTimer){clearInterval(ui.mockTimer);ui.mockTimer=null;ui.mockSeconds=0}render();scrollTo(0,0)});
 if(!location.hash)location.hash="dashboard";else render();
-window.__courseDiagnostics={trackCount:tracks.length,lessonCount:lessons.length,questionCount:bank.length,labCount:labs.length,dayCount:days.length,version:"3.2.0",expandedLessonCount:Object.keys(COURSE_DEPTH).length,curatedMediaLessons:EXTERNAL_MEDIA_COUNT};
+window.__courseDiagnostics={trackCount:tracks.length,lessonCount:lessons.length,questionCount:bank.length,labCount:labs.length,dayCount:days.length,version:"3.3.0",expandedLessonCount:Object.keys(COURSE_DEPTH).length,curatedMediaLessons:EXTERNAL_MEDIA_COUNT};
 })();

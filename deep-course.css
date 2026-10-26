@@ -1,0 +1,96 @@
+
+/* Full-length learning chapters: concept → execution → production failure → rehearsal. */
+.lesson-content{padding:32px clamp(20px,3.5vw,40px)}
+.lesson-content>section{scroll-margin-top:92px}
+.lesson-overview{border-bottom:1px solid #364864;padding-bottom:26px;margin-top:30px;margin-bottom:8px}
+.lesson-overview>h2,.worked-example>h2,.lesson-practice>h2{font-size:26px;margin:10px 0 16px;color:#eef4ff}
+.lesson-overview .prose{border-left:3px solid #8f9dff;padding-left:22px;margin:14px 0 5px}
+.lesson-overview .prose p{line-height:1.95;font-size:16px;color:#b9cde7}
+.extended-chapters{position:relative;padding:20px 0 0;margin-bottom:28px}
+.deep-kicker{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.deep-estimate{display:inline-flex;border:1px solid #3e5770;background:#1a324a;border-radius:7px;padding:6px 10px;color:#b9d3e8;font:700 10px/1.3 ui-monospace,monospace;letter-spacing:.055em}
+.deep-title{font-size:clamp(26px,3vw,34px);margin:7px 0 11px;letter-spacing:-.045em}
+.deep-subtitle{font-size:14px;color:#aebfd8;line-height:1.8;max-width:680px;margin:0 0 24px}
+.chapter-directory{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;padding:14px;background:linear-gradient(135deg,#20334e,#15263e);border:1px solid #3c577a;border-radius:15px;margin-bottom:30px}
+.chapter-directory button{display:flex;align-items:center;gap:11px;background:#14243b9c;border:1px solid #3a5175;border-radius:10px;padding:12px;color:#d8e5f9;text-align:left;min-height:66px;transition:background .18s,border-color .18s}
+.chapter-directory button:hover,.chapter-directory button:focus-visible{border-color:#91a7ee;background:#294467}
+.chapter-directory button>span{font:800 12px/1.4 ui-monospace,monospace;color:#79dcca;flex-shrink:0}
+.chapter-directory button b{flex:1;font-size:12px;line-height:1.55;letter-spacing:0}
+.chapter-directory button em{color:#8cadd5;font-size:15px;font-style:normal}
+.deep-chapter{padding:23px 0 30px;margin:0;border-bottom:1px solid #34465e;scroll-margin-top:90px}
+.deep-chapter:last-child{border-bottom:0}
+.chapter-number{display:flex;align-items:center;gap:17px;margin-bottom:18px}
+.chapter-number>span{width:47px;height:47px;border-radius:13px;border:1px solid #6578aa;display:grid;place-items:center;color:#bbceff;background:linear-gradient(145deg,#283b65,#1b2d4b);font:800 19px/1 ui-monospace,monospace;box-shadow:0 9px 23px #0003}
+.chapter-number small{display:block;font:800 10px/1.4 ui-monospace,monospace;letter-spacing:.13em;color:#7ed7c8;margin-bottom:5px}
+.chapter-number h3{font-size:clamp(20px,2vw,25px);line-height:1.25;margin:0;color:#f0f4ff;letter-spacing:-.035em}
+.deep-prose{padding-left:0}
+.deep-prose p{font-size:16px!important;line-height:1.97!important;color:#bfcee2!important;max-width:76ch;margin-bottom:21px!important}
+.deep-prose strong{color:#e9eeff}
+.deep-prose code{font-size:.88em;color:#d3e1ff;white-space:normal}
+.deep-chapter .code-wrap{margin:24px 0;border-color:#4d6382}
+.deep-trace{display:grid;gap:3px;background:linear-gradient(112deg,#143a3d,#172b3f);border-left:3px solid #64e5c7;border-radius:8px;padding:17px 19px;margin:17px 0 8px}
+.deep-trace b{font-size:12px;color:#8ef5d9;letter-spacing:.03em}
+.deep-trace p{font-size:13px;color:#c2dcd9;line-height:1.8;margin:4px 0}
+.worked-example{margin:5px 0 32px;padding:25px 24px 20px;border:1px solid #3f5373;background:linear-gradient(135deg,#152641,#101d32);border-radius:17px}
+.worked-example>h3{font-size:17px;color:#c7daed}
+.worked-example .code-wrap{margin-top:16px}
+.worked-example .callout{margin-top:16px;margin-bottom:0}
+.case-study{margin:30px -6px 29px;border:1px solid #53718e;border-radius:18px;background:linear-gradient(143deg,#1b3651,#132337);overflow:hidden;box-shadow:0 18px 36px #01051244;scroll-margin-top:90px}
+.case-study-heading{padding:20px 25px 5px;display:flex;gap:10px;justify-content:space-between;align-items:center;flex-wrap:wrap}
+.case-study>h2{font-size:clamp(23px,2.6vw,30px);padding:0 25px;margin:11px 0 20px;max-width:720px;line-height:1.3}
+.case-situation{background:#24415a91;border-top:1px solid #476b87;border-bottom:1px solid #476b87;padding:19px 25px}
+.case-situation span,.case-steps>div>span{color:#8fd8ef;font:800 11px/1.3 ui-monospace,monospace;letter-spacing:.1em}
+.case-situation p,.case-steps p{color:#d3e3f0;line-height:1.85;font-size:14px;margin:10px 0 0}
+.case-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0}
+.case-steps>div{padding:21px 19px;border-right:1px solid #35526d}
+.case-steps>div:last-child{border-right:0}
+.case-steps>div:nth-child(2)>span{color:#9ce6cd}
+.case-steps>div:nth-child(3)>span{color:#eec68f}
+.case-deliverable{margin:0;padding:18px 25px;background:#182e42;border-top:1px solid #466480}
+.case-deliverable b{color:#8ff2d7;font-size:13px}
+.case-deliverable p{color:#bbcede;font-size:13px;line-height:1.8;margin:7px 0 0}
+.lesson-practice{padding:20px 0 27px;border-bottom:1px solid #34465e;margin-bottom:28px;scroll-margin-top:90px}
+.lesson-practice>h3{font-size:17px;color:#cbdcf1}
+.lesson-practice>p{font-size:15px;color:#c0d0e4;line-height:1.8}
+.interview-synthesis{padding:25px 27px;border:1px solid #625d97;border-radius:18px;background:radial-gradient(circle at right top,#433e7c9c,transparent 48%),linear-gradient(115deg,#272b56,#1a2340);box-shadow:0 15px 30px #03041438;margin:24px 0;scroll-margin-top:90px}
+.interview-synthesis>h2{font-size:25px;color:#f4f0ff;margin:11px 0 17px}
+.interview-synthesis>p{font-size:15px;line-height:1.95;color:#d6d7ed;margin:0 0 18px;max-width:75ch}
+.interview-callout{border-left:3px solid #b5a2ff;padding:11px 15px;background:#ffffff0b;color:#c2b8f2;font-size:12px;line-height:1.7;border-radius:5px;margin:17px 0}
+.primary-sources{padding:18px 0 24px;border-bottom:1px solid #344961}
+.reference-links{display:flex;gap:9px;flex-wrap:wrap;margin:17px 0}
+.reference-links>a{border:1px solid #41607b;border-radius:8px;background:#1b344e;color:#c8ddf0;padding:9px 12px;font-size:12px;font-weight:700;display:inline-flex;gap:8px;align-items:center;transition:border-color .2s}
+.reference-links>a span{color:#73e3d2}
+.reference-links>a:hover{border-color:#8ebbe7;background:#264361;text-decoration:none}
+.lesson-section-nav{position:relative}
+.lesson-section-nav .toc{margin-top:13px;max-height:none;display:grid}
+.lesson-section-nav .toc button{font-size:12px;border-left:2px solid #39516f;border-radius:0 8px 8px 0;padding:8px 11px}
+.lesson-section-nav .toc button:hover{border-left-color:#72e0cd;background:#273d5c}
+.knowledge{scroll-margin-top:90px}
+body.light .lesson-overview>h2,body.light .deep-title,body.light .chapter-number h3,body.light .worked-example>h2,body.light .lesson-practice>h2{color:#152e49}
+body.light .deep-subtitle{color:#60728c}
+body.light .deep-prose p{color:#364c66!important}
+body.light .deep-chapter{border-color:#cad6e6}
+body.light .chapter-directory{background:#e5effe}
+body.light .chapter-directory button{background:#f9fbff;color:#30486a;border-color:#c5d6e8}
+body.light .worked-example{background:#e7eefb}
+body.light .worked-example>h3{color:#304765}
+body.light .case-situation p,body.light .case-steps p,body.light .case-deliverable p{color:#d8e9fb}
+body.light .deep-prose code{color:#36598b}
+body.light .reference-links a{color:#cde6f6}
+@media(max-width:1080px){.case-steps{grid-template-columns:1fr}.case-steps>div{border-right:0;border-bottom:1px solid #34516e}.case-steps>div:last-child{border-bottom:0}}
+@media(max-width:660px){
+ .lesson-content{padding:18px 17px}
+ .chapter-directory{grid-template-columns:1fr;gap:8px;padding:10px}
+ .deep-chapter{padding:19px 0 25px}
+ .deep-prose p{font-size:15px!important}
+ .deep-kicker{align-items:flex-start}
+ .case-study{margin:21px -6px}
+ .case-study-heading,.case-situation,.case-deliverable{padding-left:18px;padding-right:18px}
+ .case-study>h2{padding-left:18px;padding-right:18px}
+ .case-steps>div{padding:17px 18px}
+ .worked-example{padding:20px 15px}
+ .interview-synthesis{padding:20px}
+ .chapter-number{gap:12px}
+ .chapter-number>span{width:40px;height:40px}
+}
+@media(prefers-reduced-motion:reduce){.chapter-directory button{transition:none}}

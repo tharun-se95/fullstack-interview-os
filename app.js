@@ -135,5 +135,5 @@ document.getElementById("menu-btn").addEventListener("click",()=>document.getEle
 document.getElementById("theme-btn").addEventListener("click",()=>{progress.theme=progress.theme==="dark"?"light":"dark";save();render()});
 window.addEventListener("hashchange",()=>{if(ui.mockTimer){clearInterval(ui.mockTimer);ui.mockTimer=null;ui.mockSeconds=0}render();scrollTo(0,0)});
 if(!location.hash)location.hash="dashboard";else render();
-window.__courseDiagnostics={trackCount:tracks.length,lessonCount:lessons.length,questionCount:bank.length,labCount:labs.length,dayCount:days.length,version:"2.0.0"};
+window.__courseDiagnostics={trackCount:tracks.length,lessonCount:lessons.length,questionCount:bank.length,labCount:labs.length,dayCount:days.length,version:"2.1.0"};
 })();

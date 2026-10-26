@@ -97,7 +97,7 @@ function deepChapterBody(l){
  const d=COURSE_DEPTH[l.id];
  if(!d)return `<div class="callout warn"><b>Deep lesson content not loaded</b><p>Review the standard worked example and try the checkpoint.</p></div>`;
  return `<section class="extended-chapters" id="lesson-deep-${l.id}">
- <div class="deep-kicker"><span class="eyebrow">DEEP LEARNING / ${d.chapters.length} PARTS</span><span class="deep-estimate">${Math.max(4,Math.round(d.chapters.map(x=>x.body).join(" ").split(/\\s+/).length/170))} MIN READING</span></div>
+ <div class="deep-kicker"><span class="eyebrow">DEEP LEARNING / ${d.chapters.length} PARTS</span><span class="deep-estimate">${Math.max(9,Math.round((d.chapters.map(x=>x.body).join(" ").split(/\s+/).length + l.theory.split(/\s+/).length)/130))} MIN READING</span></div>
  <h2 class="deep-title">Understand it from first principles.</h2>
  <p class="deep-subtitle">Go beyond definitions: reason through execution, real-world consequences and engineering trade-offs before opening the answer.</p>
  <div class="chapter-directory">${d.chapters.map((ch,i)=>`<button type="button" data-action="jump-section" data-id="deep-${l.id}-${i}"><span>${String(i+1).padStart(2,"0")}</span><b>${esc(ch.title)}</b><em>↘</em></button>`).join("")}</div>

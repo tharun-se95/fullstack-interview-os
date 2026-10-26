@@ -4,6 +4,19 @@ Live website: https://fullstack-interview-os.vercel.app
 
 A practical, structured interview-preparation application tailored to a senior frontend-heavy fullstack developer with experience in React, Next.js, Node.js, PostgreSQL, healthcare microfrontends, WebSockets and LangGraph.
 
+## Visual edition (v2.1)
+
+The site now includes a custom no-framework SVG artwork engine (`visuals.js`), including:
+
+- A layered isometric engineering dashboard illustration on the homepage
+- Eleven distinct vector illustrations for the course-track gallery
+- Thirty-three concept-specific visual flow diagrams inside the full lessons
+- Six illustrated interactive architecture maps
+- SVG progress rings, graphic learning-path banners, illustrated coding/mock sections and image-backed practice and portfolio feature cards
+- Responsive visual styling, subtle movement and reduced-motion handling (`visual-theme.css`)
+
+Two remote Unsplash photos are loaded lazily: the developer workspace photo on the dashboard and the infrastructure photograph on the projects page. The vectors are authored directly in the repository; the photos require an internet connection and fall back visually to dark gradients if blocked.
+
 ## What is actually in the course
 
 - **11 progressive tracks and 33 complete lessons** — every lesson has a skill objective, a substantial explanation, annotated production-oriented code, common trap, hands-on task, worked answer and multiple-choice comprehension check.

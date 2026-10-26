@@ -1340,3 +1340,49 @@ body.light .route-diagrams .diagram-detail p{color:var(--field-muted)}
     animation:none!important;transition:none!important;scroll-behavior:auto!important;
   }
 }
+
+
+/* Compact section jump outline appears when the desktop reading rail collapses. */
+body:is(.light,:not(.light)) .mobile-lesson-nav{display:none}
+@media(max-width:1080px){
+ body:is(.light,:not(.light)) .route-lesson .mobile-lesson-nav{
+   display:block;
+   background:none;
+   border:0;
+   border-top:1px solid var(--field-line);
+   border-bottom:1px solid var(--field-line);
+   border-radius:0;
+   padding:0;
+   margin:0 0 24px;
+ }
+ body:is(.light,:not(.light)) .route-lesson .mobile-lesson-nav summary{
+   display:flex;
+   align-items:center;
+   justify-content:space-between;
+   padding:13px 0;
+   color:var(--field-ink);
+   font-size:12px;
+   font-weight:750;
+ }
+ body:is(.light,:not(.light)) .route-lesson .mobile-lesson-nav summary span{color:var(--field-accent)}
+ body:is(.light,:not(.light)) .route-lesson .mobile-lesson-nav nav{
+   display:grid;
+   grid-template-columns:repeat(2,minmax(0,1fr));
+   gap:0 18px;
+   padding:0 0 12px;
+ }
+ body:is(.light,:not(.light)) .route-lesson .mobile-lesson-nav nav button{
+   background:none;
+   border:0;
+   border-bottom:1px solid var(--field-line);
+   text-align:left;
+   color:var(--field-muted);
+   font-size:12px;
+   padding:11px 0;
+ }
+ body:is(.light,:not(.light)) .route-lesson .mobile-lesson-nav nav button:hover{color:var(--field-accent)}
+ body:is(.light,:not(.light)) .route-lesson .lesson-aside{display:none}
+}
+@media(max-width:500px){
+ body:is(.light,:not(.light)) .route-lesson .mobile-lesson-nav nav{grid-template-columns:1fr}
+}

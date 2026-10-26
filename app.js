@@ -91,7 +91,65 @@ function sourcedLessonGallery(l) {
  </section>`;
 }
 
-function lessonPage(id){const l=lessonById.get(id);if(!l)return notFound();const t=trackById.get(l.trackId),position=t.lessons.findIndex(x=>x.id===id),completed=progress.done.includes(id),checked=progress.checks[id],next=t.lessons[position+1]||lessons[lessons.findIndex(x=>x.id===id)+1];const opts=l.check.options.map((opt,i)=>`<button class="option ${checked===i?(i===l.check.correct?"correct":"incorrect"):""}" data-action="answer-check" data-id="${l.id}" data-index="${i}">${String.fromCharCode(65+i)}. ${esc(opt)}</button>`).join("");return `<button class="back" data-go="track/${t.id}">← ${esc(t.title)}</button><div class="lesson-layout"><div class="lesson-main"><div class="lesson-heading"><div class="eyebrow">${esc(t.title)} · LESSON ${position+1} OF ${t.lessons.length}</div><h1>${esc(l.title)}</h1><p class="lead">${esc(l.goal)}</p><div class="flex"><span class="tag">◷ ${l.minutes} min</span><span class="tag ${completed?"accent":""}">${completed?"✓ Mastered":"Checkpoint required"}</span>${bookmarkBtn(l.id)}</div></div><article class="lesson-content"><div class="learning-objectives"><div class="eyebrow">YOUR LEARNING OBJECTIVE</div><p style="color:#d6e3fa;margin:9px 0 0">${esc(l.goal)}</p></div>${sourcedLessonGallery(l)}<div class="prose">${prose(l.theory)}</div><h3>Production code example</h3>${codeBlock("Walk through line-by-line",l.code)}<div class="callout"><b>🔍 Why this code works</b><p>${esc(l.walkthrough)}</p></div><div class="callout warn"><b>⚠️ Common interview trap</b><p>${esc(l.pitfall)}</p></div><h3>Try it yourself</h3><p>${esc(l.task)}</p><button class="btn secondary small" data-action="toggle-lesson-solution">${ui.lessonReveal?"Hide worked answer":"Reveal worked answer"}</button><div id="lesson-solution" ${ui.lessonReveal?"":"hidden"}>${codeBlock("Model solution / reasoning",l.solution)}</div><hr><div class="knowledge"><div class="eyebrow">KNOWLEDGE CHECK · REQUIRED</div><h3>${esc(l.check.q)}</h3>${opts}<div class="reveal" ${checked===undefined?"hidden":""}><b>${checked===l.check.correct?"✓ Correct.":"Not quite — try another option."}</b> ${esc(l.check.why)}</div></div><div class="progress-check"><div><b>${completed?"Lesson mastered ✓":"Ready to complete?"}</b><p style="font-size:12px;margin:5px 0">${checked===l.check.correct?"Checkpoint passed.": "Answer the checkpoint correctly to unlock completion."}</p></div><button class="btn" data-action="complete-lesson" data-id="${l.id}" ${checked!==l.check.correct?"disabled":""}>${completed?"Completed ✓":"Mark mastered ✓"}</button></div><hr><h3>Your private learning notes</h3><p class="tiny">Write an explanation in your own words. Saved on this device.</p><textarea class="textarea" id="lesson-notes" data-save-note="${l.id}" placeholder="What was hard? What would you tell an interviewer?">${esc(progress.notes[l.id]||"")}</textarea><p class="tiny muted">Autosaved locally as you type.</p></article><div class="flex between" style="margin-top:23px"><button class="btn secondary" data-go="track/${t.id}">← Track overview</button>${next?`<button class="btn" data-go="lesson/${next.id}">Next lesson →</button>`:""}</div></div><aside class="lesson-aside"><div class="card"><div class="eyebrow">THIS TRACK</div><h3 style="margin-top:10px">${esc(t.title)}</h3><div class="bar"><span style="width:${trackProgress(t).pct}%"></span></div><div class="toc">${t.lessons.map((x,i)=>`<button data-go="lesson/${x.id}" class="${x.id===l.id?"current":""} ${progress.done.includes(x.id)?"done":""}">${i+1}. ${esc(x.title)}</button>`).join("")}</div></div><div class="card" style="margin-top:13px"><b>After this lesson</b><p class="tiny">Explain its core idea aloud in 60 seconds, then compare your explanation to the worked answer.</p><button class="btn secondary small" data-go="interviews">Interview practice →</button></div></aside></div>`}
+
+const COURSE_DEPTH=window.COURSE_DEPTH||{};
+function deepChapterBody(l){
+ const d=COURSE_DEPTH[l.id];
+ if(!d)return `<div class="callout warn"><b>Deep lesson content not loaded</b><p>Review the standard worked example and try the checkpoint.</p></div>`;
+ return `<section class="extended-chapters" id="lesson-deep-${l.id}">
+ <div class="deep-kicker"><span class="eyebrow">DEEP LEARNING / ${d.chapters.length} PARTS</span><span class="deep-estimate">${Math.max(4,Math.round(d.chapters.map(x=>x.body).join(" ").split(/\\s+/).length/170))} MIN READING</span></div>
+ <h2 class="deep-title">Understand it from first principles.</h2>
+ <p class="deep-subtitle">Go beyond definitions: reason through execution, real-world consequences and engineering trade-offs before opening the answer.</p>
+ <div class="chapter-directory">${d.chapters.map((ch,i)=>`<button type="button" data-action="jump-section" data-id="deep-${l.id}-${i}"><span>${String(i+1).padStart(2,"0")}</span><b>${esc(ch.title)}</b><em>↘</em></button>`).join("")}</div>
+ ${d.chapters.map((ch,i)=>`<section class="deep-chapter" id="deep-${l.id}-${i}">
+ <div class="chapter-number"><span>${String(i+1).padStart(2,"0")}</span><div><small>CHAPTER ${String(i+1).padStart(2,"0")} OF ${String(d.chapters.length).padStart(2,"0")}</small><h3>${esc(ch.title)}</h3></div></div>
+ <div class="prose deep-prose">${prose(ch.body)}</div>
+ ${ch.code?codeBlock(ch.codeLabel||"Trace this example",ch.code):""}
+ ${ch.trace?`<div class="deep-trace"><b>↳ Walkthrough</b><p>${esc(ch.trace)}</p></div>`:""}
+ </section>`).join("")}
+ </section>`;
+}
+function deepScenarioBody(l){
+ const d=COURSE_DEPTH[l.id];
+ if(!d?.scenario)return "";
+ const a=d.scenario;
+ return `<section class="case-study" id="case-${l.id}">
+ <div class="case-study-heading"><span class="tag accent">REAL-WORLD APPLICATION</span><span class="eyebrow">PRODUCTION / CASE FILE</span></div>
+ <h2>${esc(a.title)}</h2>
+ <div class="case-situation"><span>01 / THE PROBLEM</span><p>${esc(a.situation)}</p></div>
+ <div class="case-steps">
+ <div><span>02 / INVESTIGATE</span><p>${esc(a.investigation)}</p></div>
+ <div><span>03 / DESIGN THE FIX</span><p>${esc(a.solution)}</p></div>
+ <div><span>04 / TRADE-OFFS</span><p>${esc(a.tradeoff)}</p></div>
+ </div>
+ <div class="case-deliverable"><b>✦ Your engineering assignment</b><p>${esc(a.deliverable)}</p></div>
+ </section>`;
+}
+function deepInterviewBody(l){
+ const d=COURSE_DEPTH[l.id];
+ if(!d)return "";
+ return `<section class="interview-synthesis" id="interview-${l.id}">
+ <div class="eyebrow">SENIOR INTERVIEW / 90-SECOND EXPLANATION</div>
+ <h2>How to explain this under pressure</h2>
+ <p>${esc(d.interview)}</p>
+ <div class="interview-callout">Don't memorize this word-for-word. Explain the mechanism, name a failure case and justify one design trade-off in your own language.</div>
+ <button class="btn secondary small" data-action="copy-interview" data-id="${l.id}">Copy answer to rehearse</button>
+ </section>
+ <section class="primary-sources"><div class="eyebrow">CONTINUE READING / PRIMARY REFERENCES</div>
+ <div class="reference-links">${(d.references||[]).map(([name,url])=>`<a href="${esc(url)}" target="_blank" rel="noopener noreferrer"><span>↗</span>${esc(name)}</a>`).join("")}</div>
+ <p class="tiny muted">Official documentation and additional reading support the course; version-specific behavior should be checked against the framework version you use.</p>
+ </section>`;
+}
+
+function lessonPage(id){const l=lessonById.get(id);if(!l)return notFound();const t=trackById.get(l.trackId),position=t.lessons.findIndex(x=>x.id===id),completed=progress.done.includes(id),checked=progress.checks[id],next=t.lessons[position+1]||lessons[lessons.findIndex(x=>x.id===id)+1];const opts=l.check.options.map((opt,i)=>`<button class="option ${checked===i?(i===l.check.correct?"correct":"incorrect"):""}" data-action="answer-check" data-id="${l.id}" data-index="${i}">${String.fromCharCode(65+i)}. ${esc(opt)}</button>`).join("");return `<button class="back" data-go="track/${t.id}">← ${esc(t.title)}</button><div class="lesson-layout"><div class="lesson-main"><div class="lesson-heading"><div class="eyebrow">${esc(t.title)} · LESSON ${position+1} OF ${t.lessons.length}</div><h1>${esc(l.title)}</h1><p class="lead">${esc(l.goal)}</p><div class="flex"><span class="tag">◷ ${l.minutes} min</span><span class="tag ${completed?"accent":""}">${completed?"✓ Mastered":"Checkpoint required"}</span>${bookmarkBtn(l.id)}</div></div><article class="lesson-content"><div class="learning-objectives"><div class="eyebrow">YOUR LEARNING OBJECTIVE</div><p style="color:#d6e3fa;margin:9px 0 0">${esc(l.goal)}</p></div>${sourcedLessonGallery(l)}<section class="lesson-overview" id="overview-${l.id}"><div class="eyebrow">PART 01 / CORE CONCEPT</div><h2>The starting mental model</h2><div class="prose">${prose(l.theory)}</div></section>${deepChapterBody(l)}<section id="example-${l.id}" class="worked-example"><div class="eyebrow">PART 02 / READ THE CODE</div><h2>Production code, explained</h2><h3>Production code example</h3>${codeBlock("Walk through line-by-line",l.code)}<div class="callout"><b>🔍 Why this code works</b><p>${esc(l.walkthrough)}</p></div><div class="callout warn"><b>⚠️ Common interview trap</b><p>${esc(l.pitfall)}</p></div></section>${deepScenarioBody(l)}<section id="practice-${l.id}" class="lesson-practice"><div class="eyebrow">PART 03 / APPLY YOUR KNOWLEDGE</div><h2>Practice without looking at the answer</h2><h3>Try it yourself</h3><p>${esc(l.task)}</p><button class="btn secondary small" data-action="toggle-lesson-solution">${ui.lessonReveal?"Hide worked answer":"Reveal worked answer"}</button><div id="lesson-solution" ${ui.lessonReveal?"":"hidden"}>${codeBlock("Model solution / reasoning",l.solution)}</div></section>${deepInterviewBody(l)}<hr><div id="checkpoint-${l.id}" class="knowledge"><div class="eyebrow">KNOWLEDGE CHECK · REQUIRED</div><h3>${esc(l.check.q)}</h3>${opts}<div class="reveal" ${checked===undefined?"hidden":""}><b>${checked===l.check.correct?"✓ Correct.":"Not quite — try another option."}</b> ${esc(l.check.why)}</div></div><div class="progress-check"><div><b>${completed?"Lesson mastered ✓":"Ready to complete?"}</b><p style="font-size:12px;margin:5px 0">${checked===l.check.correct?"Checkpoint passed.": "Answer the checkpoint correctly to unlock completion."}</p></div><button class="btn" data-action="complete-lesson" data-id="${l.id}" ${checked!==l.check.correct?"disabled":""}>${completed?"Completed ✓":"Mark mastered ✓"}</button></div><hr><h3>Your private learning notes</h3><p class="tiny">Write an explanation in your own words. Saved on this device.</p><textarea class="textarea" id="lesson-notes" data-save-note="${l.id}" placeholder="What was hard? What would you tell an interviewer?">${esc(progress.notes[l.id]||"")}</textarea><p class="tiny muted">Autosaved locally as you type.</p></article><div class="flex between" style="margin-top:23px"><button class="btn secondary" data-go="track/${t.id}">← Track overview</button>${next?`<button class="btn" data-go="lesson/${next.id}">Next lesson →</button>`:""}</div></div><aside class="lesson-aside"><div class="card"><div class="eyebrow">THIS TRACK</div><h3 style="margin-top:10px">${esc(t.title)}</h3><div class="bar"><span style="width:${trackProgress(t).pct}%"></span></div><div class="toc">${t.lessons.map((x,i)=>`<button data-go="lesson/${x.id}" class="${x.id===l.id?"current":""} ${progress.done.includes(x.id)?"done":""}">${i+1}. ${esc(x.title)}</button>`).join("")}</div></div><div class="card lesson-section-nav"><div class="eyebrow">WITHIN THIS LESSON</div><div class="toc">
+<button data-action="jump-section" data-id="overview-${l.id}">◈ Core model</button>
+<button data-action="jump-section" data-id="lesson-deep-${l.id}">▤ Deep chapters</button>
+<button data-action="jump-section" data-id="example-${l.id}">⌘ Worked code</button>
+<button data-action="jump-section" data-id="case-${l.id}">▦ Production case</button>
+<button data-action="jump-section" data-id="practice-${l.id}">✎ Practice</button>
+<button data-action="jump-section" data-id="interview-${l.id}">◎ Interview answer</button>
+<button data-action="jump-section" data-id="checkpoint-${l.id}">✓ Checkpoint</button>
+</div></div><div class="card" style="margin-top:13px"><b>After this lesson</b><p class="tiny">Explain its core idea aloud in 60 seconds, then compare your explanation to the worked answer.</p><button class="btn secondary small" data-go="interviews">Interview practice →</button></div></aside></div>`}
 function interviewItem(q){const rated=progress.rated[q.id];return `<article class="question" data-qid="${q.id}"><div class="flex between"><div class="flex"><span class="tag">${esc(trackById.get(q.topic)?.title||q.topic)}</span><span class="tag">${esc(q.level)}</span></div><span class="tag ${rated==="ready"?"accent":""}">${rated==="ready"?"✓ Confident":rated==="review"?"↻ Review later":"Unattempted"}</span></div><h3>${esc(q.q)}</h3><div class="interview-toolbar"><button class="btn secondary small" data-action="toggle-answer" data-id="${q.id}">Show model answer ↓</button>${bookmarkBtn(q.id)}</div><div class="answer" id="answer-${q.id}"><b>INTERVIEW-READY ANSWER</b><p>${esc(q.answer)}</p><hr><b>INTERVIEWER FOLLOW-UP</b><p>${esc(q.followup)}</p><div class="flex"><button class="btn small" data-action="rate-answer" data-id="${q.id}" data-rating="ready">✓ I can explain this</button><button class="btn secondary small" data-action="rate-answer" data-id="${q.id}" data-rating="review">↻ Review later</button></div></div></article>`}
 function filterBank(){let qs=bank;if(ui.topic!=="all")qs=qs.filter(q=>q.topic===ui.topic);if(ui.level!=="all")qs=qs.filter(q=>q.level===ui.level);const q=ui.search.trim().toLowerCase();if(q)qs=qs.filter(x=>(x.q+" "+x.answer+" "+x.followup).toLowerCase().includes(q));return qs}
 function interviewList(){const qs=filterBank();return `<div class="muted tiny">${qs.length} answered questions found • ${bank.filter(q=>progress.rated[q.id]).length} self-assessed</div>${qs.length?qs.slice(0,ui.limit).map(interviewItem).join(""):`<div class="empty">No questions match these filters.</div>`}${qs.length>ui.limit?`<button class="btn secondary" data-action="more-questions">Load more questions (${Math.min(10,qs.length-ui.limit)} more) →</button>`:""}`}
@@ -118,6 +176,8 @@ if(target.dataset.go){go(target.dataset.go);return}
 const act=target.dataset.action,id=target.dataset.id,idx=Number(target.dataset.index);
 if(act==="select-diagram"){ui.diagram=id;ui.diagramNode=0;render()}
 if(act==="select-node"){ui.diagramNode=idx;render()}
+if(act==="jump-section"){const section=document.getElementById(id);if(section)section.scrollIntoView({behavior:"smooth",block:"start"});return}
+if(act==="copy-interview"){const answer=COURSE_DEPTH[id]?.interview||"";try{await navigator.clipboard.writeText(answer);showToast("Interview answer copied")}catch{showToast("Could not access clipboard")}return}
 if(act==="copy-code"){const code=target.closest(".code-wrap")?.querySelector("code")?.textContent||"";try{await navigator.clipboard.writeText(code);showToast("Code copied")}catch{showToast("Clipboard permission denied")}}
 if(act==="bookmark"){progress.bookmarks=progress.bookmarks.includes(id)?progress.bookmarks.filter(x=>x!==id):[...progress.bookmarks,id];save();target.textContent=progress.bookmarks.includes(id)?"★ Bookmarked":"☆ Bookmark"}
 if(act==="toggle-lesson-solution"){ui.lessonReveal=!ui.lessonReveal;const el=document.getElementById("lesson-solution");el.hidden=!ui.lessonReveal;target.textContent=ui.lessonReveal?"Hide worked answer":"Reveal worked answer"}
@@ -163,5 +223,5 @@ document.getElementById("menu-btn").addEventListener("click",()=>document.getEle
 document.getElementById("theme-btn").addEventListener("click",()=>{progress.theme=progress.theme==="dark"?"light":"dark";save();render()});
 window.addEventListener("hashchange",()=>{if(ui.mockTimer){clearInterval(ui.mockTimer);ui.mockTimer=null;ui.mockSeconds=0}render();scrollTo(0,0)});
 if(!location.hash)location.hash="dashboard";else render();
-window.__courseDiagnostics={trackCount:tracks.length,lessonCount:lessons.length,questionCount:bank.length,labCount:labs.length,dayCount:days.length,version:"2.2.0",curatedMediaLessons:EXTERNAL_MEDIA_COUNT};
+window.__courseDiagnostics={trackCount:tracks.length,lessonCount:lessons.length,questionCount:bank.length,labCount:labs.length,dayCount:days.length,version:"3.0.0",expandedLessonCount:Object.keys(COURSE_DEPTH).length,curatedMediaLessons:EXTERNAL_MEDIA_COUNT};
 })();

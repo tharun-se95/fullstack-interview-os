@@ -1,6 +1,6 @@
 (function visualEngine(){
 const colors={
-javascript:["#FFD875","#F6A844"],typescript:["#6FB5FF","#446BFF"],react:["#77E5FF","#37A8FF"],nextjs:["#E9EAFF","#9099FF"],node:["#B9EE89","#4CC9AA"],postgres:["#8DAAFF","#5574E8"],auth:["#FFB7B5","#F37EA6"],testing:["#74E6C9","#22B59C"],system:["#B7A3FF","#795FF0"],ai:["#BFB6FF","#7F65FC"],resume:["#FFDCA0","#EEAA69"]};
+javascript:["#FFD875","#F6A844"],typescript:["#6FB5FF","#446BFF"],react:["#77E5FF","#37A8FF"],nextjs:["#E9EAFF","#9099FF"],node:["#B9EE89","#4CC9AA"],postgres:["#8DAAFF","#5574E8"],auth:["#FFB7B5","#F37EA6"],testing:["#74E6C9","#22B59C"],system:["#B7A3FF","#795FF0"],ai:["#BFB6FF","#7F65FC"],resume:["#FFDCA0","#EEAA69"],api:["#62D5A6","#198F86"],data:["#82BDFF","#4A8ED9"],async:["#F0BE71","#D18B57"],ops:["#A7BEAC","#539285"]};
 let seq=0;
 const prefix=()=>`cv-${++seq}`;
 function defs(uid,a,b){return `<defs>
@@ -13,6 +13,10 @@ function defs(uid,a,b){return `<defs>
 function shape(id,uid,a,b){
 const fill=`url(#${uid}-main)`,glass=`url(#${uid}-glass)`;
 switch(id){
+case "api":return shape("node",uid,a,b);
+case "data":return shape("postgres",uid,a,b);
+case "async":return shape("system",uid,a,b);
+case "ops":return shape("testing",uid,a,b);
 case"javascript":return `<g filter="url(#${uid}-shadow)"><path d="M146 38L244 38 207 123 268 123 133 239 161 145 104 145Z" fill="${fill}" opacity=".96"/><path d="M151 48L219 48 183 130 241 130 156 205 175 135 125 135Z" fill="#fff" opacity=".18"/></g>`;
 case"typescript":return `<g transform="rotate(-9 188 135)"><rect x="98" y="50" width="176" height="171" rx="23" fill="${fill}" filter="url(#${uid}-shadow)"/><rect x="112" y="64" width="148" height="143" rx="15" fill="#142c69" opacity=".48"/><text x="186" y="164" text-anchor="middle" fill="#fff" font-family="monospace" font-weight="900" font-size="71">TS</text></g>`;
 case"react":return `<g filter="url(#${uid}-shadow)" fill="none" stroke="${fill}" stroke-width="8"><ellipse cx="187" cy="135" rx="103" ry="39" transform="rotate(-60 187 135)"/><ellipse cx="187" cy="135" rx="103" ry="39" transform="rotate(60 187 135)"/><ellipse cx="187" cy="135" rx="103" ry="39"/></g><circle cx="187" cy="135" r="18" fill="${fill}"/>`;
@@ -109,7 +113,7 @@ const pipelines={
 "ai-evals":["Test cases","Agent run","Quality score"],
 "resume-stories":["Problem","Decisions","Impact"],
 "resume-leadership":["Disagreement","Trade-offs","Alignment"],
-"resume-interview-plan":["Learn","Implement","Explain"]
+"resume-interview-plan":["Learn","Implement","Explain"],"api-http":["HTTP request","Validation + auth","Typed response"],"api-layers":["Controller","Service invariant","Repository"],"api-validation":["Unknown JSON","Runtime schema","Safe DTO"],"api-streams":["Upload chunks","Backpressure","Object store"],"mongo-model":["Query pattern","Embed / reference","Document"],"mongo-queries":["Scoped filter","Index + pipeline","Result page"],"redis-cache":["Redis lookup","DB fallback","Invalidation"],"data-choice":["Invariants","Store + index","Migration"],"async-queues":["HTTP 202","Durable queue","Idempotent worker"],"async-idempotency":["DB mutation","Outbox event","Dedupe consumer"],"async-webhooks":["Signed payload","Verified inbox","State transition"],"async-rate":["Request quota","Atomic limiter","Bounded traffic"],"ops-docker":["Docker image","Compose services","Health check"],"ops-tests":["API contract","Real DB test","Release gate"],"ops-cloud":["TLS ingress","Node replicas","Private storage"],"ops-observe":["Metrics","Distributed trace","Mitigation"]
 };
 function lesson(id,track,title){
 const [a,b]=colors[track]||colors.system,uid=prefix(),steps=pipelines[id]||pipelines["sys-estimation"];

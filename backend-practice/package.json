@@ -1,0 +1,20 @@
+{
+  "name": "fullstack-os-backend-practice",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "node --env-file=.env --watch src/server.mjs",
+    "start": "node --env-file=.env src/server.mjs",
+    "migrate": "node --env-file=.env scripts/migrate.mjs",
+    "test": "node --env-file=.env --test"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "pg": "^8.16.3",
+    "zod": "^4.1.0"
+  }
+}

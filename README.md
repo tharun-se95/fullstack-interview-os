@@ -1,28 +1,58 @@
-# Fullstack Interview OS
+# Fullstack Interview OS — Complete Senior Fullstack Crash Course
 
-A responsive, interactive senior fullstack interview preparation dashboard tailored to React, Next.js, TypeScript, Node.js, PostgreSQL, system design, and LangGraph experience.
+Live website: https://fullstack-interview-os.vercel.app
 
-## Live site
+A practical, structured interview-preparation application tailored to a senior frontend-heavy fullstack developer with experience in React, Next.js, Node.js, PostgreSQL, healthcare microfrontends, WebSockets and LangGraph.
 
-https://fullstack-interview-os.vercel.app
+## What is actually in the course
 
-## Features
+- **11 progressive tracks and 33 complete lessons** — every lesson has a skill objective, a substantial explanation, annotated production-oriented code, common trap, hands-on task, worked answer and multiple-choice comprehension check.
+- **110 answered interview questions** — categorized by topic and difficulty, with a model answer, interviewer follow-up and self-assessed confidence state.
+- **12 runnable JavaScript coding challenges** — starter code, requirements, progressive hints, reference solution, and 32 automated tests evaluated locally inside a short-lived Web Worker.
+- **Six interactive visual architecture maps** — request lifecycle, event loop, microfrontend shell, database transaction/idempotency, real-time fleet tracking, and LangGraph compliance review. Click each boundary to read its responsibility and failure risks.
+- **Six guided mock interviews** — fullstack system design, React performance, Node/SQL signup, WebSocket architecture, LangGraph SOP review and senior behavioral stories, each with a structured rubric and sample answer outline.
+- **An eight-day crash plan** — daily lesson assignments, coding practice, interview prompts and day completion.
+- **Three serious capstone briefs** — private diagnostics portal, live fleet tracking and auditable SOP review, each with deliverables, acceptance checks and interview defense topics.
+- Browser-local lesson notes, completion, interview revision flags, bookmarks, coding drafts, mock answers and progress.
 
-- Ten focused modules with code snippets and explanations
-- Multiple-choice interview questions with feedback
-- Coding lab with local drafts and reference solutions
-- Resume-focused mock interview prompts and self-review rubrics
-- System architecture diagram
-- Progress tracking saved in browser localStorage
+### Curriculum
 
-## Development
+1. JavaScript Internals
+2. TypeScript Architecture
+3. React Deep Dive
+4. Next.js & Core Web Vitals
+5. Node.js & Express APIs
+6. SQL & PostgreSQL
+7. Authentication & App Security
+8. Testing, CI/CD & Observability
+9. Fullstack System Design
+10. AI Engineering & LangGraph
+11. Resume Defense & Interview Strategy
 
-This is a static, dependency-free website. Open `index.html` in a browser to run locally.
+## Local development
+
+Dependency-free static website. Clone the repository and serve from a local HTTP server:
+
+```bash
+python3 -m http.server 8000
+```
+
+Then open http://localhost:8000.
+
+The data is stored in the course-*.js, interview-*.js and coding-labs.js files. The player is implemented in app.js, and styles in styles.css.
 
 ## Deployment
 
-Hosted on Vercel from the GitHub `main` branch.
+Connect this GitHub repository to the Vercel project `fullstack-interview-os` and deploy the `main` branch. The project uses a static framework preset (no build command).
 
-## Current limitations
+## Limitations and privacy
 
-Code editor does not execute code; mock interview answers are not AI-graded. Browser progress is not synced between devices.
+- The mock interviewer uses **self-assessment rubrics, not LLM grading**.
+- JavaScript code runs **only in a local browser Web Worker** and is stopped after a short deadline. The editor is **not a secure multi-tenant sandbox**. Do not paste secrets.
+- TypeScript and SQL examples are teaching material, not executed in the JS coding runner.
+- Notes and progress live in **localStorage on the current browser/device**; there is no account sync or backend.
+- Course explanations are educational and may vary with framework/library versions; verify version-specific behavior against official documentation.
+
+## Learning model
+
+Read → explain aloud without notes → solve the practice exercise → compare solution → pass checkpoint → answer interview questions → revisit weak areas.

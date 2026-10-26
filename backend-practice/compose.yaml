@@ -1,0 +1,18 @@
+services:
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: course
+      POSTGRES_PASSWORD: course-local-only
+      POSTGRES_DB: course
+    ports:
+      - "127.0.0.1:5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U course -d course"]
+      interval: 3s
+      timeout: 3s
+      retries: 15
+    volumes:
+      - course-db:/var/lib/postgresql/data
+volumes:
+  course-db:

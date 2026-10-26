@@ -1386,3 +1386,130 @@ body:is(.light,:not(.light)) .mobile-lesson-nav{display:none}
 @media(max-width:500px){
  body:is(.light,:not(.light)) .route-lesson .mobile-lesson-nav nav{grid-template-columns:1fr}
 }
+
+
+/* Lesson source carousel — one reference at a time, no stacked gallery cards. */
+body:is(.light,:not(.light)) .route-lesson .source-carousel{
+  width:100%;
+  min-width:0;
+  outline-offset:5px;
+}
+body:is(.light,:not(.light)) .route-lesson .source-carousel-toolbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  margin:0 0 13px;
+  padding:0;
+}
+body:is(.light,:not(.light)) .route-lesson .source-carousel-position{
+  font:750 12px/1.3 ui-monospace,SFMono-Regular,Menlo,monospace;
+  letter-spacing:.07em;
+  color:var(--field-muted);
+  font-variant-numeric:tabular-nums;
+}
+body:is(.light,:not(.light)) .route-lesson .source-carousel-actions{
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+body:is(.light,:not(.light)) .route-lesson .source-carousel-arrow{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  min-height:40px;
+  padding:9px 13px;
+  border:1px solid var(--field-line);
+  border-radius:6px;
+  background:transparent;
+  color:var(--field-ink);
+  font:700 12px/1.2 "DM Sans",system-ui,sans-serif;
+  cursor:pointer;
+  transition:background .16s,border-color .16s,color .16s;
+}
+body:is(.light,:not(.light)) .route-lesson .source-carousel-arrow:hover{
+  background:var(--field-soft);
+  color:var(--field-accent);
+  border-color:var(--field-accent);
+}
+body:is(.light,:not(.light)) .route-lesson .source-carousel-arrow>span[aria-hidden]{font-size:17px}
+body:is(.light,:not(.light)) .route-lesson .source-carousel-slides{width:100%;min-width:0}
+body:is(.light,:not(.light)) .route-lesson .source-slide{width:100%;min-width:0}
+body:is(.light,:not(.light)) .route-lesson .source-slide[hidden]{display:none!important}
+body:is(.light,:not(.light)) .route-lesson .source-slide:not([hidden]){
+  animation:source-enter .2s ease-out;
+}
+body:is(.light,:not(.light)) .route-lesson .source-slide .external-visual{margin:0;padding:0}
+body:is(.light,:not(.light)) .route-lesson .source-slide .external-visual-stage{
+  min-height:250px;
+  max-height:550px;
+}
+body:is(.light,:not(.light)) .route-lesson .source-slide .external-visual-img{
+  object-fit:contain;
+  max-height:470px;
+}
+body:is(.light,:not(.light)) .route-lesson .source-slide .external-visual figcaption{
+  align-items:flex-start;
+  padding:16px 0 0;
+}
+body:is(.light,:not(.light)) .route-lesson .source-carousel-pagination{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:1px;
+  margin:10px 0 17px;
+}
+body:is(.light,:not(.light)) .route-lesson .source-carousel-dot{
+  display:grid;
+  place-items:center;
+  width:38px;
+  height:38px;
+  flex:0 0 38px;
+  padding:0;
+  border:0;
+  background:transparent;
+  cursor:pointer;
+}
+body:is(.light,:not(.light)) .route-lesson .source-carousel-dot>span{
+  display:block;
+  width:7px;
+  height:7px;
+  border-radius:999px;
+  background:var(--field-line);
+  transition:width .16s,background .16s;
+}
+body:is(.light,:not(.light)) .route-lesson .source-carousel-dot:hover>span{background:var(--field-muted)}
+body:is(.light,:not(.light)) .route-lesson .source-carousel-dot.active>span{
+  width:21px;
+  background:var(--field-accent);
+}
+body:is(.light,:not(.light)) .route-lesson .source-slide .media-attribution{
+  max-width:100%;
+}
+@keyframes source-enter{
+  from{opacity:.62;transform:translateY(3px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@media(max-width:500px){
+  body:is(.light,:not(.light)) .route-lesson .source-carousel-arrow{
+    padding:9px 11px;
+    gap:7px;
+    min-height:42px;
+  }
+  body:is(.light,:not(.light)) .route-lesson .source-slide .external-visual-stage{
+    min-height:205px;
+  }
+  body:is(.light,:not(.light)) .route-lesson .source-slide .external-visual-stage>a:first-child{
+    min-height:205px;
+    padding:14px 12px 42px;
+  }
+  body:is(.light,:not(.light)) .route-lesson .source-slide .external-visual-img{
+    max-height:330px;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  body:is(.light,:not(.light)) .route-lesson .source-slide:not([hidden]){animation:none}
+  body:is(.light,:not(.light)) .route-lesson .source-carousel-dot>span,
+  body:is(.light,:not(.light)) .route-lesson .source-carousel-arrow{transition:none}
+}

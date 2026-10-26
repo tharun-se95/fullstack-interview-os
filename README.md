@@ -4,6 +4,12 @@ Live website: https://fullstack-interview-os.vercel.app
 
 A practical, structured interview-preparation application tailored to a senior frontend-heavy fullstack developer with experience in React, Next.js, Node.js, PostgreSQL, healthcare microfrontends, WebSockets and LangGraph.
 
+## Light-theme repair (v3.1)
+
+Light appearance now has a complete high-contrast palette rather than the older partial overrides. The last-loaded `light-theme.css` supplies consistent styling across sidebar/header, all dashboard and course cards, the deep lesson reader, source-image galleries, knowledge checks, interview answers, flashcards, architecture diagrams, forms and mobile navigation. Dark illustrations, image-led banners and code/terminal surfaces remain intentional visual islands with readable text.
+
+Theme switching retains the user's selection in localStorage, labels the next switch action accessibly, updates the browser theme-color and restores light mode before first paint on a new page load. The dark theme retains its existing styling. Route/state and static contrast checks cover the major screens; individual remote image hotlink behavior is outside the local CSS checks.
+
 ## In-depth senior course edition (v3.0)
 
 The prior ~120–170-word lesson summaries were too thin. **All 33 lessons now contain extended teaching modules** across 11 tracks. The course contains **105 new deep-reading chapters**, about **20,800 additional words** of authored instruction (about 25,500 words including the older concept summaries, excluding source code), plus the original coding exercises, test runner, diagrams and interview bank.

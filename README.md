@@ -4,6 +4,18 @@ Live website: https://fullstack-interview-os.vercel.app
 
 A practical, structured interview-preparation application tailored to a senior frontend-heavy fullstack developer with experience in React, Next.js, Node.js, PostgreSQL, healthcare microfrontends, WebSockets and LangGraph.
 
+## Source illustration carousel (v3.3)
+
+The lesson's curated visual references now appear in a **single, manually controlled carousel**, instead of a main diagram followed by an expandable grid. The data in `lesson-media.js` is unchanged: 41 external image references across 33 lessons, including 8 lessons with multiple sources.
+
+- When two or more diagrams exist, display exactly one at a time with **Previous / Next** buttons, position counter, clickable pagination dots, keyboard arrow navigation, and horizontal touch swipes.
+- When one diagram exists, display it directly without redundant navigation.
+- Keep original image aspect ratio, full-resolution asset link, publisher/source credit, usage terms and “what to notice” explanatory text associated with each slide.
+- Navigation wraps around; no autoplay. Inactive slides are hidden from the visual layout and assistive-technology tree. Counters announce position changes, pagination buttons expose their selected state, and reduced-motion users receive no entrance animation.
+- Implementation lives in `app.js` and the final-loaded `tasteful-refinement.css`. There are no added dependencies and saved course progress remains unchanged.
+
+Validation: 33/33 lesson media render checks, correct source/credit associations, and simulated Previous, Next, wraparound, direct selection, keyboard and touch behavior all passed. Remote hosts may still block image embedding; original source URLs remain accessible.
+
 ## Tasteful UI editorial redesign (v3.2)
 
 This release rethinks the interface as a **calm engineering field guide**, following the process and anti-generic design principles in [Tasteful UI](https://github.com/DonkeyKing01/tasteful-ui-skill). The project-specific decisions are documented in [PROJECT_DESIGN.md](./PROJECT_DESIGN.md).
@@ -50,7 +62,7 @@ These lessons emphasize understanding production mechanisms and debugging decisi
 The original SVG concept sketches in the lessons were replaced by **41 existing technical diagrams across all 33 lessons** (33 main visuals + 8 supplementary diagrams). The collection is defined in `lesson-media.js`, and the viewer is styled in `lesson-media.css`.
 
 - Every lesson shows the original diagram, an explanatory “what to notice” prompt, the author/publisher credit, a link to its publication and a full-resolution media link.
-- Some lessons offer an expandable additional-diagram gallery.
+- Lessons with several curated diagrams show a navigable illustration carousel with Previous/Next controls; single-source lessons retain one direct visual.
 - **Rights & availability:** Third-party diagrams are **linked from their original hosts, not copied into this repository**. Many are covered by CC BY, CC BY-SA, CC0 or documentation terms; others are copyright of their publishers and are included as offsite references with visible attribution. Linking is **not** a blanket license to reproduce, sublicense, or redistribute these images. Confirm each source's permissions before commercial use. Hosts may block hotlinking or change media URLs, so the website includes a source-link fallback.
 - Prefer official docs and Commons vector illustrations where possible. Original files may be higher resolution than their preview; the UI preserves aspect ratio and offers a “full-size” link.
 

@@ -4,6 +4,23 @@ Live website: https://fullstack-interview-os.vercel.app
 
 A practical, structured interview-preparation application tailored to a senior frontend-heavy fullstack developer with experience in React, Next.js, Node.js, PostgreSQL, healthcare microfrontends, WebSockets and LangGraph.
 
+## In-depth senior course edition (v3.0)
+
+The prior ~120–170-word lesson summaries were too thin. **All 33 lessons now contain extended teaching modules** across 11 tracks. The course contains **105 new deep-reading chapters**, about **20,800 additional words** of authored instruction (about 25,500 words including the older concept summaries, excluding source code), plus the original coding exercises, test runner, diagrams and interview bank.
+
+Each expanded lesson now presents:
+
+1. An opening mental model and curated explanatory diagram.
+2. Three or four structured chapters unpacking mechanisms and execution ordering, with runnable/annotated examples where relevant.
+3. A worked production code example and explicit pitfalls.
+4. A **realistic production failure case** (situation, investigation, solution, design trade-off and testable assignment).
+5. A hands-on task with worked solution, and a clear senior-level verbal interview answer to rehearse.
+6. A knowledge checkpoint required for marking the lesson mastered, personal notes and official documentation/reference links.
+
+The reader has chapter navigation, section jump controls, redesigned long-form typography and consistent supporting source credits. Content is stored in the ten `depth-*.js` files; `deep-course.css` styles the reader. Existing locally saved progress remains under the original storage key, so it is preserved across the upgrade.
+
+These lessons emphasize understanding production mechanisms and debugging decisions, not memorizing a glossary. Course content is educational; version-specific framework behavior must be verified against the linked primary references.
+
 ## Curated third-party lesson diagrams (v2.2)
 
 The original SVG concept sketches in the lessons were replaced by **41 existing technical diagrams across all 33 lessons** (33 main visuals + 8 supplementary diagrams). The collection is defined in `lesson-media.js`, and the viewer is styled in `lesson-media.css`.

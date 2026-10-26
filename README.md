@@ -4,6 +4,24 @@ Live website: https://fullstack-interview-os.vercel.app
 
 A practical, structured interview-preparation application tailored to a senior frontend-heavy fullstack developer with experience in React, Next.js, Node.js, PostgreSQL, healthcare microfrontends, WebSockets and LangGraph.
 
+## Tasteful UI editorial redesign (v3.2)
+
+This release rethinks the interface as a **calm engineering field guide**, following the process and anti-generic design principles in [Tasteful UI](https://github.com/DonkeyKing01/tasteful-ui-skill). The project-specific decisions are documented in [PROJECT_DESIGN.md](./PROJECT_DESIGN.md).
+
+**Primary change: no more box-inside-box visual structure.** Large promotional panels, repeating track-card tiles, heavy gradient/blur chrome, deeply framed reader sections, and stacked navigation cards have been replaced with an open, reading-first hierarchy:
+
+- Dashboard focuses on the next lesson; progress is an unboxed summary, and practice tools are quiet links.
+- Curriculum uses an ordered index with illustrations, names, descriptions, estimated time and completion progress.
+- Deep lessons begin with the mental model, followed by the real source diagram, structured chapters, code, production case, practice, and interview answer. One slim rail replaces three stacked cards; a responsive section-jump menu preserves quick navigation on mobile.
+- Interview questions, mocks, roadmap, projects and architecture diagrams use divider-based sections and restrained interactive surfaces.
+- Both light and dark schemes use corresponding neutral canvases and a readable green-teal action accent; intentionally dark code and illustration panels remain.
+
+The design references are Mintlify-style reading proportions and Notion-style open content, **not copies of their brand styling**. Existing content, source attributions, bookmarked notes, quizzes, code execution and local progress remain.
+
+Implementation: `app.js` changes the markup for the high-priority user journeys and adds page-specific class hooks; `tasteful-refinement.css` is loaded last to simplify the full application with responsive variants. Content is unmodified.
+
+Verification: 53 route-render cases passed, including 33 lessons and all 11 track pages; mock checks confirmed checkpoint/mastery and theme switching. CSS import ordering and balanced syntax delimiters were checked. Live browser visual screenshots were not available to the static checks and should be reviewed separately after deployment.
+
 ## Light-theme repair (v3.1)
 
 Light appearance now has a complete high-contrast palette rather than the older partial overrides. The last-loaded `light-theme.css` supplies consistent styling across sidebar/header, all dashboard and course cards, the deep lesson reader, source-image galleries, knowledge checks, interview answers, flashcards, architecture diagrams, forms and mobile navigation. Dark illustrations, image-led banners and code/terminal surfaces remain intentional visual islands with readable text.

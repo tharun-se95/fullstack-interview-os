@@ -1,5 +1,21 @@
 # Fullstack Interview OS — Complete Senior Fullstack Crash Course
 
+## Lesson-to-practice experience (v5.2)
+
+Iteration two removes a remaining gap between reading, recalling and building:
+
+- **Today** now features the exact recommended **lesson title** as the dominant headline. The supporting goal and one primary action replace a generic marketing-style hero; stage/progress details are quieter.
+- **Lessons** now have a three-stage in-page guide: **01 Understand → 02 Apply → 03 Check**. The full original first-principles chapters, diagrams, code, production cases, references, checkpoints and private notes remain intact. Repeated chapter directory, duplicated labels and decorative callouts were removed.
+- **Completion is a handoff**, not a dead end: after passing a checkpoint and marking the lesson complete, the reader sees a specific interview practice action and a secondary next-lesson link.
+- **Practice starts from the exact lesson** (`#practice/<lesson-id>`). The first question is selected from its matching interview topic, with direct lesson-linked questions where authored. Learners reveal the answer, self-assess confidence and continue into a related workshop; ratings are saved without collapsing the answer.
+- **Exercise links are now contextual.** GenAI prompts point to contracts, RAG chunking to ingestion, RAG embeddings to retrieval, agent tools to the bounded executor and human approval to the approval lab. The old overview AI lessons have matching upgrades too, regardless of the currently selected dashboard path.
+- **Light is the default for new visitors** to favor sustained technical reading. Previously saved dark/light preferences stay in the existing localStorage record. One accessible green accent, path indicators, spacious type and horizontal rules keep the attention on content.
+- New responsive styles live in [lesson-journey.css](./lesson-journey.css), loaded after previous design layers. There are no changes to course content, credential handling or underlying stored progress keys.
+
+Verification: JavaScript imports and application screens were exercised with a simulated browser DOM, testing **171 routes** (all lesson pages plus all matching practice routes) and key checkpoint/rating/theme/lab-link interactions. The new stylesheet and the other nine CSS files passed source brace-balance checks. These checks do not replace a live-browser desktop/mobile screenshot audit, which remains outstanding.
+
+---
+
 ## Learner journey simplification (v5.1)
 
 The course is now organized around the learner's next step rather than a list of features. Only **four** main navigation destinations remain:

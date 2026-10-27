@@ -1,5 +1,39 @@
 # Fullstack Interview OS — Complete Senior Fullstack Crash Course
 
+## Generative AI · RAG · Agentic AI expansion (v5.0)
+
+**Three full engineering courses are now integrated into the site** at [#ai-path](https://fullstack-interview-os.vercel.app/#ai-path). They build on the user's frontend-heavy fullstack background, emphasizing Node services, trusted boundaries, datasets, SQL/pgvector, source citations, tool orchestration and deployed reliability rather than general prompt tips.
+
+**New content:** 3 tracks, **20 lessons**, **60 full-length deep chapters**, **40 new senior interview questions**, **8 local AI workshop missions**, and a **four-week / approximately 80-hour** progressive path.
+
+- **Generative AI Engineering** (6 lessons, 11h): transformer/tokens/attention, model API design, prompt contracts and injection, structured outputs vs business validation, streaming and conversation state, model selection/evals/fine-tuning/cost.
+- **Retrieval-Augmented Generation (RAG)** (7 lessons, 12h): index/query architecture, PDF/OCR/chunk provenance, embeddings/pgvector, hybrid keyword+semantic search with RRF/reranking, citations and contradictions, multi-tenant ACL/injection/deletion, RAG evaluations and observability.
+- **Agentic AI & LangGraph Systems** (7 lessons, 14h): tool-call execution loops, typed graphs/nodes/edges, checkpoint memory and recovery, human-in-the-loop approval, bounded multi-agent delegation, agentic RAG, trajectory/security evaluation and production operations.
+
+The existing 3-lesson AI overview is retained as **Applied AI Architecture Cases**. Backend-first tracks and the original frontend/interview content are unchanged. The global course now has **18 tracks, 69 lessons and 173 questions**. This release does not modify existing localStorage progress; it adds the `aiLabDone` key for self-reported workshop completion.
+
+### Hands-on roadmap
+
+The new `#ai-path` route organizes fundamentals → RAG → evidence/evaluation → safe agents. Eight workshop missions culminate in an auditable SOP review copilot with versioned document retrieval, citation validation, explicit no-evidence outcomes, LangGraph approvals and retry-safe actions.
+
+The [AI practice starter](./ai-lab-starter) is an intentionally small **zero-dependency local Node.js project**. It includes two fictional tenants, current/retired policy fixtures, an offline lexical retrieval baseline, recall@k evaluation, a strictly read-only bounded fake agent executor, and Node's built-in automated tests. Execute locally with:
+
+```sh
+cd ai-lab-starter
+npm test
+npm run demo
+```
+
+Live embeddings, OpenAI model inference, pgvector and LangGraph runtime/checkpointing are **guided upgrade exercises**, not features falsely claimed to be provided by this static frontend. The demo cannot run an external LLM and it does not certify production quality. A no-secret [AI practice CI workflow](./.github/workflows/ai-lab-tests.yml) is included.
+
+### Visual design, sources and limitations
+
+The minimal Tasteful UI editorial design is preserved. Every new AI lesson has a topic-specific vector mechanism diagram; several LangGraph/agentic lessons additionally link original third-party technical diagrams with publisher credit and usage note (hosted by the originals). Official OpenAI, LangChain/LangGraph, pgvector, Hugging Face, Microsoft architecture and OWASP documentation are linked by lesson.
+
+The website's checkpoints, saved course progress, interview bank and theme system are retained. Route and interaction simulations do not substitute for real browser screenshot inspection or execution of the user's local Docker/AI environment. Version-specific provider SDK snippets should be checked against the installed version before integration, and all model calls/tools need auth, budgets and safety evaluation.
+
+---
+
 ## Backend-first expansion (v4.0)
 
 **Why:** The learner already has substantial React/Next.js frontend experience but wants confidence implementing and operating Node backends independently. The default dashboard, curriculum track order and dedicated sidebar route now prioritize backend development. The original frontend, system design and AI lessons remain available, and saved progress uses the same storage key.

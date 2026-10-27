@@ -1,0 +1,65 @@
+[
+  {
+    "tenantId": "clinic-a",
+    "question": "How often should analyzer A in Clinic A be calibrated?",
+    "gold": [
+      "clinic-a:SOP-CAL-042:2"
+    ],
+    "mustNotInclude": [
+      "clinic-b:SOP-CAL-042:3"
+    ]
+  },
+  {
+    "tenantId": "clinic-a",
+    "question": "What is the SOP-CAL-042 daily calibration requirement?",
+    "gold": [
+      "clinic-a:SOP-CAL-042:2"
+    ],
+    "mustNotInclude": [
+      "clinic-a:SOP-CAL-042:1"
+    ]
+  },
+  {
+    "tenantId": "clinic-a",
+    "question": "What should staff do when power fails?",
+    "gold": [
+      "clinic-a:SOP-SAF-012:1"
+    ]
+  },
+  {
+    "tenantId": "clinic-a",
+    "question": "Who may view patient reports?",
+    "gold": [
+      "clinic-a:SOP-RPT-010:1"
+    ]
+  },
+  {
+    "tenantId": "clinic-b",
+    "question": "How often should analyzer A in Clinic B be calibrated?",
+    "gold": [
+      "clinic-b:SOP-CAL-042:3"
+    ],
+    "mustNotInclude": [
+      "clinic-a:SOP-CAL-042:2"
+    ]
+  },
+  {
+    "tenantId": "clinic-a",
+    "question": "Where is the annual vehicle maintenance schedule?",
+    "gold": [],
+    "expectAbstain": true
+  },
+  {
+    "tenantId": "clinic-a",
+    "question": "What are the options for lab sample processing during a power interruption?",
+    "gold": [
+      "clinic-a:SOP-SAF-012:1"
+    ]
+  },
+  {
+    "tenantId": "clinic-b",
+    "question": "Can I view the Clinic A report disclosure policy?",
+    "gold": [],
+    "expectAbstain": true
+  }
+]

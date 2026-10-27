@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#080d19">
-  <meta name="description" content="Backend-first senior fullstack interview course with 49 guided lessons, real Node/Postgres/Docker practice, MongoDB, Redis, queues, security and system design.">
+  <meta name="description" content="Senior fullstack engineering course with 69 guided lessons including backend, GenAI, retrieval-augmented generation, agentic AI, LangGraph, system design and practical local workshops.">
   <title>Fullstack Interview OS — Senior Fullstack Crash Course</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23121d32'/%3E%3Cpath d='M17 20h30v8H25v8h19v8H25v8h-8z' fill='%2399a9ff'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="styles.css">
@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="light-theme.css">
   <link rel="stylesheet" href="tasteful-refinement.css">
   <link rel="stylesheet" href="backend-focus.css">
+  <link rel="stylesheet" href="ai-focus.css">
   <script defer src="course-frontend.js"></script>
   <script defer src="course-backend.js"></script>
   <script defer src="course-advanced.js"></script>
@@ -22,6 +23,7 @@
   <script defer src="coding-labs.js"></script>
   <script defer src="visuals.js"></script>
   <script defer src="lesson-media.js"></script>
+  <script defer src="ai-lesson-media.js"></script>
   <script defer src="depth-javascript-typescript.js"></script>
   <script defer src="depth-react.js"></script>
   <script defer src="depth-nextjs.js"></script>
@@ -37,6 +39,10 @@
   <script defer src="backend-track-async.js"></script>
   <script defer src="backend-track-ops.js"></script>
   <script defer src="backend-workshop.js"></script>
+  <script defer src="course-genai-engineering.js"></script>
+  <script defer src="course-rag-engineering.js"></script>
+  <script defer src="course-agentic-engineering.js"></script>
+  <script defer src="ai-workshop.js"></script>
   <script defer src="app.js"></script>
 </head>
 <body>
@@ -57,6 +63,7 @@
    <div class="nav">
      <button data-route="dashboard"><span class="ico">◫</span> Overview</button>
      <button data-route="backend"><span class="ico">⬢</span> Backend pathway</button>
+     <button data-route="ai-path"><span class="ico">✧</span> AI engineering</button>
      <button data-route="curriculum"><span class="ico">▤</span> Curriculum</button>
      <button data-route="diagrams"><span class="ico">▥</span> Visual architecture</button>
      <button data-route="plan"><span class="ico">▦</span> Fullstack refresher</button>
@@ -68,7 +75,7 @@
    </div>
    <div class="sidebar-bottom">
      <div class="eyebrow">PLACEMENT FIRST</div>
-     <p>Backend-first training for experienced frontend engineers: learn to build, secure, deploy and debug Node APIs.</p>
+     <p>Backend + AI architecture for frontend-heavy engineers: Node services, retrieval, agentic workflows and practical system design.</p>
      <div class="bar"><span id="side-progress" style="width:0%"></span></div>
      <small id="side-progress-text" class="muted">0 lessons complete</small>
    </div>

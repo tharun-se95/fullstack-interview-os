@@ -1,4 +1,4 @@
-# Fullstack Interview OS — Learning Experience Design (v5.1)
+# Fullstack Interview OS — Learning Experience Design (v5.2)
 
 ## Product intent
 One focused learning workspace for an experienced frontend engineer strengthening **backend engineering, GenAI, RAG and agentic AI** for senior fullstack and AI architecture interviews.
@@ -27,6 +27,24 @@ Architecture diagrams move under Learn as contextual technical reference. Origin
 Backend Engineering is the default study focus (because the learner is already experienced with frontend). The selected path is saved in the existing `fullstack-os-course-v2` localStorage object as `activePath` without resetting completed lessons, notes, check answers, bookmarked questions or lab state.
 
 Path choices: Backend Engineering (four weeks), AI Engineering (four weeks), Fullstack Foundations (eight-day refresher). Switching a path changes **what is recommended next**, not what the learner has completed. Directly navigating to a path synchronizes the selected focus. Deep links to individual lessons remain valid.
+
+## Iteration 2 — teaching as a connected journey
+
+**Key observation:** v5.1 had the right navigation but still treated lessons as long standalone essays and practice as a broad tool collection. The title, lesson material, checkpoint and next action competed for attention.
+
+**Interface decisions**
+- Put the next **real lesson title** at the top of Today; remove the generic headline and repeated course/path names.
+- Make the reader's three steps unambiguous: **Understand → Apply → Check**. Each step scrolls to the correct source section, with the full content retained rather than cut for visual minimalism.
+- Reduce repeated boilerplate headings inside deeply authored lessons. Keep first-principles chapters, source diagrams, code, production examples, scenario analysis, citations and private notes.
+- Completion presents one dominant **Practice this lesson** action. The next lesson is secondary because recall is the immediate learning follow-up.
+- A lesson-specific practice screen begins with one aligned question and an optional reveal; rating confidence persists without resetting the answer or scroll. Below it, suggest the lab aligned with that lesson's study week.
+- Light-first reading UI with saved appearance honored; keep path colors as subtle identity markers only.
+
+**Acceptance criteria:** exact-lesson practice works for every lesson, UI section anchors remain present, no missing course content, after-checkpoint handoff works, cross-path labs do not appear for AI content, original routes and saved state are retained, and both themes work.
+
+**Verified in simulated app checks:** 171 of 171 routes plus direct recall, rating persistence, matching lab links and theme changes. Actual rendered screenshots and viewport checks are a separate task, not claimed as complete.
+
+---
 
 ## Learning flow
 

@@ -1,5 +1,40 @@
 # Fullstack Interview OS — Complete Senior Fullstack Crash Course
 
+## Backend-first expansion (v4.0)
+
+**Why:** The learner already has substantial React/Next.js frontend experience but wants confidence implementing and operating Node backends independently. The default dashboard, curriculum track order and dedicated sidebar route now prioritize backend development. The original frontend, system design and AI lessons remain available, and saved progress uses the same storage key.
+
+**Current totals:** 15 tracks, 49 lessons, 133 interview questions, 12 original browser JavaScript labs, **8 additional local backend engineering workshop missions**, and a four-week backend path at roughly 20 hours per week. The 16 newly authored lessons include deep chapters, code walkthroughs, failure-analysis case studies, checkpoints and interview answers. Existing lessons remain as authored.
+
+### Newly added tracks
+- **Backend API Engineering** (4 lessons): HTTP contracts/keyset pagination, controller/service/repository boundaries, runtime validation/DTO sanitization, streaming upload/export with backpressure.
+- **MongoDB, Redis & Data Design** (4 lessons): document modeling, Mongo queries/aggregation/indexes, Redis caching and stampedes, Postgres vs MongoDB decisions and safe migrations.
+- **Queues, Events & Reliable Systems** (4 lessons): durable BullMQ jobs, idempotency and transactional outbox, verified webhooks, distributed rate limits and WebSockets.
+- **Backend Deployment & Operations** (4 lessons): Docker/Compose, DB integration tests, cloud networking/IAM/storage, tracing and incident debugging.
+
+### Practical program
+`#backend` is the dedicated backend-first roadmap. It organizes the highest-value original and new topics into **four learning weeks** with eight implementation missions:
+
+1. Boot a local Express/TypeScript/Postgres service and inspect request flow.
+2. Validate request schemas, implement safe DTOs and prove HTTP error contracts.
+3. Implement cursor pagination and test duplicate requests against real Postgres.
+4. Implement signed/revocable sessions and two-tenant authorization tests.
+5. Add safe Redis cache-aside plus stampede/failure controls.
+6. Implement a BullMQ export worker, durable outbox and replay idempotency.
+7. Build a production-shaped Docker + CI workflow and a safe sandbox deployment.
+8. Present an architecture defense and operational incident review.
+
+The supplied [backend-starter](./backend-starter) contains a small learning-only Express/TypeScript/PostgreSQL service, sample Compose/Postgres initialization, example health routes, demo idempotent POST and initial automated tests. **It deliberately uses a local demo token and fixed demo tenant and refuses production mode; never deploy it publicly without replacing demo security.** The browser merely displays the workshop instructions and saves self-reported completion—it cannot execute local Docker or attest backend tests.
+
+New content: `backend-track-{api,data,async,ops}.js`, `backend-workshop.js`, `backend-focus.css`, `backend-starter/`. The new backend lesson art uses conceptual SVG flows; curated third-party imagery from the existing 33 lessons is preserved.
+
+### Verification limits
+New content was syntax-tested and tested through simulated route rendering, checkpoint mastery, and workshop toggle behavior. The full local Node dependency installation, Docker Compose, Postgres integration tests, browser visual screenshots and remote end-to-end workshop completion were **not** executed in this environment; they remain hands-on tasks with explicit acceptance criteria. A deployment marked READY proves Vercel served the static files, not that the local backend starter has passed production tests.
+
+---
+
+
+
 Live website: https://fullstack-interview-os.vercel.app
 
 A practical, structured interview-preparation application tailored to a senior frontend-heavy fullstack developer with experience in React, Next.js, Node.js, PostgreSQL, healthcare microfrontends, WebSockets and LangGraph.

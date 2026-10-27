@@ -603,3 +603,129 @@ body:is(.light,:not(.light)) .journey-project>summary:focus-visible{
  body:is(.light,:not(.light)) .journey-progress-track>span,
  body:is(.light,:not(.light)) .journey-week-chevron{transition:none}
 }
+
+/* Detail screens continue the same study → practice → proof typography. */
+body:is(.light,:not(.light)) .journey-track-reason{
+  border-left:2px solid var(--journey-accent);
+  padding-left:15px;margin:18px 0 0!important;
+  color:var(--journey-text)!important;font-size:13px!important;
+  max-width:70ch;
+}
+body:is(.light,:not(.light)) .journey-track-lessons{
+  border-top:1px solid var(--journey-line);
+  padding:28px 0 0;
+}
+body:is(.light,:not(.light)) .journey-track-row{
+  display:grid;
+  grid-template-columns:51px minmax(0,1fr) 66px 18px;
+  gap:20px;align-items:center;
+  width:100%;min-height:101px;
+  padding:19px 4px 19px 0;
+  background:transparent;border:0;
+  border-bottom:1px solid var(--journey-line);
+  border-radius:0;box-shadow:none;text-align:left;color:var(--journey-text);
+}
+body:is(.light,:not(.light)) .journey-track-row:hover{
+  background:var(--journey-hover);
+}
+body:is(.light,:not(.light)) .journey-track-row h3{
+  color:var(--journey-text);margin:0 0 5px;
+  font-size:16px;font-weight:690;letter-spacing:-.035em;
+  line-height:1.38;
+}
+body:is(.light,:not(.light)) .journey-track-row p{
+  color:var(--journey-muted);font-size:12px;line-height:1.65;margin:0;
+}
+body:is(.light,:not(.light)) .journey-track-time{
+  color:var(--journey-muted);font-size:11px;text-align:right;white-space:nowrap;
+}
+body:is(.light,:not(.light)) .journey-practice-header{
+  max-width:780px;margin:0 0 32px;
+  padding-bottom:34px;border-bottom:1px solid var(--journey-line);
+}
+body:is(.light,:not(.light)) .journey-practice-header>h1,
+body:is(.light,:not(.light)) .journey-practice-header h1{
+  color:var(--journey-text);
+  font-size:clamp(37px,4vw,56px);line-height:1.08;letter-spacing:-.065em;
+  margin:13px 0 14px;
+}
+body:is(.light,:not(.light)) .journey-practice-header>p,
+body:is(.light,:not(.light)) .journey-practice-header p{
+  color:var(--journey-muted);font-size:14px;line-height:1.75;
+  margin:0;
+}
+body:is(.light,:not(.light)) .journey-practice-header>.eyebrow{
+  color:var(--journey-muted);font-size:10px;letter-spacing:.1em;
+}
+body:is(.light,:not(.light)) .route-interviews .filters{
+  padding:0 0 25px;margin:0 0 16px;
+  border-bottom:1px solid var(--journey-line);
+  box-shadow:none;background:none;
+}
+body:is(.light,:not(.light)) .route-interviews .question{
+  background:none;border:0;border-bottom:1px solid var(--journey-line);
+  padding:24px 4px 29px 0;border-radius:0;box-shadow:none;margin:0;
+}
+body:is(.light,:not(.light)) .route-interviews .question h3{
+  font-size:18px;letter-spacing:-.035em;line-height:1.45;
+  margin:17px 0 13px;color:var(--journey-text);
+}
+body:is(.light,:not(.light)) .route-interviews .question .tag{border-radius:4px}
+body:is(.light,:not(.light)) .route-interviews .question .answer{
+  background:transparent;border:0;
+  border-left:2px solid var(--journey-accent);
+  padding:7px 0 7px 19px;
+}
+body:is(.light,:not(.light)) .route-labs>.callout.warn{
+  background:transparent;border:0;border-left:2px solid var(--journey-line);
+  box-shadow:none;padding:5px 0 5px 14px;color:var(--journey-muted);
+  margin-bottom:31px;
+}
+body:is(.light,:not(.light)) .route-labs .lesson-layout>.card,
+body:is(.light,:not(.light)) .route-mocks>.card{
+  padding:3px 0;background:transparent;
+  border:0;border-radius:0;box-shadow:none;
+}
+body:is(.light,:not(.light)) .route-labs .editor{
+  border:1px solid var(--journey-line);
+  background:var(--journey-surface);
+  color:var(--journey-text);
+  border-radius:7px;
+}
+body:is(.light,:not(.light)) .route-mocks .pillbar{
+  padding:0 0 19px;border-bottom:1px solid var(--journey-line);
+  margin-bottom:29px;
+}
+body:is(.light,:not(.light)) .route-flashcards .flashcard{
+  border:0;
+  border-top:1px solid var(--journey-line);
+  border-bottom:1px solid var(--journey-line);
+  border-radius:0;
+  background:transparent;
+  box-shadow:none;
+  padding:45px 24px;
+  min-height:270px;
+}
+body:is(.light,:not(.light)) .route-flashcards .flashcard-backdrop{display:none}
+body:is(.light,:not(.light)) .route-flashcards .flashcard h2{
+  color:var(--journey-text);
+  max-width:63ch;
+  font-size:clamp(21px,2.6vw,32px);
+  letter-spacing:-.045em;line-height:1.38;
+}
+body:is(.light,:not(.light)) .route-diagrams>.card{
+  background:transparent;border:0;border-radius:0;
+  box-shadow:none;padding:12px 0;
+}
+body:is(.light,:not(.light)) .route-diagrams .architecture-illustration{
+  overflow:hidden;border-radius:7px;
+}
+@media(max-width:700px){
+ body:is(.light,:not(.light)) .journey-track-row{
+   grid-template-columns:35px minmax(0,1fr) 14px;
+   gap:12px;min-height:90px;
+ }
+ body:is(.light,:not(.light)) .journey-track-row h3{font-size:14px}
+ body:is(.light,:not(.light)) .journey-track-time{display:none}
+ body:is(.light,:not(.light)) .route-flashcards .flashcard{padding:30px 0}
+}

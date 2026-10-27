@@ -95,7 +95,16 @@ function workshopForLesson(l){
   const lab=labById.get(day.lab)||labs[0];
   return {lab,route:"labs/"+lab.id};
  }
- return {lab:nextWorkshop(progress.activePath),route:nextWorkshopRoute(progress.activePath)};
+ if(["genai","rag","agentic","ai"].includes(l.trackId)){
+  const preferred={"ai-graphs":"ai-agent-approval","ai-rag":"ai-rag-search","ai-evals":"ai-rag-evals"}[l.id];
+  const lab=AI_WORKSHOP.labs.find(x=>x.id===preferred)||nextWorkshop("ai");
+  return {lab,route:"ai-lab/"+lab.id};
+ }
+ if(["node","api","postgres","auth","data","async","ops","testing","system"].includes(l.trackId)){
+  const lab=nextWorkshop("backend");
+  return {lab,route:"backend-lab/"+lab.id};
+ }
+ const lab=labs[0];return {lab,route:"labs/"+lab.id};
 }
 function pathWeekNumber(id){if(id==="foundations"){const index=days.findIndex(d=>!progress.dayDone.includes(days.indexOf(d)));return index<0?8:index+1;}
  const weeks=id==="backend"?WORKSHOP.weeks:AI_WORKSHOP.weeks,idx=weeks.findIndex(w=>w.lessons.some(l=>!progress.done.includes(l)));

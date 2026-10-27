@@ -78,6 +78,25 @@ function nextWorkshop(id){
  return {id:days.find(d=>!progress.dayDone.includes(days.indexOf(d)))?.lab||days[0].lab,title:"Browser coding challenge"};
 }
 function nextWorkshopRoute(id){const x=nextWorkshop(id);return id==="backend"?"backend-lab/"+x.id:id==="ai"?"ai-lab/"+x.id:"labs/"+x.id}
+function workshopForLesson(l){
+ if(!l)return {lab:nextWorkshop(progress.activePath),route:nextWorkshopRoute(progress.activePath)};
+ const aiWeek=AI_WORKSHOP.weeks.find(w=>w.lessons.includes(l.id));
+ if(aiWeek){
+  const lab=aiWeek.labs.map(id=>AI_WORKSHOP.labs.find(x=>x.id===id)).find(x=>x&&!progress.aiLabDone.includes(x.id))||AI_WORKSHOP.labs.find(x=>x.id===aiWeek.labs[0]);
+  if(lab)return {lab,route:"ai-lab/"+lab.id};
+ }
+ const backendWeek=WORKSHOP.weeks.find(w=>w.lessons.includes(l.id));
+ if(backendWeek){
+  const lab=backendWeek.labs.map(id=>WORKSHOP.labs.find(x=>x.id===id)).find(x=>x&&!progress.backendLabDone.includes(x.id))||WORKSHOP.labs.find(x=>x.id===backendWeek.labs[0]);
+  if(lab)return {lab,route:"backend-lab/"+lab.id};
+ }
+ const day=days.find(d=>d.ids.includes(l.id));
+ if(day){
+  const lab=labById.get(day.lab)||labs[0];
+  return {lab,route:"labs/"+lab.id};
+ }
+ return {lab:nextWorkshop(progress.activePath),route:nextWorkshopRoute(progress.activePath)};
+}
 function pathWeekNumber(id){if(id==="foundations"){const index=days.findIndex(d=>!progress.dayDone.includes(days.indexOf(d)));return index<0?8:index+1;}
  const weeks=id==="backend"?WORKSHOP.weeks:AI_WORKSHOP.weeks,idx=weeks.findIndex(w=>w.lessons.some(l=>!progress.done.includes(l)));
  return (idx<0?weeks.length:idx+1);
@@ -85,7 +104,7 @@ function pathWeekNumber(id){if(id==="foundations"){const index=days.findIndex(d=
 
 function dashboard(){
  const focus=learningPath(),p=pathProgress(focus.id),next=nextOnPath(focus.id);
- const workshop=nextWorkshop(focus.id),nextLabRoute=nextWorkshopRoute(focus.id);
+ const practical=workshopForLesson(next),workshop=practical.lab,nextLabRoute=practical.route;
  const topicCount=bank.filter(q=>q.topic===next.trackId).length;
  return `<div class="journey-home">
  <header class="journey-home-header"><span class="journey-kicker">TODAY / KEEP MOVING</span><span class="journey-top-note">One meaningful step at a time</span></header>
@@ -200,13 +219,14 @@ function latestLessonForPractice(){
 }
 function practicePage(topicId){
  const exactLesson=lessonById.get(topicId);
- const current=exactLesson||latestLessonForPractice()||nextOnPath(learningPath().id);
+ const chosenTrack=trackById.get(topicId);
+ const current=exactLesson||(chosenTrack?.lessons.find(l=>!progress.done.includes(l.id))||chosenTrack?.lessons[0])||latestLessonForPractice()||nextOnPath(learningPath().id);
  const chosen=exactLesson?.trackId||(trackById.has(topicId)?topicId:current.trackId);
  const related=bank.filter(q=>q.topic===chosen);
  const question=exactLesson?questionForLesson(exactLesson):!trackById.has(topicId)?questionForLesson(current):related.find(q=>!progress.rated[q.id])||related[0];
  const fallback=question||related[0]||bank.find(q=>!progress.rated[q.id])||bank[0];
  const subject=trackById.get(chosen),rating=progress.rated[fallback.id];
- const currentFocus=learningPath(),nextLab=nextWorkshop(currentFocus.id),labRoute=nextWorkshopRoute(currentFocus.id);
+ const currentFocus=learningPath(),practical=workshopForLesson(current),nextLab=practical.lab,labRoute=practical.route;
  const contextLabel=exactLesson?"PRACTICE / FROM YOUR LESSON":"PRACTICE / ACTIVE RECALL";
  return `<div class="journey-page journey-practice journey-practice-v2">
  <header class="journey-page-intro"><span class="journey-kicker">${contextLabel}</span>

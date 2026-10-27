@@ -479,7 +479,7 @@ if(target.dataset.go){go(target.dataset.go);return}
 const act=target.dataset.action,id=target.dataset.id,idx=Number(target.dataset.index);
 if(act==="choose-path"){if(!["backend","ai","foundations"].includes(id))return;progress.activePath=id;save();go(learningPath(id).route);return}
 if(act==="study-questions"){ui.topic=trackById.has(id)?id:"all";ui.search="";ui.limit=10;go("interviews");return}
-if(act==="practice-grade"){if(!bank.some(q=>q.id===id))return;progress.rated[id]=target.dataset.rating==="ready"?"ready":"review";progress.rated[id+"_due"]=Date.now()+(progress.rated[id]==="ready"?3*864e5:0);save();render();showToast(progress.rated[id]==="ready"?"Marked confident":"Added to revision");return}
+if(act==="practice-grade"){if(!bank.some(q=>q.id===id))return;const rating=target.dataset.rating==="ready"?"ready":"review";progress.rated[id]=rating;progress.rated[id+"_due"]=Date.now()+(rating==="ready"?3*864e5:0);save();const buttons=target.closest(".practice-evaluation")?.querySelectorAll?.("button");buttons?.forEach(b=>b.classList.toggle("is-selected",b.dataset.rating===rating));const status=document.querySelector(".practice-attempt-status");if(status)status.textContent=rating==="ready"?"RECALLED":"REVISIT LATER";showToast(rating==="ready"?"Marked confident":"Added to revision");return}
 if(act==="journey-day-done"){progress.dayDone=progress.dayDone.includes(idx)?progress.dayDone.filter(x=>x!==idx):[...progress.dayDone,idx];save();render();return}
 
 if(act==="source-next"||act==="source-prev"||act==="source-jump"){

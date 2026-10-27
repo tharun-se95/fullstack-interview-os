@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#080d19">
+  <meta name="theme-color" content="#fafaf7">
   <meta name="description" content="Senior fullstack engineering course with 69 guided lessons including backend, GenAI, retrieval-augmented generation, agentic AI, LangGraph, system design and practical local workshops.">
   <title>Fullstack Interview OS — Your Engineering Journey</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23121d32'/%3E%3Cpath d='M17 20h30v8H25v8h19v8H25v8h-8z' fill='%2399a9ff'/%3E%3C/svg%3E">
@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="backend-focus.css">
   <link rel="stylesheet" href="ai-focus.css">
   <link rel="stylesheet" href="learner-journey.css">
+  <link rel="stylesheet" href="lesson-journey.css">
   <script defer src="course-frontend.js"></script>
   <script defer src="course-backend.js"></script>
   <script defer src="course-advanced.js"></script>
@@ -51,9 +52,9 @@
   /* Apply the saved appearance before the interface paints. */
   try {
     const appearance = JSON.parse(localStorage.getItem("fullstack-os-course-v2") || "{}").theme;
-    if (appearance === "light") {
+    if (appearance !== "dark") {
       document.body.classList.add("light");
-      document.querySelector('meta[name="theme-color"]').setAttribute("content","#f5f8fe");
+      document.querySelector('meta[name="theme-color"]').setAttribute("content","#fafaf7");
     }
   } catch (_) {}
 </script>
@@ -82,7 +83,6 @@
       <div class="crumb" id="breadcrumb">Today</div>
     </div>
     <div class="topright">
-      <span class="header-progress-label" id="header-count">Your learning workspace</span>
       <button class="btn ghost small" id="theme-btn" type="button" title="Switch color theme" aria-label="Switch color theme">◐ Theme</button>
     </div>
   </header>

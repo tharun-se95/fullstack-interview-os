@@ -136,6 +136,16 @@ function journeyPathPage(id){
 }
 function backendPathPage(){return journeyPathPage("backend")}
 
+function backendLabPage(id){
+ const lab=WORKSHOP.labs.find(x=>x.id===id)||WORKSHOP.labs[0];if(!lab)return notFound();
+ const i=WORKSHOP.labs.findIndex(x=>x.id===lab.id),done=progress.backendLabDone.includes(lab.id);
+ const next=WORKSHOP.labs[i+1];
+ return `<button class="back" data-go="backend">← Backend learning pathway</button><div class="backend-lab-header"><div class="eyebrow">LOCAL ENGINEERING WORKSHOP · WEEK ${lab.week} · MISSION ${i+1}/${WORKSHOP.labs.length}</div><h1>${esc(lab.title)}</h1><p>${esc(lab.brief)}</p><div class="backend-lab-meta"><span>${esc(lab.level)}</span><span>${esc(lab.duration)}</span><span>${done?"✓ Self-verified":"Not yet marked complete"}</span></div></div>
+ <div class="backend-lab-grid"><article><section><h2>Implementation sequence</h2><ol class="backend-steps">${lab.steps.map(s=>`<li>${esc(s)}</li>`).join("")}</ol></section><section><h2>Run it locally</h2><p>These commands run on your computer in the backend-starter directory, not in this website.</p>${codeBlock("Local terminal / illustrative commands",lab.command)}<p class="muted">Source project: <a href="${esc(WORKSHOP.starter)}" target="_blank" rel="noopener noreferrer">Backend starter and setup guide ↗</a></p></section><section><h2>Acceptance criteria</h2><ul class="backend-acceptance">${lab.acceptance.map(s=>`<li><span>□</span>${esc(s)}</li>`).join("")}</ul><div class="backend-warning"><b>Engineering caution</b><p>${esc(lab.watch)}</p></div><button class="btn ${done?"secondary":""}" data-action="backend-lab-done" data-id="${lab.id}">${done?"✓ Marked self-verified · undo":"I completed and verified these checks"}</button></section><section><h2>Reference</h2><a href="${esc(lab.reference)}" target="_blank" rel="noopener noreferrer">Read official guidance ↗</a></section></article>
+ <aside class="backend-lab-rail"><span class="eyebrow">OTHER MISSIONS</span>${WORKSHOP.labs.map((x,j)=>`<button data-go="backend-lab/${x.id}" class="${x.id===lab.id?"current":""}"><span>${progress.backendLabDone.includes(x.id)?"✓":String(j+1).padStart(2,"0")}</span>${esc(x.title)}</button>`).join("")}${next?`<button class="backend-next" data-go="backend-lab/${next.id}">Next mission →</button>`:""}</aside></div>`;
+}
+
+function aiPathPage(){return journeyPathPage("ai")}
 function aiLabPage(id){
  const l=AI_WORKSHOP.labs.find(x=>x.id===id)||AI_WORKSHOP.labs[0];if(!l)return notFound();
  const i=AI_WORKSHOP.labs.findIndex(x=>x.id===l.id),done=progress.aiLabDone.includes(l.id),next=AI_WORKSHOP.labs[i+1];

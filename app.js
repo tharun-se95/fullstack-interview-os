@@ -51,7 +51,7 @@ const esc=value=>String(value??"").replaceAll("&","&amp;").replaceAll("<","&lt;"
 const inline=t=>esc(t).replace(/\*\*([^*]+)\*\*/g,"<strong>$1</strong>").replace(/\*([^*]+)\*/g,"<em>$1</em>").replace(/`([^`]+)`/g,"<code>$1</code>");
 function prose(text){return String(text||"").split(/\n\s*\n/).filter(Boolean).map(piece=>{const s=piece.trim();if(s.startsWith("## ")){const i=s.indexOf("\n");if(i<0)return `<h3>${inline(s.slice(3))}</h3>`;return `<h3>${inline(s.slice(3,i))}</h3><p>${inline(s.slice(i+1)).replaceAll("\n","<br>")}</p>`;}if(s.startsWith("- "))return "<ul>"+s.split("\n").filter(Boolean).map(x=>`<li>${inline(x.replace(/^- /,""))}</li>`).join("")+"</ul>";return `<p>${inline(s).replaceAll("\n","<br>")}</p>`;}).join("")}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(progress))}catch(e){console.warn("Local save unavailable",e)}syncSidebar()}
-function syncSidebar(){const n=progress.done.length;const bar=document.getElementById("side-progress");if(bar)bar.style.width=(n/Math.max(lessons.length,1)*100)+"%";const t=document.getElementById("side-progress-text");if(t)t.textContent=`${n} of ${lessons.length} lessons complete`;document.getElementById("header-count").textContent=lessons.length+" LESSONS"}
+function syncSidebar(){const n=progress.done.length;const bar=document.getElementById("side-progress");if(bar)bar.style.width=(n/Math.max(lessons.length,1)*100)+"%";const t=document.getElementById("side-progress-text");if(t)t.textContent=`${n} of ${lessons.length} lessons complete`;}
 function showToast(text){const t=document.getElementById("toast");t.textContent=text;t.classList.add("show");clearTimeout(ui.toastTimer);ui.toastTimer=setTimeout(()=>t.classList.remove("show"),2600)}
 function trackProgress(track){const n=track.lessons.filter(l=>progress.done.includes(l.id)).length;return {n,total:track.lessons.length,pct:Math.round(n/track.lessons.length*100)}}
 function codeBlock(title,text){return `<div class="code-wrap"><div class="code-head"><span>⌘ ${esc(title)}</span><button class="btn small ghost" data-action="copy-code" type="button">Copy code</button></div><pre><code>${esc(text)}</code></pre></div>`}
@@ -88,14 +88,14 @@ function dashboard(){
  const workshop=nextWorkshop(focus.id),nextLabRoute=nextWorkshopRoute(focus.id);
  const topicCount=bank.filter(q=>q.topic===next.trackId).length;
  return `<div class="journey-home">
- <header class="journey-home-header"><span class="journey-kicker">YOUR LEARNING SPACE</span><span class="journey-top-note">A clear path to senior engineering interviews</span></header>
+ <header class="journey-home-header"><span class="journey-kicker">TODAY / KEEP MOVING</span><span class="journey-top-note">One meaningful step at a time</span></header>
  <section class="journey-focus">
-  <div class="journey-focus-main"><div class="journey-eyebrow"><span class="journey-dot journey-dot--${focus.className}"></span> YOUR CURRENT PATH · ${esc(focus.short.toUpperCase())}</div>
-    <h1>One step<br>at a time.</h1>
-    <div class="journey-focus-lesson"><span class="journey-minor">UP NEXT · ${esc(next.trackTitle)}</span><h2>${esc(next.title)}</h2><p>${esc(next.goal)}</p></div>
-    <div class="journey-actions"><button class="btn journey-primary" data-go="lesson/${next.id}">Continue learning <span aria-hidden="true">→</span></button><button class="journey-subtle-link" data-go="learn">Change path ↗</button></div>
+  <div class="journey-focus-main"><div class="journey-eyebrow"><span class="journey-dot journey-dot--${focus.className}"></span> ${esc(focus.short.toUpperCase())} / YOUR NEXT LESSON</div>
+    <h1>${esc(next.title)}</h1>
+    <p class="journey-focus-description">${esc(next.goal)}</p>
+    <div class="journey-actions"><button class="btn journey-primary" data-go="lesson/${next.id}">Start this lesson <span aria-hidden="true">→</span></button><button class="journey-subtle-link" data-go="learn">Change learning path ↗</button></div>
   </div>
-  <aside class="journey-focus-aside"><span class="journey-minor">YOUR PROGRESS</span><strong>${p.pct}%</strong><div class="journey-progress-track" aria-label="${p.done} of ${p.total} lessons completed"><span style="width:${p.pct}%"></span></div><p>${p.done} of ${p.total} lessons mastered</p><div class="journey-aside-separator"></div><span class="journey-minor">YOUR DIRECTION</span><b>${esc(focus.title)}</b><p>Step ${pathWeekNumber(focus.id)} · ${esc(focus.time)}</p><button data-go="${focus.route}" class="journey-subtle-link">View study plan ↗</button></aside>
+  <aside class="journey-focus-aside"><span class="journey-minor">YOUR PROGRESS</span><strong>${p.pct}%</strong><div class="journey-progress-track" aria-label="${p.done} of ${p.total} lessons completed"><span style="width:${p.pct}%"></span></div><p>${p.done} of ${p.total} lessons mastered</p><div class="journey-aside-separator"></div><span class="journey-minor">CURRENT STAGE</span><b>${focus.id==="foundations"?"Day":"Week"} ${pathWeekNumber(focus.id)}</b><p>${esc(focus.time)} · learn at your own pace</p><button data-go="${focus.route}" class="journey-subtle-link">Open your roadmap ↗</button></aside>
  </section>
  <section class="journey-sequence" aria-label="Your learning journey">
   <div class="journey-section-label"><span class="journey-kicker">THE PROCESS</span><h2>Learn it. Use it. Prove it.</h2><p>Everything you need, in the order you need it.</p></div>
@@ -451,7 +451,7 @@ if(themeButton){
   themeButton.setAttribute("aria-pressed",String(progress.theme==="light"));
 }
 const themeMeta=document.querySelector('meta[name="theme-color"]');
-if(themeMeta)themeMeta.setAttribute("content",progress.theme==="light"?"#f5f8fe":"#080d19");}
+if(themeMeta)themeMeta.setAttribute("content",progress.theme==="light"?"#fafaf7":"#10191b");}
 const app=document.getElementById("app");
 app.addEventListener("click",async e=>{
 const target=e.target.closest("[data-go],[data-action]");if(!target)return;

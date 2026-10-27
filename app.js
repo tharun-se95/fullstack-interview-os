@@ -80,6 +80,25 @@ function nextWorkshop(id){
 function nextWorkshopRoute(id){const x=nextWorkshop(id);return id==="backend"?"backend-lab/"+x.id:id==="ai"?"ai-lab/"+x.id:"labs/"+x.id}
 function workshopForLesson(l){
  if(!l)return {lab:nextWorkshop(progress.activePath),route:nextWorkshopRoute(progress.activePath)};
+ // A lesson gets its OWN most relevant exercise, not the first incomplete lab
+ // from whichever unrelated pathway the user opened last.
+ const aiLabByLesson={
+  "genai-tokens":"ai-gen-endpoint","genai-api":"ai-gen-endpoint",
+  "genai-prompts":"ai-gen-contract","genai-structured":"ai-gen-contract",
+  "genai-stream":"ai-gen-contract","genai-decisions":"ai-gen-contract",
+  "rag-architecture":"ai-rag-index","rag-chunking":"ai-rag-index",
+  "rag-embeddings":"ai-rag-search","rag-hybrid":"ai-rag-search",
+  "rag-citations":"ai-rag-evals","rag-governance":"ai-rag-evals",
+  "rag-evaluation":"ai-rag-evals",
+  "agentic-loop":"ai-agent-tools","agentic-graph":"ai-agent-tools",
+  "agentic-checkpoints":"ai-agent-tools","agentic-approval":"ai-agent-approval",
+  "agentic-multi":"ai-capstone","agentic-rag":"ai-capstone",
+  "agentic-security":"ai-capstone",
+  "ai-graphs":"ai-agent-approval","ai-rag":"ai-rag-search",
+  "ai-evals":"ai-rag-evals"
+ };
+ const aiLab=AI_WORKSHOP.labs.find(x=>x.id===aiLabByLesson[l.id]);
+ if(aiLab)return {lab:aiLab,route:"ai-lab/"+aiLab.id};
  const aiWeek=AI_WORKSHOP.weeks.find(w=>w.lessons.includes(l.id));
  if(aiWeek){
   const lab=aiWeek.labs.map(id=>AI_WORKSHOP.labs.find(x=>x.id===id)).find(x=>x&&!progress.aiLabDone.includes(x.id))||AI_WORKSHOP.labs.find(x=>x.id===aiWeek.labs[0]);
@@ -87,18 +106,24 @@ function workshopForLesson(l){
  }
  const backendWeek=WORKSHOP.weeks.find(w=>w.lessons.includes(l.id));
  if(backendWeek){
-  const lab=backendWeek.labs.map(id=>WORKSHOP.labs.find(x=>x.id===id)).find(x=>x&&!progress.backendLabDone.includes(x.id))||WORKSHOP.labs.find(x=>x.id===backendWeek.labs[0]);
+  const chosen=l.id.startsWith("auth-")?"be-auth":
+   l.id.startsWith("async-")?"be-worker":
+   l.id==="redis-cache"||l.id.startsWith("mongo-")?"be-redis":
+   l.id.startsWith("api-")?"be-contract":
+   l.id.startsWith("ops-")?"be-deploy":
+   l.id.startsWith("test-")?"be-review":null;
+  const lab=WORKSHOP.labs.find(x=>x.id===chosen)||
+   backendWeek.labs.map(id=>WORKSHOP.labs.find(x=>x.id===id)).find(x=>x&&!progress.backendLabDone.includes(x.id))||
+   WORKSHOP.labs.find(x=>x.id===backendWeek.labs[0]);
   if(lab)return {lab,route:"backend-lab/"+lab.id};
+ }
+ if(["genai","rag","agentic","ai"].includes(l.trackId)){
+  const lab=nextWorkshop("ai");return {lab,route:"ai-lab/"+lab.id};
  }
  const day=days.find(d=>d.ids.includes(l.id));
  if(day){
   const lab=labById.get(day.lab)||labs[0];
   return {lab,route:"labs/"+lab.id};
- }
- if(["genai","rag","agentic","ai"].includes(l.trackId)){
-  const preferred={"ai-graphs":"ai-agent-approval","ai-rag":"ai-rag-search","ai-evals":"ai-rag-evals"}[l.id];
-  const lab=AI_WORKSHOP.labs.find(x=>x.id===preferred)||nextWorkshop("ai");
-  return {lab,route:"ai-lab/"+lab.id};
  }
  if(["node","api","postgres","auth","data","async","ops","testing","system"].includes(l.trackId)){
   const lab=nextWorkshop("backend");

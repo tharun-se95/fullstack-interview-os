@@ -1,5 +1,24 @@
 # Fullstack Interview OS — Complete Senior Fullstack Crash Course
 
+## Learner journey simplification (v5.1)
+
+The course is now organized around the learner's next step rather than a list of features. Only **four** main navigation destinations remain:
+
+1. **Today** (`#dashboard`) — one recommended lesson from your active path, focused progress and a clear Learn → Practice → Build sequence.
+2. **Learn** (`#learn`) — choose Backend Engineering (default), AI Engineering or Fullstack Foundations; open one week at a time. The full 18-track library and architecture diagrams remain contextual references.
+3. **Practice** (`#practice`) — start with an active-topic interview question, then choose related questions, local implementation or mock interview; revision cards and system maps are secondary tools.
+4. **Projects** (`#projects`) — three editorial capstone summaries with on-demand deliverables and acceptance criteria.
+
+`#backend`, `#ai-path`, `#plan` and all original routes still work. Track and lesson pages have contextual practice links; the user no longer needs to search a feature-heavy sidebar for the appropriate next action.
+
+Path choice is persisted as `activePath` under the **existing** `fullstack-os-course-v2` key, preserving all completion, answer, notes, bookmark and workshop data. Direct navigation to a pathway also updates the study focus. The app remains a static, no-login learning environment.
+
+Design tokens and responsive layouts are in [learner-journey.css](./learner-journey.css), loaded last. The interface uses a calm neutral foundation, one meaningful action accent and small path-identity color markers. Large banners, repeated nested cards and unnecessary competing calls to action have been removed from key entry and practice surfaces.
+
+The updated [PROJECT_DESIGN.md](./PROJECT_DESIGN.md) is the source of truth for learner journey, information architecture and visual hierarchy. Route/interaction simulations verify the primary flows; they do not replace real browser screenshot checks.
+
+---
+
 ## Generative AI · RAG · Agentic AI expansion (v5.0)
 
 **Three full engineering courses are now integrated into the site** at [#ai-path](https://fullstack-interview-os.vercel.app/#ai-path). They build on the user's frontend-heavy fullstack background, emphasizing Node services, trusted boundaries, datasets, SQL/pgvector, source citations, tool orchestration and deployed reliability rather than general prompt tips.

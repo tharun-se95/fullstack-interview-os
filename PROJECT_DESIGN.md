@@ -1,66 +1,82 @@
-# PROJECT_DESIGN — Fullstack Interview OS v3.2
+# Fullstack Interview OS — Learning Experience Design (v5.1)
 
-## Product and implementation context
-- Product: self-paced senior fullstack learning and interview-preparation website, 11 tracks, 33 lessons, 110 interview questions, coding labs, architecture maps, mocks, notes and saved progress.
-- Audience: experienced frontend engineer becoming an interview-ready senior fullstack / AI architect.
-- Primary job: find the next useful learning step; study one topic deeply; practice and verify understanding.
-- Stack: existing static HTML, vanilla JS data-driven client router, CSS, localStorage. Preserve hashes, handlers, content and stored progress.
-- Surfaces: overview, curriculum, tracks, lesson reader, labs, bank, revision, mocks, projects, maps, responsive navigation.
+## Product intent
+One focused learning workspace for an experienced frontend engineer strengthening **backend engineering, GenAI, RAG and agentic AI** for senior fullstack and AI architecture interviews.
 
-## Audit of original
-- Positive cue to preserve: clear course track terminology, custom technology illustrations, real source diagrams, completion states and labs.
-- Failures: dark oversized marketing hero for an operational learning tool; excessive decorative gradients and category cards; card inside card inside card in lessons, plans, labs and diagrams; numerous all-caps labels; noisy heavy shadows and tight reading line height; sidebar uses too much real estate.
-- Critical user directive: **avoid box inside boxes; implement proper visual hierarchy**.
+The interface should answer three questions without requiring the learner to search through features:
+1. **What should I do right now?** The next unfinished lesson from the currently selected path.
+2. **Why does it matter?** A short goal, current stage and a visible progression toward practice.
+3. **What happens next?** Recall/implement the concept, then use the result in a project or interview.
 
-## Taste direction
-**Calm, editorial engineering field guide.** A technical reading/productivity workspace with a quietly capable nav, large confident page headings, compact metadata, uncluttered reading column and a restrained accent for real actions.
-- Product-fit reasons: study sessions are long; visual hierarchy should serve comprehension and practice, not sell a product the user already uses.
-- Explicitly reject: glassmorphism, fake SaaS KPI cards, decorative glows, nested card grids, graphic ornaments without information, dramatic homepage marketing, dark by default.
-- References: Mintlify's reading-first documentation proportions; Notion's spare canvas, lightweight navigation, divider-based grouping. Transfer whitespace, typescale, TOCs, focus states; **do not copy brand colors, logos or exact patterns**.
-- The skill's confirmation gates are interpreted through the user's explicit directive to implement this structural taste in the existing app without waiting for further selection.
+The site contains **18 tracks, 69 lessons, 173 interview questions, 12 browser coding challenges, 8 local backend missions and 8 local AI missions**. These are learning resources, not 11 separate products.
 
-## Visual hierarchy
-1. Page title + clear task or progress.
-2. One dominant next action.
-3. The primary reading, practice or selection surface.
-4. Inline progress/status and relevant utilities.
-5. Context, references and secondary links.
-Typography: 36–44px h1 on desktop; 26–30px h2; 19–22px h3; 16–17px body at ~1.7 line height; micro-labels only for actual status. Reading measure ~72ch, monospace exclusively for code, numbers, step captions.
-Use DM Sans / Space Grotesk existing assets; no new third-party fonts.
+## Information architecture
 
-## Color and structure
-- Light: #fafbf9 canvas; #202d34 body ink; #607178 secondary; #dfe5e2 dividers; #35594f green-teal accent; #f0f5f2 soft interaction, neutral white reading.
-- Dark: #10191d canvas; #e5edec ink; #a9bbb7 secondary; #2b393c dividers; #82bead accent; #182522 soft interaction.
-- Keep image-led/media and code areas dark only where meaningful. Never place contrast-sensitive text over a generated glow.
-- Flat sections separated by whitespace/one line, not stacked cards. Borders on forms and editor only; almost no shadows.
-- Content width: 1120–1200px overall; reader center 700–750px plus 220px slim TOC; minimal side navigation 212–228px. Mobile 100% without nested scroll panels.
-- Spacing increments 8/12/16/24/32/48/64. One divider between neighboring content sections.
-- Buttons: one primary per region, understated text actions for others. 40–44px touch targets and visible focus.
+Four items in the only primary sidebar navigation:
 
-## Component guidance
-- Dashboard: compact editorial intro, learning continuity with next lesson as primary action, unobtrusive unboxed progress stats, compact track list; one curated feature image at most if beneficial.
-- Curriculum: sequential editorial track rows with short descriptions, progress indication, small illustration; no grid of identical boxes.
-- Track: open header and overview, linked ordered lesson rows.
-- Lesson: remove duplicated objective card; introduce concept first, then media; chapter directory as typographic list; continuous prose; isolated code and case blocks with accent rule but no extra framing; single right-rail TOC with a top-level list and in-page outline; checkpoint and notes as quiet flat sections.
-- Interviews: filter bar then numbered questions with divider rows; answers reveal inline instead of within another nested card.
-- Labs: documentation-style instructions followed directly by editor, results, and a compact library navigation rail.
-- Plans/mocks/maps/projects: editorial sections; no background-card plus background-card nesting.
-- Preserve source attribution and image fallback links.
+| Primary section | Job | What moved here |
+| --- | --- | --- |
+| **Today** `#dashboard` | Show next action and current path progress | One lesson CTA and a three-step learning loop |
+| **Learn** `#learn` | Select one direction and progress through it | Backend `#backend`, AI `#ai-path`, Fullstack `#plan`, 18-track library `#curriculum` |
+| **Practice** `#practice` | Apply what was just studied | Topic-scoped interviews, coding lab, mock interviews; revision cards as secondary tool |
+| **Projects** `#projects` | Prove skills with real deliverables | Three capstones with expandable acceptance criteria |
 
-## Responsive and interaction
-- Desktop ≥1100: slim side nav, 1120 content max, reader + right TOC; tablet collapses rail; mobile nav becomes toggle and content is single column.
-- Hover states subtle; focus visible; selected states semantic; no animation except gentle color transition, reduced-motion respected.
-- Never hide the completion, notes, code-run or reveal controls.
+Architecture diagrams move under Learn as contextual technical reference. Original routes (`#interviews`, `#labs`, `#mocks`, `#flashcards`, `#diagrams`) remain reachable through contextual links and direct URLs, **not** from first-level nav. No content or capabilities are deleted.
 
-## Implementation mapping
-- Update `app.js` templates to remove duplicate objective, reduce dashboard promo, convert curriculum and projects to rows/columns, simplify TOC nesting.
-- Add `tasteful-refinement.css` loaded after previous styles (including light-theme) so both appearances are consistently simplified.
-- Add explicit route classes to #app via render for targeted layout, without changing URL routing.
-- Keep all lesson and quiz data untouched.
+### Default and personalization
+Backend Engineering is the default study focus (because the learner is already experienced with frontend). The selected path is saved in the existing `fullstack-os-course-v2` localStorage object as `activePath` without resetting completed lessons, notes, check answers, bookmarked questions or lab state.
 
-## Verification and design critique
-- Check source import and syntax; route rendering for 33 lessons and all major screens.
-- Check saved theme and progress, quiz answers, section jump, sample solution, code editor and notes interactions with possible local mocks.
-- Inspect contrast, navigation states, 375px mobile conditions and reading width through CSS analysis where browser capture is unavailable.
-- Judge against previous product: faster entry to next lesson, fewer container layers and less visual competition. Reject regressions that hide useful content.
-- Caveat: live-browser screenshot inspection requires network/browser access to the deployed site and should not be claimed if unavailable.
+Path choices: Backend Engineering (four weeks), AI Engineering (four weeks), Fullstack Foundations (eight-day refresher). Switching a path changes **what is recommended next**, not what the learner has completed. Directly navigating to a path synchronizes the selected focus. Deep links to individual lessons remain valid.
+
+## Learning flow
+
+```
+Today
+  ↓ start/continue a specific concept
+Lesson → explain mechanism → inspect source/diagram → worked example
+  ↓ pass checkpoint; optional notes
+Practice → recall question(s) in the same track
+  ↓
+Build → path-specific local mission or browser coding challenge
+  ↓
+Projects → interview-defensible capstone with explicit acceptance criteria
+```
+
+One clearly styled primary action per page. Links to alternate activity types appear only after the user has context. No duplicated recommended-next-lesson cards or redundant tool lists.
+
+### Progressive disclosure
+- The active week is expanded by default; future weeks remain collapsible. Do not render four complete weeks as a wall of visible links.
+- Full lesson library groups 18 tracks into **Backend and architecture**, **AI Engineering**, and **Fullstack / interview foundations**. It is a reference, not an additional mandatory path.
+- Practice begins with a current-topic question and reveals the answer only when the learner chooses. Interview bank, coding lab and mocks form a coherent sequence. Revision cards and architecture maps are inside a small extra-tools disclosure.
+- Projects use editorial rows. Deliverables, acceptance criteria and interview defense are in an expandable detail panel. No large stacked cards or promotional illustration banners.
+
+## Visual system
+
+**Look and feel:** focused editorial learning space—clean type, calm neutrals and one meaningful action accent. Avoid overly decorated dashboards, colorful KPI tiles, icon soup, redundant all-caps metadata, shadows and boxes inside boxes.
+
+- Dark: neutral deep charcoal-green canvas `#10191b`; readable off-white `#ebf2ee`; secondary text `#9eb0aa`; hairline `#2d4140`; action color `#a3d5b6`.
+- Light: warm near-white canvas `#fafaf7`; dark ink `#20332c`; secondary `#61736b`; hairline `#dce5de`; accessible deep-green action `#286d50`.
+- **Path identity**, not general decoration: Backend uses the primary emerald; AI uses muted iris; Fullstack uses a quiet ochre. These appear on tiny path markers only and do not create competing button colors.
+- Font hierarchy uses existing Space Grotesk for short page/lesson titles and DM Sans for reading/actions; code retains monospace. Page introduction first, one action second, learning material third, links to reference last.
+- Use spacing and horizontal rules instead of panels. Borders stay where editor, forms, source diagrams or user choice warrant them.
+- Desktop sidebar 212px; main content capped near 1120px; readable line lengths; responsive one-column flow on mobile.
+- Focus-visible styles, reduced motion, keyboard-supported native `details` and coherent active nav state.
+
+## Implementation ownership
+- `index.html` — four nav destinations and simplified topbar; existing JS assets remain loaded in order.
+- `app.js` — learning-path selection, current lesson, progressive roadmaps, practice hub, concise curriculum index, contextual lesson links, project detail, route highlighting, saved `activePath`.
+- `learner-journey.css` — loaded after all previous styles; design tokens, shared learner components, dark/light integration and responsive layout.
+- Previous course data JS, deep lesson modules, sourced illustrations, testing exercises and associated local starters are preserved.
+- Existing saved progress remains in `fullstack-os-course-v2`.
+
+## Quality bar
+1. Fewer than five primary navigation choices; learner can always tell the next step.
+2. One prominent primary action and one recommended lesson per entry screen.
+3. Today → lesson → practice → project has contextual links with no dead ends.
+4. Path switching persists without erasing notes or progress.
+5. Every existing route is still functional and sections carry proper nav selection.
+6. Dark and light backgrounds, text and action colors stay legible and consistent.
+7. Browser/mobile screenshots are required for final visual acceptance when a connected browser is available; simulated DOM checks alone do not prove layout fidelity.
+
+### Regression check
+Application route/markup and interaction tests were run against GitHub source with mocked DOM and localStorage. Runtime browser screenshots and local Docker/Node exercises are separate verification tasks. Do not confuse a READY static Vercel deployment with a full integration test of backend/AI workshop code.

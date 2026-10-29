@@ -52,3 +52,23 @@ test('v8 guided-reader diagrams teach accurate phases with named boundary notes'
  assert.equal(typeof sandbox.window.ConceptReaderV8.render,'function');
  assert.equal(sandbox.window.ConceptReaderV8.stages.length,5);
 });
+
+test('iteration 9 guides all legacy lessons with source-grounded chapters',()=>{
+ const legacy=lessons.filter(l=>!sandbox.window.CONCEPT_PILOTS_V7[l.id]);
+ const helper=sandbox.window.LegacyReaderV9;
+ assert.equal(typeof helper.render,'function');
+ assert.equal(helper.stages.length,5);
+ assert.equal(legacy.length,lessons.length-4);
+ const keys=new Set();
+ for(const l of legacy){
+  const parts=helper.topics(l);
+  assert.ok(parts.length>=1&&parts.length<=12,l.id+' chapter count');
+  for(const p of parts){
+   assert.ok(p.id&&p.title&&p.body&&p.points.length>0,l.id+'/'+p.id);
+   const key=l.id+'/'+p.id;
+   assert.ok(!keys.has(key),key);
+   keys.add(key);
+  }
+ }
+ assert.ok(keys.size>=legacy.length);
+});

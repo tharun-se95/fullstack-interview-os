@@ -111,7 +111,7 @@ test('question-first pilot provides 12 microtopics and short step-by-step explan
  await expect(page.locator('.c7-flow li')).toHaveCount(4);
  await expect(page.locator('.c7-bullets').first().locator('li')).toHaveCount(4);
  await expect(page.locator('.c7-reference')).not.toHaveAttribute('open');
- await page.locator('[data-go="lesson/js-event-loop/queues"]').click();
+ await page.locator('.c7-micro-links [data-go="lesson/js-event-loop/queues"]').click();
  await expect(page).toHaveURL(/#lesson\/js-event-loop\/queues/);
  await expect(page.locator('.c7-micro-content')).toContainText('Microtasks versus timer tasks');
  await expect(page.locator('.c7-micro-content .c7-code')).toBeVisible();
@@ -121,6 +121,7 @@ test('question-first pilot provides 12 microtopics and short step-by-step explan
 test('closed-book recall really hides the explanation, saves draft and schedules review',async({page})=>{
  await page.goto('/');
  await page.evaluate(data=>localStorage.setItem('fullstack-os-course-v2',JSON.stringify(data)),returning);
+ await page.reload(); // Rehydrate the in-memory course state before navigating.
  await page.goto('/#lesson/js-event-loop/queues');
  await page.reload();
  await page.locator('[data-action="shadow-start"]').click();

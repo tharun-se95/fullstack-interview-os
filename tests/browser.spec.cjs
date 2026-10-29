@@ -125,7 +125,7 @@ test('one question-first stage at a time, with three focused microtopics',async(
  await expect(page).toHaveURL(/#lesson\/js-event-loop\/queues/);
  await expect(page.locator('.c8-reader[data-stage="try"]')).toBeVisible();
  await page.reload();
- await expect(page.locator('.c8-stage-panel h2')).toContainText('Why does the Promise');
+ await expect(page.locator('.c8-stage-panel h2')).toContainText('Why can a resolved Promise');
 });
 test('memory-first attempt, recall, rating and original learner notes persist',async({page})=>{
  await page.goto('/');
@@ -245,4 +245,16 @@ test('default lesson route can record recall of its first microtopic',async({pag
  const saved=await page.evaluate(()=>JSON.parse(localStorage.getItem('fullstack-os-course-v2')));
  expect(saved.shadowV7['js-event-loop/stack'].rating).toBe('ready');
  await expect(page.locator('.c8-reader[data-stage="finish"]')).toBeVisible();
+});
+
+test('capture desktop question, diagram and process for visual acceptance',async({page})=>{
+ await page.setViewportSize({width:1440,height:900});
+ await page.goto('/#lesson/js-event-loop');
+ fs.mkdirSync(path.join(__dirname,'..','test-results'),{recursive:true});
+ await page.screenshot({path:'test-results/v8-desktop-question.png',fullPage:true});
+ await page.locator('.c8-stage-nav [data-action="v8-stage"][data-id="process"]').click();
+ await page.screenshot({path:'test-results/v8-desktop-process.png',fullPage:true});
+ await page.goto('/#lesson/rag-architecture');
+ await page.locator('.c8-stage-nav [data-action="v8-stage"][data-id="overview"]').click();
+ await page.screenshot({path:'test-results/v8-desktop-rag-diagram.png',fullPage:true});
 });

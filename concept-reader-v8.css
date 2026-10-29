@@ -1,0 +1,95 @@
+/* Iteration 8 — guided question-first lesson reader. Scoped, high-contrast, responsive. */
+.route-lesson .c8-reader{--c8-ink:var(--journey-text);--c8-muted:var(--journey-muted);--c8-rule:var(--journey-line);--c8-accent:var(--journey-accent);width:100%;max-width:950px;margin:0 auto;padding:8px 0 40px;color:var(--c8-ink)}
+.c8-reader *{box-sizing:border-box}
+.c8-reader button{cursor:pointer}
+.c8-reader .c8-back{border:0;background:transparent;color:var(--c8-muted);padding:10px 0 18px;font:600 12px/1.5 system-ui,sans-serif}
+.c8-reader .c8-back:hover,.c8-reader .c8-quiet:hover{color:var(--c8-accent)}
+.c8-header{padding:4px 0 20px}
+.c8-eyebrow,.c8-kicker,.c8-nav-label{font:700 10px/1.5 system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--c8-muted)}
+.c8-header h1{font:650 clamp(31px,4.2vw,52px)/1.13 "Space Grotesk",system-ui,sans-serif;letter-spacing:-.055em;margin:14px 0;max-width:20ch;color:var(--c8-ink)}
+.c8-header>p{font-size:15px;line-height:1.68;color:var(--c8-muted);margin:12px 0;max-width:70ch}
+.c8-meta{display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center;font-size:12px;color:var(--c8-muted);margin-top:17px}
+.c8-meta .btn{margin-left:auto}
+.c8-micro-nav{padding:23px 0 14px;border-top:1px solid var(--c8-rule)}
+.c8-topic-buttons{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border-top:1px solid var(--c8-rule);margin-top:13px}
+.c8-topic-buttons button{text-align:left;display:flex;gap:10px;align-items:flex-start;border:0;border-bottom:1px solid var(--c8-rule);background:transparent;color:var(--c8-ink);padding:14px 12px 15px 0;font:inherit}
+.c8-topic-buttons button:not(:last-child){border-right:1px solid var(--c8-rule);margin-right:12px}
+.c8-topic-buttons button[aria-current=step]{color:var(--c8-accent)}
+.c8-topic-number{font-size:12px;font-weight:750;opacity:.75;min-width:19px}
+.c8-topic-title{font-size:12px;font-weight:600;line-height:1.48}
+.c8-stage-nav{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border-bottom:1px solid var(--c8-rule);gap:0;margin-top:7px}
+.c8-stage-nav button{background:transparent;border:0;border-bottom:3px solid transparent;min-width:0;display:flex;align-items:center;justify-content:center;gap:7px;color:var(--c8-muted);padding:17px 3px 15px;font-size:12px}
+.c8-stage-nav button span{font-size:10px;opacity:.75}
+.c8-stage-nav button b{font-weight:600}
+.c8-stage-nav button[aria-current=step]{color:var(--c8-accent);border-bottom-color:var(--c8-accent)}
+.c8-stage-panel{max-width:790px;min-height:360px;padding:36px 0 42px;margin:0 auto}
+.c8-stage-panel h2{font:660 clamp(27px,3.5vw,39px)/1.25 "Space Grotesk",system-ui,sans-serif;letter-spacing:-.046em;margin:14px 0 19px;color:var(--c8-ink);max-width:29ch}
+.c8-stage-panel h3{font:630 20px/1.4 "Space Grotesk",system-ui,sans-serif;margin:22px 0 14px}
+.c8-stage-panel label{display:block;color:var(--c8-ink);font-size:13px;font-weight:650;margin:24px 0 10px}
+.c8-stage-panel label span{color:var(--c8-muted);font-weight:400}
+.c8-intro,.c8-hint,.c8-diagram-note,.c8-unfinished,.c8-summary p{font-size:14px;line-height:1.75;color:var(--c8-muted);max-width:73ch}
+.c8-hint{font-size:12px;margin-top:28px;padding-top:14px;border-top:1px solid var(--c8-rule)}
+.c8-input,.c8-notes{display:block;width:100%;border:1px solid var(--c8-rule);border-radius:7px;background:var(--journey-surface);color:var(--c8-ink);font:400 15px/1.6 system-ui,sans-serif;padding:14px 16px;resize:vertical}
+.c8-input::placeholder,.c8-notes::placeholder{color:var(--c8-muted)}
+.c8-input:focus,.c8-notes:focus,.c8-reader button:focus-visible,.c8-reader summary:focus-visible{outline:2px solid var(--c8-accent);outline-offset:3px}
+.c8-actions{display:flex;align-items:center;flex-wrap:wrap;gap:13px 21px;margin-top:26px}
+.c8-actions .btn{min-height:42px}
+.c8-quiet{border:0;background:transparent;color:var(--c8-muted);font-size:13px;font-weight:640;padding:9px 0}
+.c8-bullets,.c8-steps{padding-left:24px;margin:17px 0 24px;max-width:75ch}
+.c8-bullets li,.c8-steps li{font-size:15px;line-height:1.74;margin:0 0 12px;padding-left:5px}
+.c8-bullets li::marker,.c8-steps li::marker{color:var(--c8-accent);font-weight:750}
+.c8-diagram{margin:29px 0 5px;padding:23px 0 15px;border-top:1px solid var(--c8-rule);border-bottom:1px solid var(--c8-rule)}
+.c8-diagram-title{font:650 15px/1.5 system-ui,sans-serif;margin-bottom:19px;color:var(--c8-ink)}
+.c8-diagram-lane{margin:17px 0 24px}
+.c8-diagram-label{font-size:10px;letter-spacing:.12em;font-weight:740;color:var(--c8-accent);margin-bottom:9px}
+.c8-diagram-flow{display:flex;list-style:none;padding:0;margin:0;gap:0;min-width:0}
+.c8-diagram-flow li{display:flex;flex-direction:column;gap:6px;flex:1;min-width:0;padding:13px 16px 14px 11px;background:var(--journey-surface);border:1px solid var(--c8-rule);border-radius:5px;position:relative}
+.c8-diagram-flow li:not(:last-child){margin-right:22px}
+.c8-diagram-flow li:not(:last-child)::after{content:"→";position:absolute;right:-19px;top:calc(50% - 12px);font-size:18px;color:var(--c8-accent)}
+.c8-diagram-flow b{font-size:12px;line-height:1.5;color:var(--c8-ink)}
+.c8-diagram-flow span{font-size:11px;line-height:1.55;color:var(--c8-muted);overflow-wrap:anywhere}
+.c8-diagram-note{font-size:12px;margin:16px 0 0;padding:12px 0 0;border-top:1px solid var(--c8-rule)}
+.c8-diagram-note strong{color:var(--c8-ink)}
+.c8-code{margin:24px 0 22px;border-radius:7px;border:1px solid #29423b;background:#152923;overflow:hidden}
+.c8-code figcaption{padding:10px 15px;border-bottom:1px solid #38574e;font-size:12px;font-weight:550;color:#d0e7de}
+.c8-reader .c8-code pre,.c8-reader .c8-code pre code,.c8-reader .c8-code pre code *{display:block;margin:0;padding:0;color:#f0fbf6!important;-webkit-text-fill-color:#f0fbf6!important;background:transparent!important;text-shadow:none!important;opacity:1!important;font:500 13px/1.8 ui-monospace,SFMono-Regular,Consolas,monospace!important;letter-spacing:0!important}
+.c8-reader .c8-code pre{padding:17px 18px;max-width:100%;overflow-x:auto}
+.c8-reader .c8-code code{white-space:pre}
+.c8-details{border-top:1px solid var(--c8-rule);padding:17px 0 11px}
+.c8-details summary{cursor:pointer;color:var(--c8-ink);font-size:13px;font-weight:630;padding:6px 0}
+.c8-details[open]>summary{color:var(--c8-accent)}
+.c8-original{padding-top:18px;max-width:100%;overflow-wrap:anywhere}
+.c8-original pre{max-width:100%;overflow:auto}
+.c8-original .aws-flow-node{min-width:0}
+.c8-question{font:600 18px/1.55 system-ui,sans-serif;max-width:63ch;color:var(--c8-ink)}
+.c8-checklist{margin:26px 0 0;padding:22px 0;border-top:2px solid var(--c8-accent)}
+.c8-checklist>p{font-size:12px;color:var(--c8-muted)}
+.c8-rating{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:19px}
+.c8-rating button{border:1px solid var(--c8-rule);border-radius:6px;background:var(--journey-surface);color:var(--c8-ink);font-size:12px;font-weight:650;line-height:1.45;padding:13px 9px}
+.c8-rating button:hover{border-color:var(--c8-accent);color:var(--c8-accent)}
+.c8-summary{padding:13px 0 17px;border-top:1px solid var(--c8-rule);border-bottom:1px solid var(--c8-rule);margin:24px 0}
+.c8-summary strong{font-size:14px}
+.c8-quiz{margin-top:25px;padding:3px 0 20px}
+.c8-quiz .knowledge{margin-bottom:21px}
+.c8-done{color:var(--c8-accent);font-weight:640}
+.c8-footer{border-top:1px solid var(--c8-rule);padding:22px 0 8px;display:grid;gap:14px}
+.c8-footer strong{font-size:13px}
+.c8-footer p{font-size:12px;color:var(--c8-muted);margin:6px 0 0}
+.c8-footer .c8-notes{min-height:76px}
+@media(max-width:650px){
+ .route-lesson .c8-reader{padding-inline:0}
+ .c8-header h1{font-size:clamp(29px,7vw,39px)}
+ .c8-header{padding-bottom:15px}
+ .c8-topic-buttons{grid-template-columns:1fr}
+ .c8-topic-buttons button{min-height:44px;padding:9px 0}
+ .c8-topic-buttons button:not(:last-child){border-right:0;margin-right:0}
+ .c8-stage-nav button{flex-direction:column;gap:4px;padding:11px 2px;font-size:11px}
+ .c8-stage-nav button span{font-size:9px}
+ .c8-stage-panel{min-height:300px;padding:26px 0 34px}
+ .c8-diagram-flow{flex-direction:column}
+ .c8-diagram-flow li:not(:last-child){margin-right:0;margin-bottom:22px}
+ .c8-diagram-flow li:not(:last-child)::after{content:"↓";right:11px;top:auto;bottom:-20px}
+ .c8-rating{grid-template-columns:1fr}
+ .c8-reader .c8-code pre{padding:14px;font-size:12px}
+}
+@media(prefers-reduced-motion:reduce){.c8-reader *{scroll-behavior:auto!important}}

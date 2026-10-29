@@ -1,5 +1,24 @@
 # Fullstack Interview OS — Learning Experience Design (v5.2)
 
+## Iteration 8 — guided learning release
+
+This release replaces the **four pilot lesson readers** (not the entire legacy course) with five focused stages: **Try → Understand → Implement → Recall → Finish**. Only one stage is visible at a time.
+
+- Pilot concepts: JavaScript Event Loop, Backend Idempotency, AWS VPC, RAG Architecture. They contain 12 microtopics, each starting with a standalone interview question.
+- The overview uses concise bullets and a **concept-specific two-lane process diagram**. RAG explicitly separates indexing vs user-query time; the JavaScript event-loop diagram does not guarantee paint occurs in a fixed order.
+- Implementation uses three process steps, a high-contrast code block in light/dark themes, and optional production trade-offs. The original in-depth reference remains in expandable content.
+- Recall hides explanation/code, saves a learner-authored answer to the **existing** `shadowV7` localStorage entry, displays a comparison checklist and collects one self-rating.
+- Self-ratings are **not automatic verification**. They schedule revision in 1 / 3 / 7 days. Due review links open straight into closed-book recall, but users can return to the explanation.
+- The microtopic is now the basic progress unit. All three must be rated "Explained well" to unlock the original lesson checkpoint and allow new whole-lesson completion. **Previously completed lessons are preserved**, with no retroactive progress deletion.
+- The existing localStorage key `fullstack-os-course-v2`, notes, bookmarks, links and all other lessons/questions continue working. No server account or push notification system has been added.
+- New assets: `concept-diagrams-v8.js`, `concept-reader-v8.js`, `concept-reader-v8.css`; the original V7 pilot metadata remains the source of microtopic content.
+- Run `node --test tests/course-integrity.test.cjs` and Playwright Chromium responsive checks before merge. CI verifies storage, chapter gating, question linking and CSS contrast.
+
+This is a verified **pilot format**, not a claim that every lesson in the 19-track course has already been converted.
+
+---
+
+
 ## Iteration 7 pilot — question-first, progressive depth, closed-book recall
 
 This is a **working four-concept pilot**, not a claim that all 79 lessons or 183 interview questions were rewritten.

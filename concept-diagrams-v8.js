@@ -22,8 +22,8 @@ window.CONCEPT_DIAGRAMS_V8={
         "label": "THEN THE BROWSER DECIDES",
         "nodes": [
           [
-            "Rendering opportunity",
-            "May update layout and paint"
+            "Browser scheduler",
+            "May render before selecting another task"
           ],
           [
             "Next task",

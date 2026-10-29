@@ -169,73 +169,73 @@ test('production browser persists a real recall attempt and due review without a
  save('04-production-recall.json',{origin,checkedAt:new Date().toISOString(),id:'js-event-loop/queues',rating:saved.shadowV7['js-event-loop/queues'].rating,attempts:saved.shadowV7['js-event-loop/queues'].attempts,persisted:true});
 });
 
-test('every live lesson checkpoint rejects a wrong answer and accepts completion',async({page})=>{
+
+test('every production lesson checkpoint rejects wrong answers and saves completed lessons',async({page})=>{
  await loadProduction(page);
- const data=await inventory(page),rows=[];
- const pilotIds=new Set(data.pilots);
- for(const l of data.lessons){
-  const row={track:l.trackId,id:l.id,pilot:pilotIds.has(l.id),issues:[],answerIndex:l.checkCorrect};
-  try{
-   if(row.pilot){
-    const micros=await page.evaluate(id=>window.CONCEPT_PILOTS_V7[id].microtopics.map(x=>x.id),l.id);
-    for(const microId of micros){
-     await route(page,'lesson/'+l.id+'/'+microId);
-     await page.locator('.c8-stage-nav [data-id="recall"]').click();
-     await page.locator('[data-save-shadow="'+l.id+'/'+microId+'"]').fill('Independent audit simulation of a learner explanation for '+l.id+'/'+microId);
-     await page.locator('[data-action="v8-compare"]').click();
-     await page.locator('[data-action="v8-rate"][data-rating="ready"]').click();
-     const rating=await page.evaluate(key=>JSON.parse(localStorage.getItem('fullstack-os-course-v2')).shadowV7[key]?.rating,l.id+'/'+microId);
-     if(rating!=='ready')row.issues.push('Rating not saved for '+microId);
+ const rows=await page.evaluate(()=>{
+  const tracks=window.COURSE_TRACKS||[],lessons=tracks.flatMap(t=>t.lessons);
+  const pilots=window.CONCEPT_PILOTS_V7||{};
+  const store=()=>JSON.parse(localStorage.getItem('fullstack-os-course-v2')||'{}');
+  const go=hash=>{location.hash='#'+hash;window.dispatchEvent(new Event('hashchange'))};
+  const click=selector=>{
+   const el=document.querySelector(selector);
+   if(!el)throw Error('Missing control '+selector+' @ '+location.hash);
+   if(el.disabled)throw Error('Unexpected disabled control '+selector);
+   el.click();
+  };
+  const write=(selector,value)=>{
+   const el=document.querySelector(selector);
+   if(!el)throw Error('Missing text area '+selector+' @ '+location.hash);
+   el.value=value;el.dispatchEvent(new Event('input',{bubbles:true}));
+  };
+  const rows=[];
+  for(const lesson of lessons){
+   const row={track:tracks.find(t=>t.lessons.some(x=>x.id===lesson.id))?.id,id:lesson.id,pilot:!!pilots[lesson.id],issues:[],chapters:0};
+   try{
+    const ids=row.pilot?pilots[lesson.id].microtopics.map(x=>x.id):window.LegacyReaderV9.topics(lesson).map(x=>x.id);
+    row.chapters=ids.length;
+    for(const id of ids){
+     const key=lesson.id+'/'+id;
+     go('lesson/'+key);
+     if(row.pilot){
+      click('.c8-stage-nav [data-id="recall"]');
+      write('[data-save-shadow="'+key+'"]','Audit explanation of '+key);
+      click('[data-action="v8-compare"]');
+      click('[data-action="v8-rate"][data-rating="ready"]');
+      if(store().shadowV7?.[key]?.rating!=='ready')row.issues.push('Unpersisted pilot recall '+id);
+     }else{
+      click('.c9-stages [data-id="recall"]');
+      write('[data-c9-recall="'+key+'"]','Audit explanation of '+key);
+      click('[data-action="c9-compare"]');
+      click('[data-action="c9-rate"][data-rating="ready"]');
+      if(store().legacyRecallV9?.[key]?.rating!=='ready')row.issues.push('Unpersisted legacy recall '+id);
+     }
     }
-    await route(page,'lesson/'+l.id+'/'+micros[0]);
-    await page.locator('.c8-stage-nav [data-id="finish"]').click();
-    if(await page.locator('.c8-quiz').count()!==1)row.issues.push('Final checkpoint inaccessible after all three microtopics');
-   }else{
-    const micros=await page.evaluate(id=>window.LegacyReaderV9.topics(window.COURSE_TRACKS.flatMap(t=>t.lessons).find(x=>x.id===id)).map(t=>t.id),l.id);
-    for(const microId of micros){
-     await route(page,'lesson/'+l.id+'/'+microId);
-     await page.locator('.c9-stages [data-id="recall"]').click();
-     await page.locator('[data-c9-recall="'+l.id+'/'+microId+'"]').fill('Production audit of the '+microId+' process for '+l.id);
-     await page.locator('[data-action="c9-compare"]').click();
-     await page.locator('[data-action="c9-rate"][data-rating="ready"]').click();
-     const rating=await page.evaluate(key=>JSON.parse(localStorage.getItem('fullstack-os-course-v2')).legacyRecallV9[key]?.rating,l.id+'/'+microId);
-     if(rating!=='ready')row.issues.push('Legacy chapter rating was not saved '+microId);
+    go('lesson/'+lesson.id+'/'+ids[0]);
+    click(row.pilot?'.c8-stage-nav [data-id="finish"]':'.c9-stages [data-id="finish"]');
+    const scope=row.pilot?'.c8-quiz':'.c9-quiz';
+    const options=[...document.querySelectorAll(scope+' [data-action="answer-check"]')];
+    if(options.length!==lesson.check.options.length)row.issues.push('Invalid options count');
+    if(options.length>=2){
+     const wrong=(lesson.check.correct+1)%options.length;
+     options[wrong].click();
+     if(store().done?.includes(lesson.id))row.issues.push('Wrong answer completed lesson');
+     if(store().checks?.[lesson.id]!==wrong)row.issues.push('Wrong answer state not stored');
+     click(scope+' [data-action="answer-check"][data-index="'+lesson.check.correct+'"]');
+     if(store().checks?.[lesson.id]!==lesson.check.correct)row.issues.push('Correct answer not stored');
+     click('[data-action="complete-lesson"][data-id="'+lesson.id+'"]');
+     if(!store().done?.includes(lesson.id))row.issues.push('Completion not stored');
     }
-    await route(page,'lesson/'+l.id+'/'+micros[0]);
-    await page.locator('.c9-stages [data-id="finish"]').click();
-    if(await page.locator('.c9-quiz').count()!==1)row.issues.push('Original checkpoint not unlocked after all chapters');
-   }
-   const choiceLocator=row.pilot?'.c8-quiz [data-action="answer-check"]':'.c9-quiz [data-action="answer-check"]';
-   const count=await page.locator(choiceLocator).count();
-   if(count!==l.options)row.issues.push('Question option count mismatch '+count+' vs '+l.options);
-   if(count>1){
-    const wrong=(l.checkCorrect+1)%count;
-    await page.locator(choiceLocator).nth(wrong).click();
-    const afterWrong=await page.evaluate(id=>{const p=JSON.parse(localStorage.getItem('fullstack-os-course-v2'));return {check:p.checks[id],done:p.done.includes(id)}},l.id);
-    if(afterWrong.done)row.issues.push('Wrong checkpoint answer allowed completion');
-    if(afterWrong.check!==wrong)row.issues.push('Wrong answer state not saved');
-    await page.locator(choiceLocator).nth(l.checkCorrect).click();
-    const afterCorrect=await page.evaluate(id=>JSON.parse(localStorage.getItem('fullstack-os-course-v2')).checks[id],l.id);
-    if(afterCorrect!==l.checkCorrect)row.issues.push('Correct checkpoint state not saved');
-    const button=page.locator('[data-action="complete-lesson"][data-id="'+l.id+'"]');
-    if(await button.count()!==1)row.issues.push('Completion CTA not exposed after correct answer');
-    else {
-      const disabled=await button.isDisabled();
-      if(disabled)row.issues.push('Completion button disabled despite passing checkpoint');
-      else await button.click();
-    }
-    const completed=await page.evaluate(id=>JSON.parse(localStorage.getItem('fullstack-os-course-v2')).done.includes(id),l.id);
-    row.completed=completed;
-    if(!completed)row.issues.push('Completion was not persisted');
-   }
-  }catch(e){row.issues.push('Checkpoint interaction error: '+String(e.message||e).slice(0,300))}
-  rows.push(row);
- }
- const report={origin,checkedAt:new Date().toISOString(),total:rows.length,passed:rows.filter(r=>r.issues.length===0).length,failed:rows.filter(r=>r.issues.length>0).length,failures:rows.filter(r=>r.issues.length),rows};
- save('05-checkpoint-interactions.json',report);
- expect(rows.length).toBeGreaterThanOrEqual(79);
- expect(report.failures).toEqual([]);
+   }catch(e){row.issues.push(String(e.message||e).slice(0,400))}
+   rows.push(row);
+  }
+  return {rows,savedCompleted:store().done?.length||0};
+ });
+ const results={origin,checkedAt:new Date().toISOString(),total:rows.rows.length,passed:rows.rows.filter(x=>!x.issues.length).length,failed:rows.rows.filter(x=>x.issues.length).length,failures:rows.rows.filter(x=>x.issues.length),savedCompleted:rows.savedCompleted,rows:rows.rows};
+ save('05-checkpoint-interactions.json',results);
+ expect(results.total).toBeGreaterThanOrEqual(79);
+ expect(results.failures).toEqual([]);
+ expect(results.savedCompleted).toBeGreaterThanOrEqual(79);
  await page.reload();
- const stored=await page.evaluate(()=>JSON.parse(localStorage.getItem('fullstack-os-course-v2')));
- expect(stored.done.length).toBeGreaterThanOrEqual(79);
+ expect(await page.evaluate(()=>JSON.parse(localStorage.getItem('fullstack-os-course-v2')).done.length)).toBeGreaterThanOrEqual(79);
 });

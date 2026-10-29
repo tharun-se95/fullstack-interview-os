@@ -24,6 +24,7 @@ test('AWS lessons and exact-topic practice are connected',async({page})=>{
 test('returning learners keep notes, progress, theme and path after switching',async({page})=>{
  await page.goto('/');
  await page.evaluate(data=>localStorage.setItem('fullstack-os-course-v2',JSON.stringify(data)),returning);
+ await page.reload(); // Rehydrate the application's in-memory course state from the fixture.
  await page.goto('/#learn');
  await expect(page.locator('body')).not.toHaveClass(/light/);
  const before=await page.evaluate(()=>JSON.parse(localStorage.getItem('fullstack-os-course-v2')));
@@ -41,6 +42,7 @@ test('returning learners keep notes, progress, theme and path after switching',a
 test('self-verified AWS lab persists without resetting legacy state',async({page})=>{
  await page.goto('/');
  await page.evaluate(data=>localStorage.setItem('fullstack-os-course-v2',JSON.stringify(data)),returning);
+ await page.reload(); // Rehydrate the application's in-memory course state from the fixture.
  await page.goto('/#aws-lab/aws-network');
  await page.getByRole('button',{name:'I verified these criteria'}).click();
  await expect(page.getByRole('button',{name:/Self-verified/})).toBeVisible();

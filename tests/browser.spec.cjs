@@ -380,7 +380,7 @@ test('mobile topic navigation is compact and remains horizontally accessible',as
  expect(measurements.viewportHeight).toBeLessThan(100);
  expect(measurements.scrollWidth).toBeGreaterThan(measurements.clientWidth);
  await page.locator('.c9-stages [data-id="understand"]').click();
- await expect(page.locator('.c9-mentalmap')).toContainText('First-principles mechanism');
+ await expect(page.locator('.c9-mentalmap')).toContainText('IAM evaluates applicable identity/resource policies');
  const details=await page.locator('.c9-details').count();
  expect(details).toBe(0);
  fs.mkdirSync(path.join(__dirname,'..','test-results'),{recursive:true});

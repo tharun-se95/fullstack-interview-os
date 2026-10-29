@@ -235,3 +235,14 @@ test('all four pilots render mobile diagrams, with readable code in light and da
  await page.locator('.c8-stage-nav [data-action="v8-stage"][data-id="overview"]').click();
  await page.screenshot({path:'test-results/v8-mobile-diagram.png',fullPage:true});
 });
+
+test('default lesson route can record recall of its first microtopic',async({page})=>{
+ await page.goto('/#lesson/js-event-loop');
+ await page.locator('.c8-stage-nav [data-action="v8-stage"][data-id="recall"]').click();
+ await page.locator('[data-save-shadow="js-event-loop/stack"]').fill('The synchronous function runs until its first await, then resumes via a microtask.');
+ await page.locator('[data-action="v8-compare"]').click();
+ await page.locator('[data-action="v8-rate"][data-rating="ready"]').click();
+ const saved=await page.evaluate(()=>JSON.parse(localStorage.getItem('fullstack-os-course-v2')));
+ expect(saved.shadowV7['js-event-loop/stack'].rating).toBe('ready');
+ await expect(page.locator('.c8-reader[data-stage="finish"]')).toBeVisible();
+});

@@ -17,10 +17,10 @@ test('AWS lessons and exact-topic practice are connected',async({page})=>{
  await page.locator('[data-go="lesson/aws-vpc"]').first().click();
  await expect(page.getByRole('heading',{name:'How does an AWS VPC keep an API private?'})).toBeVisible();
  await expect(page.locator('.c8-stage-nav button')).toHaveCount(5);
- await page.locator('[data-action="v8-stage"][data-id="overview"]').click();
+ await page.locator('.c8-stage-nav [data-action="v8-stage"][data-id="overview"]').click();
  await expect(page.locator('.c8-diagram-lane')).toHaveCount(2);
  await expect(page.locator('.c8-diagram-flow li')).toHaveCount(6);
- await page.locator('[data-action="v8-stage"][data-id="finish"]').click();
+ await page.locator('.c8-stage-nav [data-action="v8-stage"][data-id="finish"]').click();
  await page.locator('[data-go="practice/aws-vpc"]').click();
  await expect(page.locator('.practice-one-question')).toContainText('subnet');
  await expect(page.locator('[data-go="aws-lab/aws-network"]')).toBeVisible();
@@ -115,10 +115,10 @@ test('one question-first stage at a time, with three focused microtopics',async(
  await expect(page.locator('.c8-stage-nav button')).toHaveCount(5);
  await expect(page.locator('.c8-stage-panel h2')).toContainText('When an async function encounters await');
  await expect(page.locator('.c8-code')).toHaveCount(0);
- await page.locator('[data-action="v8-stage"][data-id="overview"]').click();
+ await page.locator('.c8-stage-nav [data-action="v8-stage"][data-id="overview"]').click();
  await expect(page.locator('.c8-reader[data-stage="overview"]')).toBeVisible();
  await expect(page.locator('.c8-diagram-lane')).toHaveCount(2);
- await page.locator('[data-action="v8-stage"][data-id="process"]').click();
+ await page.locator('.c8-stage-nav [data-action="v8-stage"][data-id="process"]').click();
  await expect(page.locator('.c8-code')).toBeVisible();
  await expect(page.locator('.c8-diagram')).toHaveCount(0);
  await page.locator('.c8-topic-buttons [data-go="lesson/js-event-loop/queues"]').click();
@@ -133,7 +133,7 @@ test('memory-first attempt, recall, rating and original learner notes persist',a
  await page.reload();
  await page.goto('/#lesson/js-event-loop/queues');
  await page.locator('[data-v8-first="js-event-loop/queues"]').fill('I predict the microtasks execute ahead of a timer.');
- await page.locator('[data-action="v8-stage"][data-id="recall"]').click();
+ await page.locator('.c8-stage-nav [data-action="v8-stage"][data-id="recall"]').click();
  await expect(page.locator('.c8-reader[data-stage="recall"]')).toBeVisible();
  await expect(page.locator('.c8-diagram')).toHaveCount(0);
  await expect(page.locator('.c8-code')).toHaveCount(0);
@@ -150,7 +150,7 @@ test('memory-first attempt, recall, rating and original learner notes persist',a
  expect(saved.notes['node-runtime']).toBeTruthy();
  expect(saved.done).toEqual(returning.done);
  await page.reload();
- await page.locator('[data-action="v8-stage"][data-id="finish"]').click();
+ await page.locator('.c8-stage-nav [data-action="v8-stage"][data-id="finish"]').click();
  await expect(page.locator('.c8-stage-panel')).toContainText('Partly recalled');
 });
 test('due reviews start hidden in recall but permit leaving recall mode',async({page})=>{
@@ -166,7 +166,7 @@ test('due reviews start hidden in recall but permit leaving recall mode',async({
  await expect(page).toHaveURL(/#lesson\/aws-vpc\/ingress\/recall/);
  await expect(page.locator('.c8-reader[data-stage="recall"]')).toBeVisible();
  await expect(page.locator('.c8-diagram')).toHaveCount(0);
- await page.locator('[data-action="v8-stage"][data-id="overview"]').click();
+ await page.locator('.c8-stage-nav [data-action="v8-stage"][data-id="overview"]').click();
  await expect(page.locator('.c8-reader[data-stage="overview"]')).toBeVisible();
  await expect(page.locator('.c8-diagram')).toBeVisible();
 });
@@ -178,7 +178,7 @@ test('microtopic self-ratings gate overall lesson completion',async({page})=>{
   s.checks={...(s.checks||{}),'js-event-loop':idx};localStorage.setItem(k,JSON.stringify(s));
  },question);
  await page.reload();
- await page.locator('[data-action="v8-stage"][data-id="finish"]').click();
+ await page.locator('.c8-stage-nav [data-action="v8-stage"][data-id="finish"]').click();
  await expect(page.locator('[data-action="complete-lesson"]')).toHaveCount(0);
  // Even a synthesized legacy completion button cannot bypass the mastery guard.
  await page.evaluate(()=>{
@@ -192,7 +192,7 @@ test('microtopic self-ratings gate overall lesson completion',async({page})=>{
   localStorage.setItem(k,JSON.stringify(s));
  });
  await page.reload();
- await page.locator('[data-action="v8-stage"][data-id="finish"]').click();
+ await page.locator('.c8-stage-nav [data-action="v8-stage"][data-id="finish"]').click();
  await expect(page.locator('.c8-quiz')).toBeVisible();
  await page.locator('[data-action="complete-lesson"]').click();
  expect(await page.evaluate(()=>JSON.parse(localStorage.getItem('fullstack-os-course-v2')).done)).toContain('js-event-loop');
@@ -207,7 +207,7 @@ test('interview bank teaches concepts without losing original question routes',a
 });
 test('RAG keeps ingestion and query pipelines separate',async({page})=>{
  await page.goto('/#lesson/rag-architecture');
- await page.locator('[data-action="v8-stage"][data-id="overview"]').click();
+ await page.locator('.c8-stage-nav [data-action="v8-stage"][data-id="overview"]').click();
  await expect(page.locator('.c8-diagram-lane')).toHaveCount(2);
  await expect(page.locator('.c8-diagram-lane').first()).toContainText('INDEXING');
  await expect(page.locator('.c8-diagram-lane').last()).toContainText('QUERY');
@@ -218,12 +218,12 @@ test('all four pilots render mobile diagrams, with readable code in light and da
  for(const id of ['js-event-loop','async-idempotency','aws-vpc','rag-architecture']){
   await page.goto('/#lesson/'+id);
   await expect(page.locator('.c8-reader')).toBeVisible();
-  await page.locator('[data-action="v8-stage"][data-id="overview"]').click();
+  await page.locator('.c8-stage-nav [data-action="v8-stage"][data-id="overview"]').click();
   await expect(page.locator('.c8-diagram-lane')).toHaveCount(2);
   await expect.poll(()=>page.evaluate(()=>document.documentElement.scrollWidth-document.documentElement.clientWidth)).toBeLessThanOrEqual(2);
  }
  await page.goto('/#lesson/js-event-loop');
- await page.locator('[data-action="v8-stage"][data-id="process"]').click();
+ await page.locator('.c8-stage-nav [data-action="v8-stage"][data-id="process"]').click();
  const light=await page.locator('.c8-code').evaluate(el=>({bg:getComputedStyle(el).backgroundColor,fg:getComputedStyle(el.querySelector('code')).color}));
  expect(light.bg).toBe('rgb(21, 41, 35)');
  expect(light.fg).toBe('rgb(240, 251, 246)');
@@ -232,6 +232,6 @@ test('all four pilots render mobile diagrams, with readable code in light and da
  expect(dark).toEqual(light);
  fs.mkdirSync(path.join(__dirname,'..','test-results'),{recursive:true});
  await page.screenshot({path:'test-results/v8-mobile-process.png',fullPage:true});
- await page.locator('[data-action="v8-stage"][data-id="overview"]').click();
+ await page.locator('.c8-stage-nav [data-action="v8-stage"][data-id="overview"]').click();
  await page.screenshot({path:'test-results/v8-mobile-diagram.png',fullPage:true});
 });

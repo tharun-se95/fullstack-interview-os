@@ -208,7 +208,7 @@ function journeyPathPage(id){
  <footer class="journey-plan-footer"><a href="${esc(plan.starter)}" target="_blank" rel="noopener noreferrer">Source code for local workshops ↗</a><button data-go="curriculum">Explore the course library ↗</button></footer>
  </div>`;
 }
-function backendPathPage(){return journeyPathPage("backend")}
+function backendPathPage(){const base=journeyPathPage("backend");return base.replace('<footer class="journey-plan-footer">','<section class="v6-aws-intro"><span class="journey-kicker">AFTER CORE BACKEND / CLOUD ARCHITECTURE</span><h2>Ready to design on AWS?</h2><p>Continue with the separate AWS Solutions Architect sprint: VPC, IAM, compute, databases, queues, multi-AZ recovery and cost trade-offs.</p><button class="btn journey-primary" data-go="aws">Open AWS architect sprint ↗</button></section><footer class="journey-plan-footer">')}
 
 function backendLabPage(id){
  const lab=WORKSHOP.labs.find(x=>x.id===id)||WORKSHOP.labs[0];if(!lab)return notFound();
@@ -622,5 +622,5 @@ document.getElementById("menu-btn").addEventListener("click",()=>document.getEle
 document.getElementById("theme-btn").addEventListener("click",()=>{progress.theme=progress.theme==="dark"?"light":"dark";save();render()});
 window.addEventListener("hashchange",()=>{if(ui.mockTimer){clearInterval(ui.mockTimer);ui.mockTimer=null;ui.mockSeconds=0}render();scrollTo(0,0)});
 if(!location.hash)location.hash="dashboard";else render();
-window.__courseDiagnostics={trackCount:tracks.length,lessonCount:lessons.length,questionCount:bank.length,labCount:labs.length,dayCount:days.length,version:"6.0.0",lessonPracticeHandoff:true,progressiveLessonStages:true,navigationSections:4,selectedLearningPath:progress.activePath,backendTrackCount:4,backendLabCount:WORKSHOP.labs.length,backendPathHours:WORKSHOP.hoursPerWeek*WORKSHOP.weeks.length,aiTrackCount:3,awsTrackCount:trackById.has("aws")?1:0,awsLabCount:AWS_WORKSHOP.labs.length,aiLabCount:AI_WORKSHOP.labs.length,aiPathHours:AI_WORKSHOP.hoursPerWeek*AI_WORKSHOP.weeks.length,expandedLessonCount:Object.keys(COURSE_DEPTH).length,curatedMediaLessons:EXTERNAL_MEDIA_COUNT};
+window.__courseDiagnostics={trackCount:tracks.length,lessonCount:lessons.length,questionCount:bank.length,labCount:labs.length,dayCount:days.length,version:"6.0.0",lessonPracticeHandoff:true,progressiveLessonStages:true,navigationSections:3,selectedLearningPath:progress.activePath,backendTrackCount:4,backendLabCount:WORKSHOP.labs.length,backendPathHours:WORKSHOP.hoursPerWeek*WORKSHOP.weeks.length,aiTrackCount:3,awsTrackCount:trackById.has("aws")?1:0,awsLabCount:AWS_WORKSHOP.labs.length,aiLabCount:AI_WORKSHOP.labs.length,aiPathHours:AI_WORKSHOP.hoursPerWeek*AI_WORKSHOP.weeks.length,expandedLessonCount:Object.keys(COURSE_DEPTH).length,curatedMediaLessons:EXTERNAL_MEDIA_COUNT};
 })();

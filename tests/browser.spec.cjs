@@ -17,6 +17,7 @@ test('AWS lessons and exact-topic practice are connected',async({page})=>{
  await page.locator('[data-go="lesson/aws-vpc"]').first().click();
  await expect(page.getByRole('heading',{name:'VPC routing, public/private subnets and security groups'})).toBeVisible();
  await expect(page.locator('.lesson-phase-nav button')).toHaveCount(4);
+ await expect(page.locator('.aws-flow-node')).toHaveCount(4);
  await page.locator('.lesson-phase-nav [data-go="practice/aws-vpc"]').click();
  await expect(page.locator('.practice-one-question')).toContainText('subnet');
  await expect(page.locator('[data-go="aws-lab/aws-network"]')).toBeVisible();

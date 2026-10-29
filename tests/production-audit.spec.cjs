@@ -168,3 +168,60 @@ test('production browser persists a real recall attempt and due review without a
  expect(await page.evaluate(()=>JSON.parse(localStorage.getItem('fullstack-os-course-v2')).shadowV7['js-event-loop/queues'].rating)).toBe('partial');
  save('04-production-recall.json',{origin,checkedAt:new Date().toISOString(),id:'js-event-loop/queues',rating:saved.shadowV7['js-event-loop/queues'].rating,attempts:saved.shadowV7['js-event-loop/queues'].attempts,persisted:true});
 });
+
+test('every live lesson checkpoint rejects a wrong answer and accepts completion',async({page})=>{
+ await loadProduction(page);
+ const data=await inventory(page),rows=[];
+ const pilotIds=new Set(data.pilots);
+ for(const l of data.lessons){
+  const row={track:l.trackId,id:l.id,pilot:pilotIds.has(l.id),issues:[],answerIndex:l.checkCorrect};
+  try{
+   if(row.pilot){
+    const micros=await page.evaluate(id=>window.CONCEPT_PILOTS_V7[id].microtopics.map(x=>x.id),l.id);
+    for(const microId of micros){
+     await route(page,'lesson/'+l.id+'/'+microId);
+     await page.locator('.c8-stage-nav [data-id="recall"]').click();
+     await page.locator('[data-save-shadow="'+l.id+'/'+microId+'"]').fill('Independent audit simulation of a learner explanation for '+l.id+'/'+microId);
+     await page.locator('[data-action="v8-compare"]').click();
+     await page.locator('[data-action="v8-rate"][data-rating="ready"]').click();
+     const rating=await page.evaluate(key=>JSON.parse(localStorage.getItem('fullstack-os-course-v2')).shadowV7[key]?.rating,l.id+'/'+microId);
+     if(rating!=='ready')row.issues.push('Rating not saved for '+microId);
+    }
+    await route(page,'lesson/'+l.id+'/'+micros[0]);
+    await page.locator('.c8-stage-nav [data-id="finish"]').click();
+    if(await page.locator('.c8-quiz').count()!==1)row.issues.push('Final checkpoint inaccessible after all three microtopics');
+   }else await route(page,'lesson/'+l.id);
+   const choiceLocator=row.pilot?'.c8-quiz [data-action="answer-check"]':'.knowledge [data-action="answer-check"]';
+   const count=await page.locator(choiceLocator).count();
+   if(count!==l.options)row.issues.push('Question option count mismatch '+count+' vs '+l.options);
+   if(count>1){
+    const wrong=(l.checkCorrect+1)%count;
+    await page.locator(choiceLocator).nth(wrong).click();
+    const afterWrong=await page.evaluate(id=>{const p=JSON.parse(localStorage.getItem('fullstack-os-course-v2'));return {check:p.checks[id],done:p.done.includes(id)}},l.id);
+    if(afterWrong.done)row.issues.push('Wrong checkpoint answer allowed completion');
+    if(afterWrong.check!==wrong)row.issues.push('Wrong answer state not saved');
+    await page.locator(choiceLocator).nth(l.checkCorrect).click();
+    const afterCorrect=await page.evaluate(id=>JSON.parse(localStorage.getItem('fullstack-os-course-v2')).checks[id],l.id);
+    if(afterCorrect!==l.checkCorrect)row.issues.push('Correct checkpoint state not saved');
+    const button=page.locator('[data-action="complete-lesson"][data-id="'+l.id+'"]');
+    if(await button.count()!==1)row.issues.push('Completion CTA not exposed after correct answer');
+    else {
+      const disabled=await button.isDisabled();
+      if(disabled)row.issues.push('Completion button disabled despite passing checkpoint');
+      else await button.click();
+    }
+    const completed=await page.evaluate(id=>JSON.parse(localStorage.getItem('fullstack-os-course-v2')).done.includes(id),l.id);
+    row.completed=completed;
+    if(!completed)row.issues.push('Completion was not persisted');
+   }
+  }catch(e){row.issues.push('Checkpoint interaction error: '+String(e.message||e).slice(0,300))}
+  rows.push(row);
+ }
+ const report={origin,checkedAt:new Date().toISOString(),total:rows.length,passed:rows.filter(r=>r.issues.length===0).length,failed:rows.filter(r=>r.issues.length>0).length,failures:rows.filter(r=>r.issues.length),rows};
+ save('05-checkpoint-interactions.json',report);
+ expect(rows.length).toBeGreaterThanOrEqual(79);
+ expect(report.failures).toEqual([]);
+ await page.reload();
+ const stored=await page.evaluate(()=>JSON.parse(localStorage.getItem('fullstack-os-course-v2')));
+ expect(stored.done.length).toBeGreaterThanOrEqual(79);
+});

@@ -72,3 +72,31 @@ for(const width of [375,768,1440]){
   await page.screenshot({path:path.join(__dirname,'..','test-results','v6-dark-lesson-'+width+'.png'),fullPage:true});
  });
 }
+
+test('all registered lessons and practice handoffs render, including legacy deep links',async({page})=>{
+ await page.goto('/');
+ const audit=await page.evaluate(()=>{
+  const ids=window.COURSE_TRACKS.flatMap(t=>t.lessons.map(l=>l.id)),bad=[];
+  for(const id of ids){
+   for(const type of ['lesson','practice']){
+    location.hash='#'+type+'/'+id;
+    window.dispatchEvent(new Event('hashchange'));
+    const html=document.querySelector('#app').innerHTML;
+    if(!html||html.includes('Page not found'))bad.push(type+'/'+id);
+   }
+  }
+  return {checked:ids.length*2,bad};
+ });
+ expect(audit.checked).toBeGreaterThanOrEqual(158);
+ expect(audit.bad).toEqual([]);
+});
+test('theme switching survives refresh and navigation',async({page})=>{
+ await page.goto('/#dashboard');
+ await expect(page.locator('body')).toHaveClass(/light/);
+ await page.locator('#theme-btn').click();
+ await expect(page.locator('body')).not.toHaveClass(/light/);
+ await page.reload();
+ await expect(page.locator('body')).not.toHaveClass(/light/);
+ await page.goto('/#aws');
+ await expect(page.locator('body')).not.toHaveClass(/light/);
+});

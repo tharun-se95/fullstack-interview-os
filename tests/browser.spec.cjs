@@ -113,7 +113,7 @@ test('one question-first stage at a time, with three focused microtopics',async(
  await expect(page.locator('.c8-reader[data-stage="try"]')).toBeVisible();
  await expect(page.locator('.c8-topic-buttons button')).toHaveCount(3);
  await expect(page.locator('.c8-stage-nav button')).toHaveCount(5);
- await expect(page.locator('.c8-stage-panel h2')).toContainText('Why does B run');
+ await expect(page.locator('.c8-stage-panel h2')).toContainText('When an async function encounters await');
  await expect(page.locator('.c8-code')).toHaveCount(0);
  await page.locator('[data-action="v8-stage"][data-id="overview"]').click();
  await expect(page.locator('.c8-reader[data-stage="overview"]')).toBeVisible();

@@ -151,7 +151,7 @@ function v6StageMap(context="learn"){
     <div class="v6-stage-detail"><p>${current?"Your current milestone. Work through one topic at a time.":"Explore this milestone whenever you need it."}</p><div class="v6-stage-topics">${stage.trackIds.map(id=>{const t=trackById.get(id);return t?`<button data-go="track/${id}">${esc(t.title)}</button>`:"";}).join("")}</div><div class="v6-stage-actions">${next?`<button class="btn journey-primary" data-go="lesson/${next.id}">Continue: ${esc(next.title)} ↗</button>`:""}${stage.id==="systems"?'<button class="journey-subtle-link" data-go="aws">AWS architect sprint ↗</button>':""}</div></div>
     </details>`;
  }).join("");
- return `<section class="v6-map" aria-label="Five-stage engineering journey"><div class="v6-section-heading"><div><span class="journey-kicker">YOUR ENGINEERING JOURNEY</span><h2>Build depth, one milestone at a time.</h2></div><p>${context==="dashboard"?"Your existing lessons, practice and projects are connected in one route.":"Select a milestone to see its tracks, or choose a focused study direction below."}</p></div><div class="v6-stage-list">${html}</div></section>`;
+ return `<section class="v6-map" aria-label="Five-stage engineering journey"><div class="v6-section-heading"><div><span class="journey-kicker">YOUR ENGINEERING JOURNEY</span><h2>Five milestones.</h2></div><p>${context==="dashboard"?"Your existing lessons, practice and projects are connected in one route.":"Select a milestone to see its tracks, or choose a focused study direction below."}</p></div><div class="v6-stage-list">${html}</div></section>`;
 }
 function awsPathPage(){
  const sprint=window.FULLSTACK_JOURNEY.awsSprint,plan=AWS_WORKSHOP;
@@ -240,9 +240,9 @@ function aiLabPage(id){
 }
 function learnPage(){
  const selected=learningPath();
- return `<div class="journey-page journey-learn"><header class="journey-page-intro"><span class="journey-kicker">LEARNING PATH / YOUR ENGINEERING ROADMAP</span><h1>One connected learning path.</h1><p>The courses are connected, but your attention doesn't have to be split. Pick the path that matters most right now; you can switch at any time.</p></header>
+ return `<div class="journey-page journey-learn"><header class="journey-page-intro"><span class="journey-kicker">LEARNING PATH / YOUR ENGINEERING ROADMAP</span><h1>Your learning path.</h1><p>The courses are connected, but your attention doesn't have to be split. Pick the path that matters most right now; you can switch at any time.</p></header>
  ${v6StageMap("learn")}
- <div class="v6-section-heading v6-path-choice"><div><span class="journey-kicker">YOUR STUDY FOCUS</span><h2>Choose the next direction.</h2></div><p>Backend first by default; switch to AI or the fullstack refresher without losing progress.</p></div>
+ <div class="v6-section-heading v6-path-choice"><div><span class="journey-kicker">YOUR STUDY FOCUS</span><h2>Choose your focus.</h2></div><p>Backend first by default; switch to AI or the fullstack refresher without losing progress.</p></div>
  <div class="journey-path-list" aria-label="Learning paths">${LEARNING_PATHS.map(p=>{
   const stat=pathProgress(p.id),active=selected.id===p.id;
   return `<section class="journey-path-option ${active?"is-active":""}">

@@ -30,7 +30,7 @@ const markup=(l,section,html,ctx)=>{
  let body="";
  if(stage==="try"){
   body='<p class="c9-kicker">01 / QUESTION FIRST</p><h2>'+escape(section.title)+'</h2>'+
-   '<p class="c9-lead">'+escape(l.check.q)+'</p><p class="c9-muted">Start by predicting the answer. Your explanation is private and saved on this device.</p>'+
+   '<p class="c9-lead">'+escape(position===0?l.check.q:'How would you explain “'+section.title+'” to a teammate, and when does it matter?')+'</p><p class="c9-muted">Start by predicting the answer. Your explanation is private and saved on this device.</p>'+
    '<label for="c9-first">Explain what you already know <span>(optional)</span></label><textarea rows="4" id="c9-first" class="c9-input" data-c9-first="'+escape(unitKey)+'" placeholder="What would you say in an interview?">'+escape(entry.initialDraft||"")+'</textarea>'+
    '<div class="c9-actions"><button class="btn journey-primary" data-action="c9-stage" data-id="understand">Understand the idea →</button><button class="c9-quiet" data-action="c9-stage" data-id="recall">I already know this · test me</button></div>';
  }else if(stage==="understand"){

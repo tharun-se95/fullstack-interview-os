@@ -25,7 +25,7 @@ try{progress={...defaults,...JSON.parse(localStorage.getItem(KEY)||"{}")}}catch{
 for(const key of ["done","bookmarks","dayDone","backendLabDone","aiLabDone","awsLabDone"])if(!Array.isArray(progress[key]))progress[key]=[];
 if(!["backend","ai","foundations"].includes(progress.activePath))progress.activePath="backend";
 for(const key of ["checks","rated","notes","labDrafts","labPassed","mockAnswers","mockRubrics","shadowV7"])if(!progress[key]||typeof progress[key]!=="object")progress[key]={};
-const ui={shadowKey:null,shadowMode:false,shadowReveal:false,v8StageKey:null,v8Stage:"try",v8Compare:false,topic:"all",level:"all",search:"",limit:10,lessonReveal:false,labReveal:false,labHint:0,labResults:null,day:0,flashIndex:0,flipped:false,showSample:false,toastTimer:null,mockTimer:null,mockSeconds:0};
+const ui={shadowKey:null,shadowMode:false,shadowReveal:false,v8StageKey:null,v8RouteKey:null,v8Stage:"try",v8Compare:false,topic:"all",level:"all",search:"",limit:10,lessonReveal:false,labReveal:false,labHint:0,labResults:null,day:0,flashIndex:0,flipped:false,showSample:false,toastTimer:null,mockTimer:null,mockSeconds:0};
 const days=[
 {theme:"JavaScript + TypeScript essentials",ids:["js-closures","js-event-loop","js-async","ts-unions"],lab:"lab-once",goal:"Predict event-loop output aloud and explain types without notes."},
 {theme:"React rendering and TS patterns",ids:["ts-generics","ts-utils","react-render","react-effects"],lab:"lab-debounce",goal:"Debug stale closures and explain a render profile."},
@@ -496,8 +496,7 @@ function shadowReviewQueue(){
 function pilotLessonPage(l,microId,reviewOnly){
  const p=CONCEPT_PILOTS[l.id],t=trackById.get(l.trackId);
  const micro=p.microtopics.find(m=>m.id===microId)||p.microtopics[0],key=l.id+"/"+micro.id;
- if(ui.v8StageKey!==key){ui.v8StageKey=key;ui.v8Stage=reviewOnly?"recall":"try";ui.v8Compare=false}
- else if(reviewOnly&&ui.v8Stage!=="recall"){ui.v8Stage="recall";ui.v8Compare=false}
+ if(ui.v8StageKey!==key||ui.v8RouteKey!==getLocation()){ui.v8StageKey=key;ui.v8RouteKey=getLocation();ui.v8Stage=reviewOnly?"recall":"try";ui.v8Compare=false}
  const position=t.lessons.findIndex(x=>x.id===l.id),next=t.lessons[position+1]||lessons[lessons.findIndex(x=>x.id===l.id)+1];
  const ref='<section aria-label="Original detailed explanation"><h2>Original in-depth lesson</h2><div class="prose">'+prose(l.theory)+'</div>'+awsArchitectureDiagram(l)+sourcedLessonGallery(l)+deepChapterBody(l)+codeBlock("Original implementation",l.code)+deepScenarioBody(l)+deepInterviewBody(l)+'<p>'+esc(l.task)+'</p>'+codeBlock("Model reasoning",l.solution)+'</section>';
  return window.ConceptReaderV8.render({lesson:l,topic:micro.id,stage:ui.v8Stage,checkpoint:progress.checks[l.id],completed:progress.done.includes(l.id),review:progress.shadowV7,showAnswer:ui.v8Compare,bookmark:bookmarkBtn(l.id),referenceHtml:ref,nextLesson:next?.id||"",notes:progress.notes[l.id]||"",interviewQuestion:questionForLesson(l)});

@@ -43,7 +43,7 @@ const markup=(l,section,html,ctx)=>{
   const process=sentencePieces(l.walkthrough||"").slice(0,4);
   body='<p class="c9-kicker">03 / WORK THROUGH IT</p><h2>Follow the process.</h2>'+
    (process.length?'<ol class="c9-process">'+process.map(x=>'<li>'+escape(x)+'</li>').join("")+'</ol>':'<p>'+escape(l.goal)+'</p>')+
-   '<figure class="c9-code"><figcaption>Existing lesson implementation</figcaption><pre><code>'+escape((()=>{const src=String(l.code||"");return src.includes("\\n")?src:((src.match(/\\\\n/g)||[]).length>=2?src.replace(/\\\\n/g,"\\n"):src)})())+'</code></pre></figure>'+
+   '<figure class="c9-code"><figcaption>Existing lesson implementation</figcaption><pre><code>'+escape((()=>{const src=String(l.code||"");return src.includes("\n")?src:((src.match(/\\n/g)||[]).length>=2?src.replace(/\\n/g,"\n"):src)})())+'</code></pre></figure>'+
    '<details class="c9-details"><summary>Common production/interview trap</summary><p>'+escape(l.pitfall)+'</p></details>'+
    '<details class="c9-details"><summary>Complete reference · original teaching, diagrams, scenarios and solution</summary><div class="c9-reference">'+originalHtml+'</div></details>'+
    '<div class="c9-actions"><button class="btn journey-primary" data-action="c9-stage" data-id="recall">Hide it & explain from memory →</button><button class="c9-quiet" data-action="c9-stage" data-id="understand">← Big picture</button></div>';

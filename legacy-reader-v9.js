@@ -34,7 +34,8 @@ const markup=(l,section,html,ctx)=>{
    '<label for="c9-first">Explain what you already know <span>(optional)</span></label><textarea rows="4" id="c9-first" class="c9-input" data-c9-first="'+escape(unitKey)+'" placeholder="What would you say in an interview?">'+escape(entry.initialDraft||"")+'</textarea>'+
    '<div class="c9-actions"><button class="btn journey-primary" data-action="c9-stage" data-id="understand">Understand the idea →</button><button class="c9-quiet" data-action="c9-stage" data-id="recall">I already know this · test me</button></div>';
  }else if(stage==="understand"){
-  const keyIdea=section.points[0]||"Read the full source in the Apply step.";
+  const chapters=topics(l),mechanism=chapters.find(x=>/mechanism|how it works|mental model|core concept|under the hood|execution|internals/i.test(x.title))||chapters.find(x=>x.id!==section.id)||section;
+  const keyIdea=(/^(the )?problem$/i.test(section.title)?mechanism.points[0]:section.points[0])||"Read the full source in the Apply step.";
   body='<p class="c9-kicker">02 / HIGH-LEVEL EXPLANATION</p><h2>'+escape(section.title)+'</h2>'+list(section.points)+
    '<figure class="c9-mentalmap"><figcaption>Learning map · not a system architecture diagram</figcaption><ol><li><b>Goal</b><span>'+escape(l.goal)+'</span></li><li><b>Core idea</b><span>'+escape(keyIdea)+'</span></li><li><b>Apply it</b><span>'+escape(l.task)+'</span></li></ol></figure>'+
    '<div class="c9-actions"><button class="btn journey-primary" data-action="c9-stage" data-id="implement">Show the implementation →</button><button class="c9-quiet" data-action="c9-stage" data-id="try">← Question</button></div>';
@@ -42,7 +43,7 @@ const markup=(l,section,html,ctx)=>{
   const process=sentencePieces(l.walkthrough||"").slice(0,4);
   body='<p class="c9-kicker">03 / WORK THROUGH IT</p><h2>Follow the process.</h2>'+
    (process.length?'<ol class="c9-process">'+process.map(x=>'<li>'+escape(x)+'</li>').join("")+'</ol>':'<p>'+escape(l.goal)+'</p>')+
-   '<figure class="c9-code"><figcaption>Existing lesson implementation</figcaption><pre><code>'+escape(l.code||"")+'</code></pre></figure>'+
+   '<figure class="c9-code"><figcaption>Existing lesson implementation</figcaption><pre><code>'+escape((()=>{const src=String(l.code||"");return src.includes("\\n")?src:((src.match(/\\\\n/g)||[]).length>=2?src.replace(/\\\\n/g,"\\n"):src)})())+'</code></pre></figure>'+
    '<details class="c9-details"><summary>Common production/interview trap</summary><p>'+escape(l.pitfall)+'</p></details>'+
    '<details class="c9-details"><summary>Complete reference · original teaching, diagrams, scenarios and solution</summary><div class="c9-reference">'+originalHtml+'</div></details>'+
    '<div class="c9-actions"><button class="btn journey-primary" data-action="c9-stage" data-id="recall">Hide it & explain from memory →</button><button class="c9-quiet" data-action="c9-stage" data-id="understand">← Big picture</button></div>';

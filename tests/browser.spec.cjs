@@ -360,3 +360,29 @@ test('legacy guided lesson mobile layout uses legible code in dark and light',as
  await page.locator('.c9-stages [data-id="understand"]').click();
  await page.screenshot({path:'test-results/v9-legacy-mobile-map.png',fullPage:true});
 });
+
+test('AWS source code prints real newlines, not visible backslash-n escapes',async({page})=>{
+ await page.goto('/#lesson/aws-iam');
+ await page.locator('.c9-stages [data-id="implement"]').click();
+ const source=await page.locator('.c9-code code').textContent();
+ expect(source).toContain('Effect');
+ expect(source.split('\n').length).toBeGreaterThanOrEqual(3);
+ expect(source.startsWith('{')).toBeTruthy();
+});
+test('mobile topic navigation is compact and remains horizontally accessible',async({page})=>{
+ await page.setViewportSize({width:375,height:810});
+ await page.goto('/#lesson/aws-iam');
+ const measurements=await page.locator('.c9-topics').evaluate(el=>({
+  viewportHeight:el.getBoundingClientRect().height,
+  scrollWidth:el.scrollWidth,
+  clientWidth:el.clientWidth
+ }));
+ expect(measurements.viewportHeight).toBeLessThan(100);
+ expect(measurements.scrollWidth).toBeGreaterThan(measurements.clientWidth);
+ await page.locator('.c9-stages [data-id="understand"]').click();
+ await expect(page.locator('.c9-mentalmap')).toContainText('First-principles mechanism');
+ const details=await page.locator('.c9-details').count();
+ expect(details).toBe(0);
+ fs.mkdirSync(path.join(__dirname,'..','test-results'),{recursive:true});
+ await page.screenshot({path:'test-results/v9-mobile-polished-map.png',fullPage:true});
+});

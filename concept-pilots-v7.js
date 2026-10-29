@@ -47,7 +47,7 @@ window.CONCEPT_PILOTS_V7={
         ],
         "exampleTitle": "Follow synchronous execution",
         "code": "console.log('A');\nasync function task() {\n  console.log('B');\n  await Promise.resolve();\n  console.log('D');\n}\ntask();\nconsole.log('C'); // A B C D",
-        "recallPrompt": "Why does B run before C, but D runs afterward?",
+        "recallPrompt": "When an async function encounters await, what has already run, and when does its continuation execute?",
         "checklist": [
           "The async function starts synchronously.",
           "await suspends the continuation even for an already-fulfilled promise.",
@@ -74,7 +74,7 @@ window.CONCEPT_PILOTS_V7={
         ],
         "exampleTitle": "Predict the order",
         "code": "console.log('A');\nsetTimeout(() => console.log('B'), 0);\nPromise.resolve().then(() => console.log('C'));\nconsole.log('D');\n// A D C B",
-        "recallPrompt": "Why does the Promise log appear before the timer log?",
+        "recallPrompt": "Why can a resolved Promise callback run before a setTimeout(..., 0) callback in a browser?",
         "checklist": [
           "The current synchronous task produces A and D.",
           "The Promise callback is a microtask.",

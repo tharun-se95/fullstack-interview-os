@@ -774,3 +774,22 @@ body:is(.light,:not(.light)) .v6-prove-project h3{margin:0 0 8px;font-size:20px}
 body:is(.light,:not(.light)) .v6-prove-project p{color:var(--journey-muted);font-size:14px;line-height:1.7;max-width:58ch}
 body:is(.light,:not(.light)) button:focus-visible,body:is(.light,:not(.light)) summary:focus-visible,body:is(.light,:not(.light)) a:focus-visible{outline:3px solid var(--journey-accent);outline-offset:3px}
 @media(max-width:700px){body:is(.light,:not(.light)) .v6-stage>summary{grid-template-columns:32px minmax(0,1fr) 18px;gap:9px;min-height:83px}body:is(.light,:not(.light)) .v6-stage-count{grid-column:2;text-align:left}body:is(.light,:not(.light)) .v6-stage-chevron{grid-column:3;grid-row:1 / span 2}body:is(.light,:not(.light)) .v6-stage-detail{padding-left:39px}body:is(.light,:not(.light)) .v6-section-heading{gap:10px}body:is(.light,:not(.light)) .v6-map{margin:32px 0 40px}}
+
+
+/* Final visual QA: remove inherited details/card appearance from milestone rows. */
+body:is(.light,:not(.light)) .journey-learn .v6-stage{
+ background:transparent;border:0;border-bottom:1px solid var(--journey-line);
+ border-radius:0;box-shadow:none;margin:0;
+}
+body:is(.light,:not(.light)) .journey-learn .v6-stage>summary{
+ background:transparent;border:0;border-radius:0;box-shadow:none;
+ padding-inline:2px;
+}
+body:is(.light,:not(.light)) .journey-learn .v6-stage[open]{
+ background:transparent;box-shadow:none;
+}
+body:is(.light,:not(.light)) .journey-home .v6-stage{
+ background:transparent;border:0;border-bottom:1px solid var(--journey-line);
+ border-radius:0;box-shadow:none;margin:0;
+}
+body:is(.light,:not(.light)) .journey-home .v6-stage>summary{background:transparent;border:0;box-shadow:none;}

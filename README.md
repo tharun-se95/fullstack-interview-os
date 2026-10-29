@@ -1,5 +1,30 @@
 # Fullstack Interview OS — Complete Senior Fullstack Crash Course
 
+## Iteration 7 pilot — question-first, progressive depth, closed-book recall
+
+This is a **working four-concept pilot**, not a claim that all 79 lessons or 183 interview questions were rewritten.
+
+- Existing lesson routes and IDs remain unchanged. Four routes now render a compact microtopic reader: `#lesson/js-event-loop`, `#lesson/async-idempotency`, `#lesson/aws-vpc`, and `#lesson/rag-architecture`.
+- The four concepts are divided into **12 focused microtopics**, each with a short bullet overview, 4-stage flow diagram, numbered implementation process, small example, recall question, answer checklist, and optional production details. Deep links work as `#lesson/<lessonId>/<microtopicId>`.
+- The original in-depth content, original checkpoint, historical notes and practice handoff are retained inside each pilot lesson.
+- Interview-bank entries already associated with the pilot questions now have **Learn visually** links to the appropriate concept. The bank remains intact; no fictitious 50-question JavaScript catalog is added.
+- **Shadow Study** hides the explanatory material, asks for an original explanation, then shows a comparison checklist. A learner self-rates missed / partial / ready and the system schedules review at 1 / 3 / 7 days respectively.
+- Drafts and self-ratings are saved in an additive `shadowV7` object within the existing `fullstack-os-course-v2` localStorage key. No existing notes, completion arrays, lesson IDs, bookmarks or interview ratings are replaced.
+- Due reviews appear in Today and practice. No automatic notifications, external storage, paid model, or AI scoring is claimed.
+- Files: `concept-pilots-v7.js` (content), `concept-reader-v7.js` (renderer), `concept-reader-v7.css` (presentation), small in-place changes in `app.js` and `index.html`.
+
+### Rollout sequence
+
+1. Validate learning format and visual hierarchy in these four representative topics.
+2. Map question clusters to canonical concepts; deduplicate explanations and add missing high-frequency JS questions only after a quality review.
+3. Migrate remaining lessons gradually with original IDs and an explicit fallback reader.
+4. Expand review logic and optionally add visual/answer variants (timelines, state machines, request traces) without turning every page into a box grid.
+
+Run `node --test tests/course-integrity.test.cjs` and the Playwright workflow before merging. Review mobile and desktop screenshots. A browser test does not validate AWS provisioning or paid model integrations.
+
+---
+
+
 ## Iteration 6 — guided learning and AWS architecture
 
 This is an **in-place upgrade** of the existing static application, not a new Next.js/React project. The existing backend/AI course modules, notes, saved progress, code labs and deep links are retained.

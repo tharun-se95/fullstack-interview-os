@@ -1,0 +1,49 @@
+/* Iteration 7: question-first microtopics. Editorial rules, no nested card stacks. */
+.route-lesson .c7-reader{max-width:980px;margin:0 auto;color:var(--journey-text)}
+.c7-reader button{cursor:pointer}
+.c7-back{background:none;border:0;color:var(--journey-muted);padding:10px 0;font-size:13px}
+.c7-hero{padding:26px 0 32px;border-bottom:1px solid var(--journey-line)}
+.c7-hero h1{max-width:20ch;font:650 clamp(31px,4vw,50px)/1.16 "Space Grotesk",system-ui,sans-serif;letter-spacing:-.055em;margin:15px 0}
+.c7-hero>p{font-size:16px;color:var(--journey-muted);max-width:64ch;line-height:1.7}
+.c7-meta{display:flex;flex-wrap:wrap;gap:16px;margin-top:20px;color:var(--journey-muted);font-size:12px;align-items:center}
+.c7-reader .c7-phase{margin:8px 0 26px;border-bottom:1px solid var(--journey-line)}
+.c7-reader .c7-body{max-width:810px;padding:0}
+.c7-reader .c7-body>section,.c7-reader .c7-body>details{scroll-margin-top:90px}
+.c7-reader .c7-body h2{font:650 clamp(24px,3vw,31px)/1.24 "Space Grotesk",system-ui,sans-serif;letter-spacing:-.04em;margin:9px 0 18px;color:var(--journey-text)}
+.c7-reader .c7-body h3{font-size:18px;margin:22px 0 12px}
+.c7-reader .c7-body>section{padding:29px 0 35px;border-bottom:1px solid var(--journey-line)}
+.c7-reader .c7-bullets,.c7-reader .c7-steps{padding-left:23px;max-width:70ch}
+.c7-reader .c7-bullets li,.c7-reader .c7-steps li{font-size:15px;line-height:1.75;margin-bottom:11px;padding-left:4px}
+.c7-reader li::marker{color:var(--journey-accent)}
+.c7-reader .c7-flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;padding:0;list-style:none}
+.c7-reader .c7-flow li{position:relative;display:flex;flex-direction:column;gap:6px;padding:11px 13px 16px 0;border-top:2px solid var(--journey-line)}
+.c7-reader .c7-flow li:not(:last-child):after{content:"→";position:absolute;right:0;top:4px;color:var(--journey-accent)}
+.c7-reader .c7-flow-index{font-size:11px;color:var(--journey-accent);font-weight:700}
+.c7-reader .c7-flow b{font-size:14px}
+.c7-reader .c7-flow small{font-size:12px;color:var(--journey-muted);line-height:1.6}
+.c7-reader .c7-micro-links{border-top:1px solid var(--journey-line)}
+.c7-reader .c7-micro-links button{display:flex;align-items:center;gap:13px;border:0;border-bottom:1px solid var(--journey-line);background:transparent;color:var(--journey-text);padding:15px 0;width:100%;text-align:left}
+.c7-reader .c7-micro-links button b{font-size:14px;flex:1}
+.c7-reader .c7-micro-links button span,.c7-reader .c7-micro-links button small{font-size:11px;color:var(--journey-muted)}
+.c7-reader .c7-micro-links button[aria-current=step] b{color:var(--journey-accent)}
+.c7-reader .c7-code{margin:20px 0;border:1px solid var(--journey-line);border-radius:7px;overflow:hidden}
+.c7-reader .c7-code figcaption{padding:10px 15px;font-size:11px;border-bottom:1px solid var(--journey-line);color:var(--journey-muted)}
+.c7-reader .c7-code pre{padding:16px;margin:0;overflow-x:auto;background:var(--journey-surface);color:var(--journey-text);font:13px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace}
+.c7-reader .c7-details,.c7-reader .c7-reference{padding:18px 0;border-bottom:1px solid var(--journey-line)}
+.c7-reader .c7-details summary,.c7-reader .c7-reference summary{cursor:pointer;font-size:13px;font-weight:650;color:var(--journey-text)}
+.c7-reader .c7-recall.is-recalling{border-top:2px solid var(--journey-accent)}
+.c7-reader .c7-prompt{font-size:18px;line-height:1.65;font-weight:620}
+.c7-reader .c7-recall-info,.c7-reader .c7-review-status{font-size:13px;color:var(--journey-muted);line-height:1.65}
+.c7-reader .c7-answer-label{display:block;margin:19px 0 8px;font-size:12px;font-weight:700}
+.c7-reader .c7-recall-textarea,.c7-reader .c7-notes textarea{width:100%;min-height:130px}
+.c7-reader .c7-recall-actions,.c7-reader .c7-ratings,.c7-reader .c7-related,.c7-reader .c7-complete{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:16px}
+.c7-reader .c7-answer-key{border-top:1px solid var(--journey-line);margin-top:20px;padding-top:15px}
+.c7-reader .c7-ratings button{background:transparent;border:1px solid var(--journey-line);border-radius:6px;padding:10px 12px;color:var(--journey-text);font-size:12px}
+.c7-reader .c7-ratings button:hover{border-color:var(--journey-accent)}
+.c7-reader .c7-related button{border:0;background:transparent;color:var(--journey-accent);font-size:13px}
+.c7-reader .c7-reference-inner{padding-top:22px}
+.c7-due-list{padding-top:22px;margin-top:24px;border-top:1px solid var(--journey-line)}
+.c7-due-list h3{margin:8px 0;font-size:18px}
+.c7-due-list p{font-size:13px;color:var(--journey-muted)}
+.c7-due-list button{width:100%;display:flex;justify-content:space-between;gap:12px;border:0;border-bottom:1px solid var(--journey-line);background:transparent;padding:13px 0;text-align:left;color:var(--journey-text)}
+@media(max-width:700px){.c7-reader .c7-flow{grid-template-columns:1fr;gap:2px}.c7-reader .c7-flow li{border-top:1px solid var(--journey-line)}.c7-reader .c7-flow li:not(:last-child):after{content:"↓"}.c7-hero h1{font-size:clamp(29px,7vw,40px)}.c7-reader .c7-code pre{font-size:12px;padding:12px}}

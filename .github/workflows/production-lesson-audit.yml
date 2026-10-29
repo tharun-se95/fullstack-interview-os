@@ -1,0 +1,34 @@
+name: Audit every production lesson
+on:
+  push:
+    branches:
+      - audit/iteration-9-production
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  production-browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install browser runner
+        run: |
+          npm install --no-save @playwright/test@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Audit the actual production URL, not localhost
+        env:
+          PRODUCTION_ORIGIN: https://fullstack-interview-os.vercel.app
+        run: npx playwright test --config=playwright.production.config.cjs
+      - name: Publish per-lesson audit artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: production-iteration9-all-lessons-report
+          path: |
+            production-audit/
+            test-results/
+          if-no-files-found: warn

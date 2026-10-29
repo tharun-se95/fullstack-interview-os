@@ -70,3 +70,17 @@
  .c9-ratings{grid-template-columns:1fr}
  .c9-reader .c9-code pre{padding:13px;font-size:12px}
 }
+
+/* Visual QA polish: compact mobile chapter picker and flat disclosure styling. */
+.route-lesson .c9-reader .c9-details{display:block!important;background:transparent!important;border:0!important;border-top:1px solid var(--journey-line)!important;border-radius:0!important;box-shadow:none!important;padding:17px 0!important;margin:0!important}
+.route-lesson .c9-reader .c9-details summary{padding:3px 0!important;background:transparent!important;border:0!important;color:var(--journey-text)!important}
+.route-lesson .c9-reader .c9-details[open] summary{color:var(--journey-accent)!important}
+.route-lesson .c9-reader .c9-details .c9-reference{background:transparent!important;box-shadow:none!important}
+@media(max-width:700px){
+ .route-lesson .c9-reader .c9-topics{display:flex;overflow-x:auto;gap:8px;scroll-snap-type:x proximity;scrollbar-width:thin;padding:10px 0 13px;overscroll-behavior-x:contain}
+ .route-lesson .c9-reader .c9-topics button{flex:0 0 165px;max-width:185px;min-height:60px;scroll-snap-align:start;border-bottom:2px solid var(--journey-line);padding:9px 7px 11px 1px;align-items:flex-start}
+ .route-lesson .c9-reader .c9-topics button[aria-current=step]{border-bottom-color:var(--journey-accent)}
+ .route-lesson .c9-reader .c9-topics button b{font-size:11px}
+ .route-lesson .c9-reader .c9-header{padding-bottom:13px}
+ .route-lesson .c9-reader .c9-panel{padding-top:24px}
+}

@@ -1,0 +1,36 @@
+{
+  "done": [
+    "node-runtime",
+    "api-http",
+    "sql-index"
+  ],
+  "checks": {
+    "node-runtime": 1
+  },
+  "rated": {
+    "node-1": "review"
+  },
+  "bookmarks": [
+    "node-runtime"
+  ],
+  "notes": {
+    "node-runtime": "A timeout must bound external I/O; CPU-heavy synchronous work blocks callbacks."
+  },
+  "labDrafts": {
+    "lab-once": "function once(fn) { /* personal draft */ }"
+  },
+  "labPassed": {},
+  "mockAnswers": {
+    "0": "Establish requirements and threat boundaries first."
+  },
+  "mockRubrics": {},
+  "dayDone": [],
+  "backendLabDone": [
+    "be-start"
+  ],
+  "aiLabDone": [],
+  "activePath": "backend",
+  "theme": "dark",
+  "lastStudiedLessonId": "sql-index",
+  "lastCompletedLessonId": "node-runtime"
+}

@@ -1,0 +1,49 @@
+name: Iteration 6 UI and curriculum checks
+on:
+  push:
+    branches: [main, 'feat/**']
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  curriculum:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --test tests/course-integrity.test.cjs
+      - name: Existing offline AI starter
+        working-directory: ai-lab-starter
+        run: npm test
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install test runner and Chromium
+        run: |
+          npm install --no-save @playwright/test@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Serve the existing static app
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 > /tmp/fullstack-os-http.log 2>&1 &
+          sleep 2
+          curl --fail --silent http://127.0.0.1:4173/ >/dev/null
+      - name: Responsive browser checks
+        run: npx playwright test --config=playwright.config.cjs
+      - name: Upload screenshots and report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fullstack-os-v6-browser-qa
+          path: |
+            test-results/
+            playwright-report/
+          if-no-files-found: ignore

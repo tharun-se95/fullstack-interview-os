@@ -1,5 +1,27 @@
 # Fullstack Interview OS — Learning Experience Design (v5.2)
 
+## Iteration 6 — implementation contract
+
+The actual product is one connected journey; it is **not** a replacement repository or a cut-down course.
+
+### Primary information architecture
+- **Today** `#dashboard`: the exact next incomplete lesson for the selected path, one dominant action, and a five-stage journey preview.
+- **Learning Path** `#learn`: five real-data milestones, backend/AI/foundations focus selection, and the full topic library. AWS `#aws` is a post-core-backend two-sprint extension.
+- **Build & Prove** `#practice`: exact-topic active recall, related hands-on mission, project/capstone defense. `#projects`, `#interviews`, `#labs`, `#mocks`, `#flashcards`, `#diagrams` and the old path routes remain valid.
+
+### Non-destructive integration
+The learner journey metadata lives in `journey-v6.js`, and all real lesson IDs continue to originate from existing `course-*.js` files. One new `aws` track adds ten distinct lessons via `course-aws-architect.js`; deep chapters, exact interview questions and self-verified workshops are separate modules. The four-week backend schedule is unchanged; AWS is additional.
+
+The localStorage key remains `fullstack-os-course-v2`. All old state fields and IDs survive; `awsLabDone` is optional and normalized to an array. Progress is computed from source lessons. Site remains static with no account, cloud provisioning or hosted code grader.
+
+### Visual rules
+Maintain the existing editorial light/dark design layers in `learner-journey.css` and `lesson-journey.css`. Warm reading canvas, one action accent, whitespace and dividers; no competing card dashboards. Three nav choices, one strong next action, progressive disclosure, keyboard-visible focus and mobile flow.
+
+### Verification & release gate
+`node --test tests/course-integrity.test.cjs` verifies legacy content, exact topic mappings, AWS chapters, and progress fixtures. Playwright CI covers real browser navigation, state persistence and 375px/768px/1440px screenshots, including dark mode. Those checks must pass and screenshots be reviewed before merging into `main`. A green deployment alone is insufficient. Optional learner-run AWS workshops do not demonstrate provisioned infrastructure.
+
+---
+
 ## Product intent
 One focused learning workspace for an experienced frontend engineer strengthening **backend engineering, GenAI, RAG and agentic AI** for senior fullstack and AI architecture interviews.
 

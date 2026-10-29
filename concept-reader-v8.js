@@ -66,7 +66,7 @@ function render(args){
  return '<div class="c8-reader" data-concept="'+esc(l.id)+'" data-micro="'+esc(micro.id)+'" data-stage="'+selected+'">'+
  '<button class="c8-back" data-go="track/'+esc(l.trackId)+'">← '+esc(l.trackTitle)+'</button>'+
  '<header class="c8-header">'+head+'<div class="c8-meta"><span>'+esc(micro.minutes)+' min focused topic</span><span>'+count+' / '+concept.microtopics.length+' recalled</span>'+bookmark+'</div></header>'+
- microNav+nav+'<main class="c8-stage-panel" id="c8-stage-panel" aria-label="'+esc(stages.find(x=>x[0]===selected)[1])+' step">'+body+'</main>'+
+ microNav+nav+'<section class="c8-stage-panel" id="c8-stage-panel" aria-label="'+esc(stages.find(x=>x[0]===selected)[1])+' step">'+body+'</section>'+
  '<footer class="c8-footer"><div><strong>Private learning notes</strong><p>Saved on this device. Existing notes remain available.</p></div><textarea class="c8-notes" data-save-note="'+esc(l.id)+'" aria-label="Private learning notes" rows="3" placeholder="Your notes…">'+esc(notes)+'</textarea></footer></div>';
 }
 window.ConceptReaderV8={render,stages,key};

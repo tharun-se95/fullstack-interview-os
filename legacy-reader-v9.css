@@ -1,0 +1,86 @@
+/* Iteration 9: all-course guided study. Extend editorial typography, avoid dashboard card stacks. */
+.route-lesson .c9-reader{max-width:980px;margin:0 auto;padding:7px 0 36px;color:var(--journey-text)}
+.c9-reader *{box-sizing:border-box}
+.c9-reader button{cursor:pointer}
+.c9-reader .c9-back{background:none;border:0;color:var(--journey-muted);font-size:12px;font-weight:650;padding:10px 0 18px}
+.c9-header{padding:5px 0 23px}
+.c9-kicker{color:var(--journey-muted);font:750 10px/1.5 system-ui,sans-serif;letter-spacing:.13em;text-transform:uppercase;margin:0}
+.c9-header h1{font:660 clamp(31px,4vw,50px)/1.12 "Space Grotesk",system-ui,sans-serif;letter-spacing:-.055em;max-width:23ch;margin:16px 0 14px;color:var(--journey-text)}
+.c9-header>p:not(.c9-kicker){font-size:15px;line-height:1.65;color:var(--journey-muted);max-width:64ch}
+.c9-meta{display:flex;flex-wrap:wrap;gap:15px;align-items:center;color:var(--journey-muted);font-size:12px;margin-top:18px}
+.c9-topics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--journey-line);padding:10px 0 16px;gap:0}
+.c9-topics button{display:flex;align-items:flex-start;gap:10px;text-align:left;background:none;border:0;border-bottom:1px solid var(--journey-line);padding:12px 10px 12px 0;color:var(--journey-text);min-width:0}
+.c9-topics button b{flex:1;font:600 12px/1.55 system-ui,sans-serif}
+.c9-topics button span{font-size:11px;font-weight:750;color:var(--journey-muted)}
+.c9-topics button[aria-current=step] b,.c9-topics button[aria-current=step] span{color:var(--journey-accent)}
+.c9-stages{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border-bottom:1px solid var(--journey-line)}
+.c9-stages button{display:flex;justify-content:center;align-items:center;gap:8px;padding:15px 3px;border:0;border-bottom:3px solid transparent;background:none;color:var(--journey-muted);font:600 12px/1.5 system-ui,sans-serif;min-width:0}
+.c9-stages button span{font-size:10px}
+.c9-stages button[aria-current=step]{color:var(--journey-accent);border-bottom-color:var(--journey-accent)}
+.c9-panel{padding:35px 0 44px;max-width:810px;min-height:340px;margin:0 auto}
+.c9-panel h2{font:660 clamp(26px,3.5vw,38px)/1.25 "Space Grotesk",system-ui,sans-serif;letter-spacing:-.04em;margin:13px 0 19px;color:var(--journey-text);max-width:30ch}
+.c9-panel h3{font:650 19px/1.35 "Space Grotesk",system-ui,sans-serif;margin:22px 0 12px}
+.c9-panel label,.c9-notes label{display:block;font-size:12px;font-weight:700;color:var(--journey-text);margin:20px 0 9px}
+.c9-panel label span{font-weight:400;color:var(--journey-muted)}
+.c9-lead{font-size:clamp(17px,2.2vw,20px);line-height:1.55;font-weight:600;max-width:58ch;color:var(--journey-text)}
+.c9-muted{font-size:13px;line-height:1.7;color:var(--journey-muted);max-width:69ch}
+.c9-input{display:block;border:1px solid var(--journey-line);border-radius:7px;padding:14px 16px;min-height:110px;width:100%;background:var(--journey-surface);color:var(--journey-text);font:400 14px/1.7 system-ui,sans-serif;resize:vertical}
+.c9-input::placeholder{color:var(--journey-muted)}
+.c9-reader button:focus-visible,.c9-reader summary:focus-visible,.c9-input:focus{outline:2px solid var(--journey-accent);outline-offset:2px}
+.c9-actions{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;margin:25px 0 0}
+.c9-quiet{border:0;background:transparent;color:var(--journey-muted);font:650 13px/1.45 system-ui,sans-serif;padding:10px 0}
+.c9-quiet:hover{color:var(--journey-accent)}
+.c9-points,.c9-process{padding-left:24px;max-width:73ch;margin:15px 0 27px}
+.c9-points li,.c9-process li{font-size:15px;line-height:1.75;margin-bottom:12px;padding-left:5px}
+.c9-points li::marker,.c9-process li::marker{color:var(--journey-accent);font-weight:750}
+.c9-mentalmap{padding:22px 0 8px;border-top:1px solid var(--journey-line);border-bottom:1px solid var(--journey-line);margin:26px 0 12px}
+.c9-mentalmap figcaption{font-size:10px;font-weight:700;letter-spacing:.1em;color:var(--journey-muted);margin-bottom:15px;text-transform:uppercase}
+.c9-mentalmap ol{list-style:none;margin:0 0 15px;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px}
+.c9-mentalmap li{border-top:2px solid var(--journey-line);padding:11px 10px 9px 0;display:flex;flex-direction:column;gap:8px;min-width:0}
+.c9-mentalmap li b{font-size:13px}
+.c9-mentalmap li span{font-size:12px;line-height:1.6;color:var(--journey-muted);overflow-wrap:anywhere}
+.c9-code{border:1px solid #36534a;background:#152923;color:#f0fbf6;border-radius:8px;overflow:hidden;margin:22px 0}
+.c9-code figcaption{padding:10px 15px;border-bottom:1px solid #46675c;color:#cce7d9;font-size:12px;font-weight:600}
+.c9-reader .c9-code pre,.c9-reader .c9-code code,.c9-reader .c9-code code *{color:#f0fbf6!important;-webkit-text-fill-color:#f0fbf6!important;text-shadow:none!important;background:none!important;opacity:1!important;font:500 13px/1.75 ui-monospace,SFMono-Regular,Consolas,monospace!important;letter-spacing:0!important}
+.c9-reader .c9-code pre{max-width:100%;padding:17px 18px;margin:0;overflow:auto}
+.c9-reader .c9-code code{white-space:pre}
+.c9-details{padding:18px 0;border-top:1px solid var(--journey-line)}
+.c9-details summary{cursor:pointer;font-size:13px;font-weight:650;color:var(--journey-text)}
+.c9-details[open] summary{color:var(--journey-accent)}
+.c9-details .c9-reference{padding:17px 0;max-width:100%;overflow-wrap:anywhere}
+.c9-details .c9-reference pre{overflow-x:auto;max-width:100%}
+.c9-details .c9-reference section{max-width:100%}
+.c9-compare{padding-top:22px;border-top:2px solid var(--journey-accent);margin-top:24px}
+.c9-ratings{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:18px}
+.c9-ratings button{border:1px solid var(--journey-line);background:var(--journey-surface);color:var(--journey-text);padding:12px 8px;border-radius:6px;font:650 12px/1.45 system-ui,sans-serif}
+.c9-ratings button:hover{border-color:var(--journey-accent)}
+.c9-quiz{padding-top:23px;margin-top:23px;border-top:1px solid var(--journey-line)}
+.c9-quiz .knowledge{margin:18px 0}
+.c9-completed{color:var(--journey-accent);font-size:13px;font-weight:700}
+.c9-notes{border-top:1px solid var(--journey-line);padding:13px 0 22px}
+.c9-notes .c9-input{min-height:75px}
+@media(max-width:700px){
+ .c9-topics{grid-template-columns:1fr}
+ .c9-topics button{min-height:40px;padding:9px 0}
+ .c9-stages button{flex-direction:column;gap:3px;padding:11px 1px;font-size:11px}
+ .c9-stages button span{font-size:9px}
+ .c9-panel{padding:28px 0 34px;min-height:300px}
+ .c9-mentalmap ol{grid-template-columns:1fr;gap:0}
+ .c9-mentalmap li{padding:10px 0;border-top:1px solid var(--journey-line)}
+ .c9-ratings{grid-template-columns:1fr}
+ .c9-reader .c9-code pre{padding:13px;font-size:12px}
+}
+
+/* Visual QA polish: compact mobile chapter picker and flat disclosure styling. */
+.route-lesson .c9-reader .c9-details{display:block!important;background:transparent!important;border:0!important;border-top:1px solid var(--journey-line)!important;border-radius:0!important;box-shadow:none!important;padding:17px 0!important;margin:0!important}
+.route-lesson .c9-reader .c9-details summary{padding:3px 0!important;background:transparent!important;border:0!important;color:var(--journey-text)!important}
+.route-lesson .c9-reader .c9-details[open] summary{color:var(--journey-accent)!important}
+.route-lesson .c9-reader .c9-details .c9-reference{background:transparent!important;box-shadow:none!important}
+@media(max-width:700px){
+ .route-lesson .c9-reader .c9-topics{display:flex;overflow-x:auto;gap:8px;scroll-snap-type:x proximity;scrollbar-width:thin;padding:10px 0 13px;overscroll-behavior-x:contain}
+ .route-lesson .c9-reader .c9-topics button{flex:0 0 165px;max-width:185px;min-height:60px;scroll-snap-align:start;border-bottom:2px solid var(--journey-line);padding:9px 7px 11px 1px;align-items:flex-start}
+ .route-lesson .c9-reader .c9-topics button[aria-current=step]{border-bottom-color:var(--journey-accent)}
+ .route-lesson .c9-reader .c9-topics button b{font-size:11px}
+ .route-lesson .c9-reader .c9-header{padding-bottom:13px}
+ .route-lesson .c9-reader .c9-panel{padding-top:24px}
+}

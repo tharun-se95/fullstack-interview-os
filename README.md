@@ -1,5 +1,25 @@
 # Fullstack Interview OS — Complete Senior Fullstack Crash Course
 
+## Iteration 9 — question-first guided study across the entire course
+
+Iteration 9 addresses a structural gap found in the production review: 75 of 79 lessons still opened as fully expanded long-form references. They now use a **five-stage guided reader**, while the existing four V8 pilot concepts keep their specialized architecture diagrams and 12 microtopics.
+
+- **Try → Understand → Apply → Recall → Finish**: Only the selected stage is visible.
+- The original lesson's `##` sections become navigable chapter-sized topics. Existing content is excerpted as bounded bullets, **not AI-invented summaries**; the full original text, code, sources, deep chapters, scenarios and solution remain accessible on demand.
+- A labeled **learning map** links goal → source concept → exercise; this is explicitly *not* presented as an architecture diagram. V8's four concept-specific technical diagrams remain unchanged.
+- The first chapter starts from its original checkpoint question; later chapters ask how to explain that chapter's concept. Answer choices remain hidden until the final checkpoint.
+- Closed-book recall saves optional drafts, subjective ratings, and 1/3/7-day due dates in additive `legacyRecallV9` data under the same `fullstack-os-course-v2` localStorage key.
+- For **newly completed legacy lessons**, a learner must self-rate all chapters confident and pass the original checkpoint. Previously completed lessons are **grandfathered unchanged**. No automated grading is claimed.
+- Due recall work merges V8 and V9 topics, opens straight into recall, and is displayed in Today and Practice. No push notifications or account sync is introduced.
+- Integration preserves exact legacy lesson and practice URLs, notes, browser coding labs, and interview content.
+
+New files: `legacy-reader-v9.js`, `legacy-reader-v9.css`. Existing nonpilot lessons now render through this adapter. The previous unabridged lesson reader is retained in source for fallback and reference, but the guided renderer is the user-facing default.
+
+**Scope disclosure:** This is a full **presentation and study-flow migration**, not a bespoke content rewrite of all legacy concepts. Only the four V8 pilot topics have manually curated architecture diagrams and question-to-microtopic authoring.
+
+---
+
+
 ## Iteration 8 — guided learning release
 
 This release replaces the **four pilot lesson readers** (not the entire legacy course) with five focused stages: **Try → Understand → Implement → Recall → Finish**. Only one stage is visible at a time.

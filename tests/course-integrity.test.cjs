@@ -34,3 +34,21 @@ test('question-first pilot content maps to existing source lessons and question 
  assert.equal(seen.size,12);
  assert.equal(typeof sandbox.window.ConceptReaderV7.render,'function');
 });
+
+test('v8 guided-reader diagrams teach accurate phases with named boundary notes',()=>{
+ const concepts=sandbox.window.CONCEPT_PILOTS_V7,diagrams=sandbox.window.CONCEPT_DIAGRAMS_V8;
+ assert.deepEqual(Object.keys(diagrams).sort(),Object.keys(concepts).sort());
+ for(const [id,d] of Object.entries(diagrams)){
+  assert.ok(d.headline&&d.kind&&d.note,id);
+  assert.equal(d.lanes.length,2,id);
+  for(const lane of d.lanes){
+   assert.ok(lane.label&&lane.nodes.length>0,id);
+   for(const node of lane.nodes)assert.equal(node.length,2,id);
+  }
+ }
+ assert.match(diagrams['rag-architecture'].lanes[0].label,/INDEXING/);
+ assert.match(diagrams['rag-architecture'].lanes[1].label,/QUERY/);
+ assert.match(diagrams['js-event-loop'].note,/render|paint/i);
+ assert.equal(typeof sandbox.window.ConceptReaderV8.render,'function');
+ assert.equal(sandbox.window.ConceptReaderV8.stages.length,5);
+});

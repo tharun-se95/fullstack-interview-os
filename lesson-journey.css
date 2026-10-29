@@ -609,3 +609,12 @@ body:is(.light,:not(.light)) .route-practice .journey-extra-tools{
 @media(prefers-reduced-motion:reduce){
  body:is(.light,:not(.light)) .route-lesson .lesson-phase-nav button{transition:none}
 }
+
+/* Iteration 6 — apply, check, defend in one reader. */
+body:is(.light,:not(.light)) .route-lesson .lesson-phase-nav{grid-template-columns:repeat(4,minmax(0,1fr))}
+body:is(.light,:not(.light)) .route-lesson .lesson-phase-nav button{min-width:0}
+body:is(.light,:not(.light)) .route-lesson .lesson-phase-nav button:last-child{color:var(--journey-accent)}
+body:is(.light,:not(.light)) .route-lesson .lesson-completion-actions{flex-wrap:wrap;align-items:center}
+body:is(.light,:not(.light)) .route-lesson .lesson-practice{scroll-margin-top:105px}
+body:is(.light,:not(.light)) .journey-practice-v2 .v6-prove-project{margin-top:27px}
+@media(max-width:580px){body:is(.light,:not(.light)) .route-lesson .lesson-phase-nav{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:8px}}
